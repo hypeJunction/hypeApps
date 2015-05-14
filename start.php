@@ -11,9 +11,5 @@ try {
 	require_once __DIR__ . '/lib/autoloader.php';
 	hypeApps()->boot();
 } catch (Exception $ex) {
-	elgg_log($ex->getMessage(), 'ERROR');
-	if (elgg_is_admin_logged_in()) {
-		register_error($ex->getMessage());
-	}
-	hypeApps()->deactivate();
+	register_error($ex->getMessage());
 }

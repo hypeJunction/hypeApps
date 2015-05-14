@@ -19,8 +19,8 @@ class Integration {
 			if (!include($path)) {
 				return false;
 			}
-			self::$version = $version;
-			return $version;
+			self::$version = $release;
+			return self::$version;
 		}
 	}
 

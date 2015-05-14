@@ -8,11 +8,23 @@ namespace hypeJunction;
  */
 abstract class Plugin extends \Elgg\Di\DiContainer {
 
+	/**
+	 * Constructor
+	 *
+	 * @param \ElggPlugin $plugin Plugin entity
+	 */
 	abstract protected function __construct(\ElggPlugin $plugin);
 
-	abstract public static function factory($id);
+	/**
+	 * Public factory
+	 * @return self
+	 */
+	abstract public static function factory();
 
+	/**
+	 * Boot time logic
+	 * @return void
+	 */
 	abstract public function boot();
 
-	abstract public function deactivate();
 }

@@ -38,7 +38,7 @@ if (\hypeJunction\Integration::isElggVersionBelow('1.11.0')) {
  * @return \hypeJunction\Apps\Plugin
  */
 function hypeApps() {
-	return \hypeJunction\Apps\Plugin::factory('hypeApps');
+	return \hypeJunction\Apps\Plugin::factory();
 }
 
 /**
