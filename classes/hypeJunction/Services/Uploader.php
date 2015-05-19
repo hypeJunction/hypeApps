@@ -112,4 +112,51 @@ class Uploader {
 		return $uploads;
 	}
 
+	/**
+	 * Returns a human-readable message for PHP's upload error codes
+	 *
+	 * @param int $error_code The code as stored in $_FILES['name']['error']
+	 * @return string
+	 */
+	public function getFriendlyUploadError($error_code = '') {
+		switch ($error_code) {
+			case UPLOAD_ERR_OK:
+				return '';
+
+			case UPLOAD_ERR_INI_SIZE:
+				$key = 'ini_size';
+				break;
+
+			case UPLOAD_ERR_FORM_SIZE:
+				$key = 'form_size';
+				break;
+
+			case UPLOAD_ERR_PARTIAL:
+				$key = 'partial';
+				break;
+
+			case UPLOAD_ERR_NO_FILE:
+				$key = 'no_file';
+				break;
+
+			case UPLOAD_ERR_NO_TMP_DIR:
+				$key = 'no_tmp_dir';
+				break;
+
+			case UPLOAD_ERR_CANT_WRITE:
+				$key = 'cant_write';
+				break;
+
+			case UPLOAD_ERR_EXTENSION:
+				$key = 'extension';
+				break;
+
+			default:
+				$key = 'unknown';
+				break;
+		}
+
+		return elgg_echo("upload:error:$key");
+	}
+
 }
