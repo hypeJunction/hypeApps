@@ -67,7 +67,6 @@ class IconServer extends Server {
 		}
 
 		if (\hypeJunction\Integration::isElggVersionBelow('1.9.0')) {
-			$md = md5($this->url);
 			$time_created = date('Y/m/d', $this->dts);
 			$d = "{$time_created}/{$this->d}/";
 		} else {
