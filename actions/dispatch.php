@@ -1,8 +1,12 @@
 <?php
 
-// After 1.9, $action is available in scope
 if (\hypeJunction\Integration::isElggVersionBelow('1.9.0')) {
 	$action = get_input('action');
+} else if (!$action) {
+	$uri = trim(get_input('__elgg_uri', ''), '/');
+	$segments = explode('/', $uri);
+	array_shift($segments);
+	$action = implode('/', $segments);
 }
 
 $result = hypeApps()->actions->execute($action);
