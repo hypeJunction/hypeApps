@@ -42,7 +42,9 @@ abstract class Action {
 		$request_keys = array_keys((array) $_REQUEST);
 		$keys = array_unique(array_merge($input_keys, $request_keys));
 		foreach ($keys as $key) {
-			$this->$key = get_input($key);
+			if ($key) {
+				$this->$key = get_input($key);
+			}
 		}
 	}
 
