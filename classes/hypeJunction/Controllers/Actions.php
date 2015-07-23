@@ -33,7 +33,7 @@ class Actions {
 	}
 
 	public function getController($action) {
-		
+
 		if (isset($this->controllers[$action])) {
 			$class = $this->controllers[$action];
 			if (class_exists($class)) {
@@ -47,19 +47,25 @@ class Actions {
 	 * Executes an action
 	 * Triggers 'action:after', $ation hook that allows you to filter the Result object
 	 * 
-	 * @param string $action   Action name
-	 * @param bool   $feedback Display errors and messages
+	 * @param mixed $controller Action name or instance of Action
+	 * @param bool  $feedback   Display errors and messages
 	 * @return ActionResult
 	 */
-	public function execute($action, $feedback = true) {
+	public function execute($controller = null, $feedback = true) {
 
 		try {
+
+			$action = $this->parseActionName($controller);
 			elgg_make_sticky_form($action);
 
-			$controller = $this->getController($action);
 			if (!$controller instanceof Action) {
-				throw new \Exception("Not a valid action controller for $action");
+				$controller = $this->getController($action);
 			}
+
+			if (!$controller instanceof Action) {
+				throw new \Exception("Not a valid action controller");
+			}
+
 			$controller->setup();
 			if ($controller->validate() === false) {
 				throw new ActionValidationException("Invalid input for action $action");
@@ -98,6 +104,31 @@ class Actions {
 		}
 
 		return elgg_trigger_plugin_hook('action:after', $action, null, $this->result);
+	}
+
+	/**
+	 * Parses action name
+	 *
+	 * @param string $action Action name
+	 * @return string
+	 */
+	public function parseActionName($action = null) {
+		if (is_string($action) && elgg_action_exists($action)) {
+			return $action;
+		}
+
+		if (\hypeJunction\Integration::isElggVersionBelow('1.9.0')) {
+			return get_input('action');
+		}
+
+		$uri = trim(get_input('__elgg_uri', ''), '/');
+		$segments = explode('/', $uri);
+		$handler = array_shift($segments);
+		if ($handler == 'action') {
+			return implode('/', $segments);
+		}
+
+		return $uri;
 	}
 
 }
