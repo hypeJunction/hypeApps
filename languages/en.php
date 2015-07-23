@@ -7,6 +7,9 @@ $actions = array(
 	'apps:validation:error' => 'One or more inputs are incomplete or contain malformatted data. Please double check your submission',
 	'apps:permissions:error' => 'You do not have sufficient permissions for this action',
 	'apps:entity:error' => 'Entity does not exist or you do not have permissions to access it',
+
+	'apps:delete:success' => '%s has been deleted',
+	'apps:delete:error' => '%s can not be deleted',
 );
 
 add_translation('en', array_merge($general, $actions));
