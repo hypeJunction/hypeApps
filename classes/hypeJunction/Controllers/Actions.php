@@ -73,7 +73,7 @@ class Actions {
 			$controller->execute();
 			$this->result = $controller->getResult();
 		} catch (\hypeJunction\Exceptions\ActionValidationException $ex) {
-			$this->result->addError(elgg_echo('apps:validation:error'));
+			$this->result->addError($ex->getMessage());
 			elgg_log($ex->getMessage(), 'ERROR');
 		} catch (\hypeJunction\Exceptions\PermissionsException $ex) {
 			$this->result->addError(elgg_echo('apps:permissions:error'));
