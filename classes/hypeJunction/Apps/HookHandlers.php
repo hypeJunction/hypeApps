@@ -48,7 +48,7 @@ class HookHandlers {
 
 		$entity = elgg_extract('entity', $params);
 		$size = elgg_extract('size', $params, 'medium');
-
+		
 		if (!$entity->icontime || !array_key_exists($size, $this->iconFactory->getSizes($entity))) {
 			// icon has not yet been created or the icon size is unknown
 			return $return;

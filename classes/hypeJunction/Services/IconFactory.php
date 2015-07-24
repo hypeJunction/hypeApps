@@ -133,7 +133,7 @@ class IconFactory {
 	 */
 	public function getSizes(\ElggEntity $entity, array $icon_sizes = array()) {
 
-		$defaults = ($entity instanceof \ElggFile) ? $this->config->getFileIconSizes() : $this->config->getGlobalIconSizes();
+		$defaults = ($entity && $entity->getSubtype() == 'file') ? $this->config->getFileIconSizes() : $this->config->getGlobalIconSizes();		
 		$sizes = array_merge($defaults, $icon_sizes);
 
 		return elgg_trigger_plugin_hook('entity:icon:sizes', $entity->getType(), array(
