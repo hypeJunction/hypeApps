@@ -25,6 +25,16 @@ abstract class Config {
 	abstract public function getDefaults();
 
 	/**
+	 * Returns config value
+	 *
+	 * @param string $name Config parameter name
+	 * @return mixed
+	 */
+	public function __get($name) {
+		return $this->get($name);
+	}
+
+	/**
 	 * Returns all plugin settings
 	 * @return array
 	 */
@@ -60,4 +70,5 @@ abstract class Config {
 	public function getID() {
 		return $this->plugin->getID();
 	}
+
 }
