@@ -16,12 +16,6 @@ abstract class Plugin extends \Elgg\Di\DiContainer {
 	abstract protected function __construct(\ElggPlugin $plugin);
 
 	/**
-	 * Public factory
-	 * @return self
-	 */
-	abstract public static function factory();
-
-	/**
 	 * Boot time logic
 	 * @return void
 	 */
