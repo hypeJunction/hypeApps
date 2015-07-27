@@ -16,6 +16,9 @@
 	"extra": {
 		"installer-name": "hypeApps"
 	},
+	"config": {
+		"vendor-dir": "vendor"
+	},
 	"require": {
 		"php": ">=5.5",
 		"ext-json": "*",
