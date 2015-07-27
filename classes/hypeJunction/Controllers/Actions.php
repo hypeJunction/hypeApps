@@ -2,6 +2,12 @@
 
 namespace hypeJunction\Controllers;
 
+use Exception;
+use hypeJunction\Exceptions\ActionValidationException;
+use hypeJunction\Exceptions\InvalidEntityException;
+use hypeJunction\Exceptions\PermissionsException;
+use hypeJunction\Integration;
+
 /**
  * Actions service
  */
@@ -10,7 +16,7 @@ class Actions {
 	private $controllers;
 	private $result;
 
-	public function __construct(\hypeJunction\Controllers\ActionResult $result) {
+	public function __construct(ActionResult $result) {
 		$this->controllers = array();
 		$this->result = $result;
 	}
@@ -63,7 +69,7 @@ class Actions {
 			}
 
 			if (!$controller instanceof Action) {
-				throw new \Exception("Not a valid action controller");
+				throw new Exception("Not a valid action controller");
 			}
 
 			$controller->setup();
@@ -72,16 +78,16 @@ class Actions {
 			}
 			$controller->execute();
 			$this->result = $controller->getResult();
-		} catch (\hypeJunction\Exceptions\ActionValidationException $ex) {
+		} catch (ActionValidationException $ex) {
 			$this->result->addError($ex->getMessage());
 			elgg_log($ex->getMessage(), 'ERROR');
-		} catch (\hypeJunction\Exceptions\PermissionsException $ex) {
+		} catch (PermissionsException $ex) {
 			$this->result->addError(elgg_echo('apps:permissions:error'));
 			elgg_log($ex->getMessage(), 'ERROR');
-		} catch (\hypeJunction\Exceptions\InvalidEntityException $ex) {
+		} catch (InvalidEntityException $ex) {
 			$this->result->addError(elgg_echo('apps:entity:error'));
 			elgg_log($ex->getMessage(), 'ERROR');
-		} catch (\Exception $ex) {
+		} catch (Exception $ex) {
 			$this->result->addError(elgg_echo('apps:action:error'));
 			elgg_log($ex->getMessage(), 'ERROR');
 		}
@@ -117,7 +123,7 @@ class Actions {
 			return $action;
 		}
 
-		if (\hypeJunction\Integration::isElggVersionBelow('1.9.0')) {
+		if (Integration::isElggVersionBelow('1.9.0')) {
 			return get_input('action');
 		}
 
