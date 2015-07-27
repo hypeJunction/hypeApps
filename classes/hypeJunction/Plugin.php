@@ -6,7 +6,7 @@ namespace hypeJunction;
  * @property-read string                 $name
  * @property-read \ElggPlugin            $plugin
  */
-abstract class Plugin extends \Elgg\Di\DiContainer {
+abstract class Plugin extends \hypeJunction\Di\DiContainer {
 
 	/**
 	 * Constructor
