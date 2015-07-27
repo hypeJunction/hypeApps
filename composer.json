@@ -1,7 +1,7 @@
 {
 	"name": "hypejunction/hypeapps",
 	"type": "elgg-plugin",
-	"description": "hypeJunction App container",
+	"description": "hypeJunction plugin bootstrap",
 	"homepage": "http://hypejunction.com",
 	"keywords": [
 		"elgg", "plugin", "hypeJunction"
@@ -15,6 +15,9 @@
 	],
 	"extra": {
 		"installer-name": "hypeApps"
+	},
+	"config": {
+		"vendor-dir": "/vendor/"
 	},
 	"require": {
 		"php": ">=5.5",

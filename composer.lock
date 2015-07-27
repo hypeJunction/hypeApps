@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "2f0b032a394f9aa3545f3fdde0508bdf",
+    "hash": "70eb6c542d8be53c8a8d8f5d9b55fb63",
     "packages": [
         {
             "name": "composer/installers",
@@ -111,7 +111,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/smottt/WideImage/zipball/ee2e71be7e3f298248bd6d0f4a157bb42f432ba7",
+                "url": "https://api.github.com/repos/smottt/WideImage/zipball/669f63f1452c7fc70120fff4bc457727714a0834",
                 "reference": "658e6b8699255724589e8fb86959306ec64af318",
                 "shasum": ""
             },
@@ -140,7 +140,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=5.4",
+        "php": ">=5.5",
         "ext-json": "*",
         "ext-xml": "*",
         "ext-curl": "*"

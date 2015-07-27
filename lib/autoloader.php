@@ -4,8 +4,8 @@ if (version_compare(PHP_VERSION, '5.5.0', '<=')) {
 	throw new Exception('hypeApps require PHP 5.5+');
 }
 
-$path = dirname(dirname(__FILE__));
-
+$path = dirname(dirname(dirname(dirname(__FILE__))));
+	
 if (!file_exists("{$path}/vendor/autoload.php")) {
 	throw new Exception('hypeApps can not resolve composer dependencies. Run composer install');
 }
@@ -13,7 +13,7 @@ if (!file_exists("{$path}/vendor/autoload.php")) {
 require_once "{$path}/vendor/autoload.php";
 
 if (\hypeJunction\Integration::isElggVersionBelow('1.9.0')) {
-	require_once "{$path}/lib/shims/1_8.php";
+	require_once __DIR__ . "/shims/1_8.php";
 }
 
 /**
