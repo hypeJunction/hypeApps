@@ -133,7 +133,7 @@ class IconFactory {
 	 */
 	public function getSizes(\ElggEntity $entity, array $icon_sizes = array()) {
 
-		$defaults = ($entity && $entity->getSubtype() == 'file') ? $this->config->getFileIconSizes() : $this->config->getGlobalIconSizes();		
+		$defaults = ($entity && $entity->getSubtype() == 'file') ? $this->config->getFileIconSizes() : $this->config->getGlobalIconSizes();
 		$sizes = array_merge($defaults, $icon_sizes);
 
 		return elgg_trigger_plugin_hook('entity:icon:sizes', $entity->getType(), array(
@@ -226,7 +226,7 @@ class IconFactory {
 
 		$dir = $this->getIconDirectory($entity, $size);
 		$filename = $this->getIconFilename($entity, $size);
-		
+
 		$file = new \ElggFile();
 		$file->owner_guid = ($entity instanceof \ElggUser) ? $entity->guid : $entity->owner_guid;
 		$file->setFilename("{$dir}/{$filename}");
@@ -264,12 +264,54 @@ class IconFactory {
 			'ts' => $entity->icontime,
 			'mac' => $hmac,
 		));
-		
+
 		$url = elgg_http_add_url_query_elements('mod/hypeApps/servers/icon.php', array(
 			'q' => base64_encode($query),
 		));
 
 		return elgg_normalize_url($url);
+	}
+
+	/**
+	 * Outputs raw icon
+	 *
+	 * @param int    $entity_guid GUID of an entity
+	 * @param string $size        Icon size
+	 * @return void
+	 */
+	public function outputRawIcon($entity_guid, $size = null) {
+		if (headers_sent()) {
+			exit;
+		}
+		$ha = access_get_show_hidden_status();
+		access_show_hidden_entities(true);
+		$entity = get_entity($entity_guid);
+		if (!$entity) {
+			exit;
+		}
+		$size = strtolower($size ? : 'medium');
+		$filename = "icons/" . $entity->guid . $size . ".jpg";
+		$etag = md5($entity->icontime . $size);
+		$filehandler = new ElggFile();
+		$filehandler->owner_guid = $entity->owner_guid;
+		$filehandler->setFilename($filename);
+		if ($filehandler->exists()) {
+			$filehandler->open('read');
+			$contents = $filehandler->grabFile();
+			$filehandler->close();
+		} else {
+			forward('', '404');
+		}
+		$mimetype = ($entity->mimetype) ? $entity->mimetype : 'image/jpeg';
+		access_show_hidden_entities($ha);
+		header("Content-type: $mimetype");
+		header("Etag: $etag");
+		header('Expires: ' . date('r', time() + 864000));
+		header("Pragma: public");
+		header("Cache-Control: public");
+		header("Content-Length: " . strlen($contents));
+		echo $contents;
+		exit;
 	}
 
 }
