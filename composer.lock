@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e98504b99a1df545c72b01ea5796e015",
+    "hash": "239519fd320362824696bf0c73c1292a",
     "packages": [
         {
             "name": "smottt/wideimage",
@@ -33,7 +33,7 @@
             ],
             "description": "An open-source PHP library for image manipulation. (With namespaces, PHP 5.3+)",
             "homepage": "http://wideimage.sourceforge.net",
-            "time": "2014-02-10 17:56:34"
+            "time": "2015-05-27 09:42:22"
         }
     ],
     "packages-dev": null,

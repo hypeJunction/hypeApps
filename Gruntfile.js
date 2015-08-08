@@ -13,7 +13,7 @@ module.exports = function (grunt) {
 			manifest: {
 				options: {
 					pkg: grunt.file.readJSON('package.json'),
-					prefix: '\<version\>'
+					prefix: '\<version type=\"dist\"\>'
 				},
 				src: ['manifest.xml'],
 			}
@@ -56,6 +56,22 @@ module.exports = function (grunt) {
 				expand: true
 			}
 		},
+		gitcommit: {
+			release: {
+				options: {
+					message: 'Release <%= pkg.version %>',
+					all: true,
+				},
+			},
+		},
+		gitpush: {
+			release: {
+				options: {
+					all: true,
+					tags: true,
+				},
+			},
+		},
 		gh_release: {
 			options: {
 				token: process.env.GITHUB_TOKEN,
@@ -84,6 +100,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-contrib-compress');
 	grunt.loadNpmTasks('grunt-composer');
+	grunt.loadNpmTasks('grunt-git');
 	grunt.loadNpmTasks('grunt-gh-release');
 
 	grunt.registerTask('readpkg', 'Read in the package.json file', function () {
@@ -91,8 +108,18 @@ module.exports = function (grunt) {
 	});
 
 	// Release task
-	grunt.registerTask('release', function () {
-		var target = grunt.option('target') || 'patch';
-		grunt.task.run(['version::' + target, 'readpkg', 'clean:release', 'composer:install:no-dev:prefer-dist', 'copy:release', 'compress:release', 'gh_release']);
+	grunt.registerTask('release', function (n) {
+		var n = n || 'patch';
+		grunt.task.run([
+			'version::' + n,
+			'readpkg',
+			'gitcommit:release',
+			'gitpush:release',
+			'clean:release',
+			'composer:install:no-dev:prefer-dist',
+			'copy:release',
+			'compress:release',
+			'gh_release'
+		]);
 	});
 };
