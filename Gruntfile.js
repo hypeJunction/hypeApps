@@ -60,16 +60,15 @@ module.exports = function (grunt) {
 			release: {
 				options: {
 					message: 'Release <%= pkg.version %>',
-					all: true,
 				},
+				files: {
+					src: ["composer.json", "manifest.xml", "package.json"],
+				}
 			},
 		},
 		gitpush: {
 			release: {
-				options: {
-					all: true,
-					tags: true,
-				},
+				
 			},
 		},
 		gh_release: {
@@ -119,7 +118,8 @@ module.exports = function (grunt) {
 			'composer:install:no-dev:prefer-dist',
 			'copy:release',
 			'compress:release',
-			'gh_release'
+			'gh_release',
+			'clean:release',
 		]);
 	});
 };
