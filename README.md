@@ -6,7 +6,6 @@ hypeApps
 ![Elgg 1.11](https://img.shields.io/badge/Elgg-1.11.x-orange.svg?style=flat-square)
 ![Elgg 1.12](https://img.shields.io/badge/Elgg-1.12.x-orange.svg?style=flat-square)
 
-
 Bootstrap for hypeJunction plugins
 
 * Provides dependency-injection container for earlier Elgg versions
@@ -17,41 +16,18 @@ Bootstrap for hypeJunction plugins
 ## Installation
 
 
-### Production
+### Composer
 
-Recommended way to install hypeJunction plugins is through Composer.
-For example, to install hypeGraph, add the following to ```composer.json```
-in your Elgg root.
-
-```json
-{
-	"require": {
-		"hypejunction/hypegraph": "1.*"
-	}
-}
-```
-
-Using your command-line, run:
+Nearly all hypeJunction plugins can be installed with Composer.
+Run ```composer require hypejunction/<plugin_name>``` from your Elgg root.
 
 ```sh
-composer install --no-dev
+composer require hypejunction/hypeapps
 ```
 
-### Development
 
-To install an actual git package that you can make pull requests against, add
+### Self-contained Release Package
 
-```json
-{
-	"config": {
-		"preferred-install": "source"
-	},
-	"require": {
-		"hypejunction/hypegraph": "1.*"
-	}
-}
-```
+If you are unfamiliar with Composer, use pre-packaged self-contained zip release.
+Releases contain all the required files.
 
-```sh
-composer install
-```

@@ -1,42 +1,46 @@
 {
 	"name": "hypejunction/hypeapps",
+	"version": "4.1.6",
 	"type": "elgg-plugin",
 	"description": "hypeJunction plugin bootstrap",
 	"homepage": "http://hypejunction.com",
 	"keywords": [
-		"elgg", "plugin", "hypeJunction"
+		"elgg",
+		"plugin",
+		"hypeJunction",
+		"bootstrap"
 	],
 	"license": "GPL-2.0",
 	"authors": [
 		{
 			"name": "Ismayil Khayredinov",
-			"email": "ismayil.khayredinov@gmail.com"
+			"email": "info@hypejunction.com"
 		}
 	],
 	"extra": {
 		"installer-name": "hypeApps"
-	},
-	"config": {
-		"vendor-dir": "/vendor/"
 	},
 	"require": {
 		"php": ">=5.5",
 		"ext-json": "*",
 		"ext-xml": "*",
 		"ext-curl": "*",
-		"composer/installers": "1.*",
 		"smottt/wideimage": "dev-master#658e6b8699255724589e8fb86959306ec64af318"
 	},
-	 "autoload": {
-        "psr-0": {
-            "": "classes/"
-        },
-		"classmap": ["vendors/de77/"]
-    },
-    "autoload-dev": {
-        "psr-0": {
-            "": "tests/phpunit/"
-        }
-    }
+	"require-dev": {
+		"composer/installers": "1.*"
+	},
+	"autoload": {
+		"psr-0": {
+			"": "classes/"
+		},
+		"classmap": [
+			"vendors/de77/"
+		]
+	},
+	"autoload-dev": {
+		"psr-0": {
+			"": "tests/phpunit/"
+		}
+	}
 }
-
