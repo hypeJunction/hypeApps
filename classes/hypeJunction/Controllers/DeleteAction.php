@@ -39,18 +39,34 @@ class DeleteAction extends Action {
 	 * {@inheritdoc}
 	 */
 	public function execute() {
-		$this->display_name = $this->entity->getDisplayName();
+		// determine what name to show on success
+		$display_name = $this->entity->getDisplayName();
+		if (!$display_name) {
+			$display_name = ucfirst(elgg_echo('apps:item'));
+		}
+
 		$container = $this->entity->getContainerEntity();
+
+		// determine forward URL
+		$forward_url = REFERER;
+		$referrer_url = !empty($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
+		if ($referrer_url) {
+			$path = explode('/', parse_url($referrer_url, PHP_URL_PATH));
+			if (in_array("{$this->entity->guid}", $path)) {
+				// referrer URL contains a reference to the entity that will be deleted
+				$forward_url = ($container) ? $container->getURL() : '';
+			}
+		}
+
 		if ($this->entity->delete()) {
 			unset($this->entity);
-			$this->result->addMessage(elgg_echo('apps:delete:success', array($this->display_name)));
+			$this->result->addMessage(elgg_echo('apps:delete:success', array($display_name)));
 			if ($container) {
-				$this->result->setForwardURL($container->getURL());
+				$this->result->setForwardURL($forward_url);
 			}
 		} else {
 			$this->result->addError(elgg_echo('apps:delete:error'));
 		}
-		
 	}
 
 }

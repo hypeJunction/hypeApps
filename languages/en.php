@@ -10,6 +10,8 @@ $actions = array(
 
 	'apps:delete:success' => '%s has been deleted',
 	'apps:delete:error' => '%s can not be deleted',
+
+	'apps:item' => 'item',
 );
 
 add_translation('en', array_merge($general, $actions));
