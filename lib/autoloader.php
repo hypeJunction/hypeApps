@@ -4,7 +4,13 @@ if (version_compare(PHP_VERSION, '5.5.0', '<')) {
 	throw new Exception('hypeApps require PHP 5.5+');
 }
 
+$elgg_root = dirname(dirname(dirname(dirname(__FILE__))));
 $plugin_root = dirname(dirname(__FILE__));
+
+if (file_exists("{$elgg_root}/vendor/autoload.php")) {
+	// check if composer dependencies are distributed with the plugin
+	require_once "{$elgg_root}/vendor/autoload.php";
+}
 
 if (file_exists("{$plugin_root}/vendor/autoload.php")) {
 	// check if composer dependencies are distributed with the plugin
