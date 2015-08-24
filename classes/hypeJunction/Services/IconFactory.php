@@ -244,7 +244,7 @@ class IconFactory {
 	 *
 	 * @param \ElggEntity $entity Entity
 	 * @param string      $size   Size
-	 * @return ElggFile
+	 * @return \ElggFile
 	 */
 	public function getURL(\ElggEntity $entity, $size = '') {
 
@@ -292,7 +292,7 @@ class IconFactory {
 		$size = strtolower($size ? : 'medium');
 		$filename = "icons/" . $entity->guid . $size . ".jpg";
 		$etag = md5($entity->icontime . $size);
-		$filehandler = new ElggFile();
+		$filehandler = new \ElggFile();
 		$filehandler->owner_guid = $entity->owner_guid;
 		$filehandler->setFilename($filename);
 		if ($filehandler->exists()) {
