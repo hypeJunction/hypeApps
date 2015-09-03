@@ -30,7 +30,11 @@ class DeleteAction extends Action {
 		if (!$this->entity) {
 			throw new InvalidEntityException(elgg_echo('apps:entity:error'));
 		}
-		if (!$this->entity->canDelete()) {
+		if (is_callable(array($this->entity, 'canDelete'))) {
+			if (!$this->entity->canDelete()) {
+				throw new PermissionsException('apps:permissions:error');
+			}
+		} else if (!$this->entity->canEdit()) {
 			throw new PermissionsException('apps:permissions:error');
 		}
 	}
