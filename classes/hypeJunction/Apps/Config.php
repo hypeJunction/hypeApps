@@ -2,6 +2,12 @@
 
 namespace hypeJunction\Apps;
 
+/**
+ * @property-read string $filestore_prefix      Default directory prefix for uploaded files
+ * @property-read string $icon_filestore_prefix Default directory prefix for uploaded icons
+ * @property-read string $default_size          Default icon size
+ * @property-read int    $master_size_length    Width of the master icon
+ */
 class Config extends \hypeJunction\Config {
 
 	const SIZE_TOPBAR = 'topbar';

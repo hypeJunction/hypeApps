@@ -6,27 +6,9 @@ class IconServer extends Server {
 
 	private $uid;
 	private $d;
-	private $dts;
 	private $ts;
 	private $path;
 	private $hmac;
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function __construct($config) {
-		parent::__construct($config);
-
-		$query = $this->get('q');
-		$query = unserialize(base64_decode($query));
-
-		$this->uid = $query['uid'];
-		$this->d = $query['d'];
-		$this->dts = $query['dts'];
-		$this->ts = $query['ts'];
-		$this->path = $query['path'];
-		$this->hmac = $query['mac'];
-	}
 
 	/**
 	 * {@inheritdoc}
@@ -37,20 +19,28 @@ class IconServer extends Server {
 			return;
 		}
 
+		$query = $this->get('q');
+		$query = unserialize(base64_decode($query));
+
+		$this->uid = $query['uid'];
+		$this->d = $query['d'];
+		$this->ts = $query['ts'];
+		$this->path = $query['path'];
+		$this->hmac = $query['mac'];
+
 		if (!$this->uid || !$this->ts || !$this->path || !$this->hmac) {
 			header("HTTP/1.1 400 Bad Request");
 			exit;
 		}
 
 		$etag = md5($this->ts . $this->uid);
-		if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && trim($_SERVER['HTTP_IF_NONE_MATCH']) == "\"$etag\"") {
-			header("HTTP/1.1 304 Not Modified");
+		$ifNoneMatch = isset($_SERVER['HTTP_IF_NONE_MATCH']) ? trim(stripslashes($_SERVER['HTTP_IF_NONE_MATCH']), '"') : false;
+		if ($ifNoneMatch == $etag) {
+			header('HTTP/1.0 304 Not Modified');
 			exit;
 		}
 
-		$this->openDbLink();
 		$values = $this->getDatalistValue(array('dataroot', '__site_secret__'));
-		$this->closeDbLink();
 
 		if (empty($values)) {
 			header("HTTP/1.1 404 Not Found");
@@ -66,13 +56,8 @@ class IconServer extends Server {
 			exit;
 		}
 
-		if (\hypeJunction\Integration::isElggVersionBelow('1.9.0')) {
-			$time_created = date('Y/m/d', $this->dts);
-			$d = "{$time_created}/{$this->d}/";
-		} else {
-			$locator = new \Elgg\EntityDirLocator($this->d);
-			$d = $locator->getPath();
-		}
+		$locator = new \Elgg\EntityDirLocator($this->d);
+		$d = $locator->getPath();
 
 		$filename = "{$data_root}{$d}{$this->path}";
 

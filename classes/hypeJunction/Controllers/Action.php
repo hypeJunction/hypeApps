@@ -6,10 +6,6 @@ use hypeJunction\Exceptions\ActionValidationException;
 
 abstract class Action {
 
-	const ACCESS_PUBLIC = 'public';
-	const ACCESS_LOGGED_IN = 'logged_in';
-	const ACCESS_ADMIN = 'admin';
-
 	/**
 	 * Parameter bag
 	 * @var ParameterBag
@@ -35,7 +31,7 @@ abstract class Action {
 
 	/**
 	 * Access value from a parameter bag
-	 * 
+	 *
 	 * @param string $name Param name
 	 * @return mixed
 	 */
@@ -56,7 +52,7 @@ abstract class Action {
 
 	/**
 	 * Check if value is set
-	 * 
+	 *
 	 * @param string $name Parameter name
 	 * @return bool
 	 */

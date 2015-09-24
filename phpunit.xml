@@ -1,7 +1,15 @@
 <phpunit bootstrap="./tests/bootstrap.php" colors="true">
 	<testsuites>
 		<testsuite name="hypeApps">
-			<directory>./tests/</directory>
+			<directory>./tests/phpunit/</directory>
 		</testsuite>
 	</testsuites>
+	<filter>
+		<whitelist processUncoveredFilesFromWhitelist="true">
+			<directory suffix=".php">./classes</directory>
+		</whitelist>
+	</filter>
+	<logging>
+		<log type="coverage-html" target="./tests/coverage" />
+	</logging>
 </phpunit>

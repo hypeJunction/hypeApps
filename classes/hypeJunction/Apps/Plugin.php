@@ -29,10 +29,6 @@ final class Plugin extends \hypeJunction\Plugin {
 			return new \hypeJunction\Apps\Config($p->plugin);
 		});
 
-		$this->setFactory('hooks', function (Plugin $p) {
-			return new \hypeJunction\Apps\HookHandlers($p->config, $p->iconFactory);
-		});
-
 		$this->setFactory('actions', function(Plugin $p) {
 			return new \hypeJunction\Controllers\Actions(new \hypeJunction\Controllers\ActionResult());
 		});
@@ -61,14 +57,8 @@ final class Plugin extends \hypeJunction\Plugin {
 	 * {@inheritdoc}
 	 */
 	public function boot() {
-		elgg_register_event_handler('init', 'system', array($this, 'init'));
+		elgg_register_event_handler('init', 'system', new Handlers\InitSystemEvent());
 	}
-
-	/**
-	 * 'init','system' callback
-	 */
-	public function init() {
-		elgg_register_plugin_hook_handler('entity:icon:url', 'all', array($this->hooks, 'setEntityIconUrls'));
-	}
+	
 
 }
