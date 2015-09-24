@@ -37,7 +37,7 @@ class Uploader {
 	 *                             'coords'                ARR Optional. Coordinates for icon cropping
 	 *                             'filestore_prefix'      STR Optional. Custom prefix on Elgg filestore
 	 *                             'icon_filestore_prefix' STR Optional. Custom prefix for created icons on Elgg filestore
-	 * @return \ElggFile[]
+	 * @return \hypeJunction\Files\Upload[]
 	 */
 	public function handle($input = '', array $attributes = array(), array $options = array()) {
 
