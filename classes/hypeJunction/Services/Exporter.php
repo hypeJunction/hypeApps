@@ -13,6 +13,10 @@ class Exporter {
 	 * @return array
 	 */
 	public function export($data, $fields = array(), $recursive = false) {
+		if (empty($data)) {
+			return $data;
+		}
+		
 		if ($data instanceof \ElggBatch) {
 			$return = array('items' => array());
 			foreach ($data as $v) {
