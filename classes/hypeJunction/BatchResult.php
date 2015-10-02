@@ -6,46 +6,86 @@ use ElggBatch;
 use stdClass;
 
 /**
- * Convenience class to output batch results
+ * Wrapper for ElggBatch
  */
 class BatchResult {
 
+	/**
+	 * Getter function
+	 * @var callable
+	 */
 	protected $getter;
+
+	/**
+	 * Batch options
+	 * @var array
+	 */
 	protected $options;
 
 	/**
 	 * Constructor
 	 *
 	 * @param callable $getter  Getter function
-	 * @param array    $options Options
+	 * @param array    $options Accepts all options of the getter function plus $options['sort'] an a array of $field => $direction pairs
 	 */
 	public function __construct(callable $getter = null, array $options = array()) {
 		$this->getter = $getter;
-		$this->options = $this->prepareBatchOptions($options);
+		$this->options = $options;
 	}
 
 	/**
-	 * Export batch
+	 * Returns count of entities in a batch
+	 * @return int
+	 */
+	public function getCount() {
+		$options = $this->prepareBatchOptions($options);
+		$options['count'] = true;
+		return (int) call_user_func($this->getter, $this->options);
+	}
+
+	/**
+	 * Returns an iterator instance
+	 * @return \ElggBatch
+	 */
+	public function getBatch() {
+		return new ElggBatch($this->getter, $this->prepareBatchOptions($this->options));
+	}
+
+	/**
+	 * Returns an array of items in the batch
+	 * @return array
+	 */
+	public function getItems() {
+		$batch = $this->getBatch();
+		$items = array();
+		foreach ($batch as $b) {
+			$items[] = $b;
+		}
+		return $items;
+	}
+
+	/**
+	 * Export batch into an object
+	 *
+	 * @param string $key Parameter name to hold batch item export
 	 * @return stdClass
 	 */
-	public function export() {
+	public function export($fields = array(), $key = 'items') {
 		$result = new stdClass;
 
-		$this->options['count'] = true;
-		$result->total = (int) call_user_func($this->getter, $this->options);
-		unset($this->options['count']);
-
+		$result->count = $this->getCount();
 		$result->limit = elgg_extract('limit', $this->options, elgg_get_config('default_limit'));
 		$result->offset = elgg_extract('offset', $this->options, 0);
 
-		$batch = new ElggBatch($this->getter, $this->options);
-		$result->nodes = array();
+		$batch = $this->getBatch();
+		$result->{"$key"} = array();
 		$i = $result->offset;
+
 		foreach ($batch as $entity) {
 			if (is_callable(array($entity, 'toObject'))) {
-				$result->nodes["$i"] = $entity->toObject();
+				$result->{"$key"}["$i"] = $entity->toObject($fields);
 			} else {
-				$result->nodes["$i"] = $entity;
+				$result->{"$key"}["$i"] = $entity;
 			}
 			$i++;
 		}
