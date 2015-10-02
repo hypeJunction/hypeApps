@@ -65,31 +65,26 @@ class BatchResult {
 	}
 
 	/**
-	 * Export batch into an object
+	 * Export batch into an array
 	 *
-	 * @param string $key Parameter name to hold batch item export
-	 * @return stdClass
+	 * @param array  $fields    Fields to export
+	 * @param bool   $recursive Export owners and containers recursively
+	 * @param string $key       Parameter name to hold batch item export
+	 * @return array
 	 */
-	public function export($fields = array(), $key = 'items') {
-		$result = new stdClass;
-
-		$result->count = $this->getCount();
-		$result->limit = elgg_extract('limit', $this->options, elgg_get_config('default_limit'));
-		$result->offset = elgg_extract('offset', $this->options, 0);
+	public function export($fields = array(), $recursive = false, $key = 'items') {
+		$result = array(
+			'count' => $this->getCount(),
+			'limit' => elgg_extract('limit', $this->options, elgg_get_config('default_limit')),
+			'offset' => elgg_extract('offset', $this->options, 0),
+			$key => array(),
+		);
 
 		$batch = $this->getBatch();
-		$result->{"$key"} = array();
-		$i = $result->offset;
-
 		foreach ($batch as $entity) {
-			if (is_callable(array($entity, 'toObject'))) {
-				$result->{"$key"}["$i"] = $entity->toObject($fields);
-			} else {
-				$result->{"$key"}["$i"] = $entity;
-			}
-			$i++;
+			$result[$key][] = hypeApps()->exporter->export($entity, $fields, $recursive);
 		}
-		
+
 		return $result;
 	}
 
@@ -102,13 +97,13 @@ class BatchResult {
 	protected function prepareBatchOptions(array $options = array()) {
 
 		if (!in_array($this->getter, array(
-			'elgg_get_entities',
-			'elgg_get_entities_from_metadata',
-			'elgg_get_entities_from_relationship',
-		))) {
+					'elgg_get_entities',
+					'elgg_get_entities_from_metadata',
+					'elgg_get_entities_from_relationship',
+				))) {
 			return $options;
 		}
-		
+
 		$sort = elgg_extract('sort', $options);
 		unset($options['sort']);
 
@@ -130,7 +125,7 @@ class BatchResult {
 			if (!in_array($direction, array('ASC', 'DESC'))) {
 				$direction = 'ASC';
 			}
-			
+
 			switch ($field) {
 
 				case 'alpha' :
@@ -163,7 +158,7 @@ class BatchResult {
 		}
 
 		$options['order_by'] = implode(',', $order_by);
-		
+
 		return $options;
 	}
 

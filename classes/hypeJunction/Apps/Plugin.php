@@ -9,6 +9,7 @@ namespace hypeJunction\Apps;
  * @property-read \hypeJunction\Controllers\Actions  $actions
  * @property-read \hypeJunction\Services\Uploader    $uploader
  * @property-read \hypeJunction\Services\IconFactory $iconFactory
+ * @property-read \hypeJunction\Services\Exporter    $exporter
  */
 final class Plugin extends \hypeJunction\Plugin {
 
@@ -43,6 +44,10 @@ final class Plugin extends \hypeJunction\Plugin {
 
 		$this->setFactory('iconFactory', function(Plugin $p) {
 			return new \hypeJunction\Services\IconFactory($p->config);
+		});
+
+		$this->setFactory('exporter', function(Plugin $p) {
+			return new \hypeJunction\Services\Exporter($p->config);
 		});
 	}
 
