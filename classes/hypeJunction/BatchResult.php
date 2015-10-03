@@ -67,22 +67,21 @@ class BatchResult {
 	/**
 	 * Export batch into an array
 	 *
-	 * @param array  $fields    Fields to export
-	 * @param bool   $recursive Export owners and containers recursively
-	 * @param string $key       Parameter name to hold batch item export
+	 * @param array $params Export params
 	 * @return array
 	 */
-	public function export($fields = array(), $recursive = false, $key = 'items') {
+	public function export(array $params = array()) {
 		$result = array(
+			'type' => 'list',
 			'count' => $this->getCount(),
 			'limit' => elgg_extract('limit', $this->options, elgg_get_config('default_limit')),
 			'offset' => elgg_extract('offset', $this->options, 0),
-			$key => array(),
+			'items' => array(),
 		);
 
 		$batch = $this->getBatch();
 		foreach ($batch as $entity) {
-			$result[$key][] = hypeApps()->exporter->export($entity, $fields, $recursive);
+			$result['items'][] = hypeApps()->exporter->export($entity, $params);
 		}
 
 		return $result;
