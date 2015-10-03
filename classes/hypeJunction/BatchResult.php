@@ -38,9 +38,9 @@ class BatchResult {
 	 * @return int
 	 */
 	public function getCount() {
-		$options = $this->prepareBatchOptions($options);
+		$options = $this->prepareBatchOptions($this->options);
 		$options['count'] = true;
-		return (int) call_user_func($this->getter, $this->options);
+		return (int) call_user_func($this->getter, $options);
 	}
 
 	/**
