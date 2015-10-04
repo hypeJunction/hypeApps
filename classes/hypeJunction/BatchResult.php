@@ -81,7 +81,7 @@ class BatchResult {
 
 		$batch = $this->getBatch();
 		foreach ($batch as $entity) {
-			$result['items'][] = hypeApps()->exporter->export($entity, $params);
+			$result['items'][] = hypeApps()->graph->export($entity, $params);
 		}
 
 		return $result;
