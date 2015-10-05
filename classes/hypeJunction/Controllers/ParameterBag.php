@@ -6,7 +6,7 @@ class ParameterBag {
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param array $params An array of parameter keys => $value pairs
 	 */
 	public function __construct(array $params = array()) {
