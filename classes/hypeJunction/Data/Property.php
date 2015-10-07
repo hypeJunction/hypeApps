@@ -234,11 +234,11 @@ class Property implements PropertyInterface {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function sanitize($object, &$value, array $params = array()) {
+	public function sanitize(&$value, array $params = array()) {
 		$sanitizers = (array) $this->sanitizers;
 		foreach ($sanitizers as $sanitizer) {
 			if (is_callable($sanitizer)) {
-				call_user_func($sanitizer, $this, $object, $value, $params);
+				call_user_func($sanitizer, $this, $value, $params);
 			}
 		}
 	}
@@ -246,7 +246,7 @@ class Property implements PropertyInterface {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function validate($object, $value, array $params = array()) {
+	public function validate($value, array $params = array()) {
 
 		$result = new \stdClass();
 		$result->valid = true;
@@ -262,7 +262,7 @@ class Property implements PropertyInterface {
 				continue;
 			}
 			try {
-				$validation_result = (array) call_user_func('\hypeJunction\Data\Validators::validateRule', $this, $object, $value, $rule, $expectation, $params);
+				$validation_result = (array) call_user_func('\hypeJunction\Data\Validators::validateRule', $this, $value, $rule, $expectation, $params);
 			} catch (\hypeJunction\Exceptions\ActionValidationException $ex) {
 				$valid = false;
 				$messages[] = $ex->getMessage();
@@ -290,7 +290,7 @@ class Property implements PropertyInterface {
 				continue;
 			}
 			try {
-				$valid = call_user_func($callback, $this, $object, $value, $params);
+				$valid = call_user_func($callback, $this, $value, $params);
 			} catch (\hypeJunction\Exceptions\ActionValidationException $ex) {
 				$valid = false;
 				$messages[] = $ex->getMessage();
