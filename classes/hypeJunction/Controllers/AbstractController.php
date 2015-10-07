@@ -50,9 +50,12 @@ abstract class AbstractController implements ControllerInterface {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function call() {
+	public function call($method = null) {
 
-		$method = $this->request->getMethod();
+		if (!$method) {
+			$method = $this->request->getMethod();
+		}
+
 		$call = strtolower($method);
 		$params = $this->params($method);
 
@@ -60,15 +63,7 @@ abstract class AbstractController implements ControllerInterface {
 			throw new ControllerException("Method not allowed", Response::HTTP_METHOD_NOT_ALLOWED);
 		}
 
-		$values = array();
-		foreach ($params as $param) {
-			$name = $param->getIdentifier();
-			$value = get_input($name, $param->getDefault($this));
-			$param->sanitize($this, $value);
-			$values[$name] = $value;
-		}
-
-		return $this->$call(new ParameterBag($values));
+		return $this->$call(new ParameterBag());
 	}
 
 	/**

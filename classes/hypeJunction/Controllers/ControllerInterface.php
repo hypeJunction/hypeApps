@@ -67,8 +67,10 @@ interface ControllerInterface {
 	/**
 	 * Calls the controller
 	 * This prepares the parameters and executes the corresponding method
+	 *
+	 * @param string $method Call method
 	 * @return mixed
 	 * @throws ControllerException
 	 */
-	public function call();
+	public function call($method = null);
 }

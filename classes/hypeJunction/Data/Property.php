@@ -353,7 +353,7 @@ class Property implements PropertyInterface {
 	 */
 	public function toArray() {
 		return array_filter(array(
-			'name' => $this->id,
+			'name' => $this->getAttributeName(),
 			'required' => $this->required,
 			'type' => $this->type,
 			'enum' => $this->getEnumOptions(),
