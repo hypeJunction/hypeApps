@@ -13,7 +13,15 @@ interface PropertyInterface {
 	 * @param string $id      Property identifier
 	 * @param array  $options Property options
 	 */
-	public function __construct($id, array $options = array());
+	public function __construct($id, $options = array());
+
+	/**
+	 * Access protected object prop
+	 *
+	 * @param string $name Property name
+	 * @return mixed
+	 */
+	public function get($name);
 
 	/**
 	 * Get property identifier (shortname)
@@ -124,4 +132,10 @@ interface PropertyInterface {
 	 * @return mixed
 	 */
 	public function getOutput();
+
+	/**
+	 * Export to serializable array
+	 * @return array
+	 */
+	public function toArray();
 }

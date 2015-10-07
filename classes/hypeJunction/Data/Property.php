@@ -4,6 +4,13 @@ namespace hypeJunction\Data;
 
 class Property implements PropertyInterface {
 
+	const TYPE_STRING = 'string';
+	const TYPE_INT = 'integer';
+	const TYPE_ARRAY = 'array';
+	const TYPE_BOOL = 'boolean';
+	const TYPE_FLOAT = 'float';
+	const TYPE_ENUM = 'enum';
+
 	/**
 	 * Property identifier
 	 * @var string
@@ -92,13 +99,20 @@ class Property implements PropertyInterface {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function __construct($id, array $options = array()) {
-		foreach ($options as $key => $value) {
+	public function __construct($id, $options = array()) {
+		foreach ((array) $options as $key => $value) {
 			$this->$key = $value;
 		}
 		$this->id = $id;
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
+	public function get($name) {
+		return $this->$name;
+	}
+	
 	/**
 	 * {@inheritdoc}
 	 */
@@ -180,7 +194,11 @@ class Property implements PropertyInterface {
 			return $key;
 		}
 
-		if ($this->help === false) {
+		if (!isset($this->desc)) {
+			$this->desc = $this->help;
+		}
+		
+		if ($this->desc === false) {
 			return false;
 		}
 
@@ -188,10 +206,10 @@ class Property implements PropertyInterface {
 			$lang = get_language();
 		}
 
-		if (is_string($this->help)) {
-			$translation = $this->help;
-		} else if (is_array($this->help)) {
-			$translation = elgg_extract($lang, $this->help);
+		if (is_string($this->desc)) {
+			$translation = $this->desc;
+		} else if (is_array($this->desc)) {
+			$translation = elgg_extract($lang, $this->desc);
 		}
 
 
@@ -235,10 +253,11 @@ class Property implements PropertyInterface {
 	 * {@inheritdoc}
 	 */
 	public function sanitize($object, &$value, array $params = array()) {
+		
 		$sanitizers = (array) $this->sanitizers;
 		foreach ($sanitizers as $sanitizer) {
 			if (is_callable($sanitizer)) {
-				call_user_func($sanitizer, $this, $object, $value, $params);
+				$value = call_user_func($sanitizer, $this, $object, $value, $params);
 			}
 		}
 	}
@@ -328,4 +347,17 @@ class Property implements PropertyInterface {
 		return $this->output;
 	}
 
+	/**
+	 * Exports property to an array
+	 * @return array
+	 */
+	public function toArray() {
+		return array_filter(array(
+			'name' => $this->id,
+			'required' => $this->required,
+			'type' => $this->type,
+			'enum' => $this->getEnumOptions(),
+			'default' => $this->default,
+		));
+	}
 }
