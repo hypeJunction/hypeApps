@@ -4,12 +4,11 @@ namespace hypeJunction\Data;
 
 class Validators {
 
-	public static function validateRule(PropertyInterface $prop, $object, $value = null, $rule = '', $expectation = null, array $params = array()) {
+	public static function validateRule(PropertyInterface $prop, $value = null, $rule = '', $expectation = null, array $params = array()) {
 
 		$params['value'] = $value;
 		$params['rule'] = $rule;
 		$params['expectation'] = $expectation;
-		$params['object'] = $object;
 		$params['property'] = $prop;
 
 		$result = elgg_trigger_plugin_hook("validate:$rule", 'action', $params, true);
@@ -21,7 +20,7 @@ class Validators {
 		return $result;
 	}
 
-	public static function isValidUsername(\PropertyInterface $prop, $object, $value = null, array $params = array()) {
+	public static function isValidUsername(\PropertyInterface $prop, $value = null, array $params = array()) {
 		try {
 			return validate_username($value);
 		} catch (\Exception $ex) {
@@ -29,7 +28,7 @@ class Validators {
 		}
 	}
 
-	public static function isAvailableUsername(\PropertyInterface $prop, $object, $value = null, array $params = array()) {
+	public static function isAvailableUsername(\PropertyInterface $prop, $value = null, array $params = array()) {
 		$access_status = access_get_show_hidden_status();
 		access_show_hidden_entities(true);
 

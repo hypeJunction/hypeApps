@@ -28,11 +28,11 @@ class Values {
 		return $type;
 	}
 
-	public static function stringToTagArray(PropertyInterface $prop, $object, $value = null, array $params = null) {
+	public static function stringToTagArray(PropertyInterface $prop, $value = null, array $params = null) {
 		return string_to_tag_array($value);
 	}
 
-	public static function htmlSpecialChars(PropertyInterface $prop, $object, $value = null, array $params = null) {
+	public static function htmlSpecialChars(PropertyInterface $prop, $value = null, array $params = null) {
 		return htmlspecialchars((string) $value, ENT_QUOTES, 'UTF-8');
 	}
 	
