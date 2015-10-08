@@ -51,7 +51,7 @@ class IconFactory {
 		$coords = elgg_extract('coords', $options, false);
 		$dir = $this->getIconDirectory($entity, elgg_extract('icon_filestore_prefix', $options));
 
-		$entity->icon_mimetype = \ElggFile::detectMimeType($source, 'image/jpeg');
+		$entity->icon_mimetype = (new \ElggFile)->detectMimeType($source, 'image/jpeg');
 		$entity->icon_directory = $dir;
 
 		// reset
