@@ -115,7 +115,7 @@ module.exports = function (grunt) {
 			'gitcommit:release',
 			'gitpush:release',
 			'clean:release',
-			'composer:install:no-dev:prefer-dist:optimize-autoloader:ignore-platform-reqs',
+			'composer:install:no-dev:prefer-dist:optimize-autoloader',
 			'copy:release',
 			'compress:release',
 			'gh_release',
