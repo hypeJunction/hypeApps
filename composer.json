@@ -21,11 +21,7 @@
 		"installer-name": "hypeApps"
 	},
 	"require": {
-		"php": ">=5.5",
-		"ext-json": "*",
-		"ext-xml": "*",
-		"ext-curl": "*",
-		"smottt/wideimage": "dev-master#658e6b8699255724589e8fb86959306ec64af318"
+		"smottt/wideimage": "~1.1.1"
 	},
 	"require-dev": {
 		"composer/installers": "~1.0"
@@ -33,10 +29,7 @@
 	"autoload": {
 		"psr-0": {
 			"": "classes/"
-		},
-		"classmap": [
-			"vendors/de77/"
-		]
+		}
 	},
 	"autoload-dev": {
 		"psr-0": {

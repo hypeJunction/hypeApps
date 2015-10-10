@@ -81,7 +81,7 @@ module.exports = function (grunt) {
 				tag_name: '<%= pkg.version %>',
 				target_commitish: 'dev',
 				name: 'Release <%= pkg.version %>',
-				body: 'Self-contained ZIP distribution for <%= pkg.name %>',
+				body: grunt.file.read('release.md'),
 				draft: false,
 				prerelease: false,
 				asset: {
@@ -115,7 +115,7 @@ module.exports = function (grunt) {
 			'gitcommit:release',
 			'gitpush:release',
 			'clean:release',
-			'composer:install:no-dev:prefer-dist:optimize-autoloader:ignore-platform-reqs',
+			'composer:install:no-dev:prefer-dist:optimize-autoloader',
 			'copy:release',
 			'compress:release',
 			'gh_release',
