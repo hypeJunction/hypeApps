@@ -69,23 +69,23 @@ final class Plugin extends \hypeJunction\Plugin {
 	 * 'init','system' callback
 	 */
 	public function init() {
-		elgg_register_plugin_hook_handler('entity:icon:url', 'all', array($this->hooks, 'setEntityIconUrls'));
+		elgg_register_plugin_hook_handler('entity:icon:url', 'all', new Handlers\EntityIconUrlHook());
 
-		elgg_register_plugin_hook_handler('graph:properties', 'all', array($this->hooks, 'getProperties'));
+		elgg_register_plugin_hook_handler('graph:properties', 'all', new Handlers\PropertiesHook());
 
-		elgg_register_plugin_hook_handler('graph:properties', 'user', array($this->hooks, 'getUserProperties'));
-		elgg_register_plugin_hook_handler('graph:properties', 'group', array($this->hooks, 'getGroupProperties'));
-		elgg_register_plugin_hook_handler('graph:properties', 'site', array($this->hooks, 'getSiteProperties'));
+		elgg_register_plugin_hook_handler('graph:properties', 'user', new Handlers\UserPropertiesHook());
+		elgg_register_plugin_hook_handler('graph:properties', 'group', new Handlers\GroupPropertiesHook());
+		elgg_register_plugin_hook_handler('graph:properties', 'site', new Handlers\SitePropertiesHook());
 
-		elgg_register_plugin_hook_handler('graph:properties', 'object', array($this->hooks, 'getObjectProperties'));
-		elgg_register_plugin_hook_handler('graph:properties', 'object:blog', array($this->hooks, 'getBlogProperties'));
-		elgg_register_plugin_hook_handler('graph:properties', 'object:file', array($this->hooks, 'getFileProperties'));
-		elgg_register_plugin_hook_handler('graph:properties', 'object:messages', array($this->hooks, 'getMessageProperties'));
+		elgg_register_plugin_hook_handler('graph:properties', 'object', new Handlers\ObjectPropertiesHook());
+		elgg_register_plugin_hook_handler('graph:properties', 'object:blog', new Handlers\BlogPropertiesHook());
+		elgg_register_plugin_hook_handler('graph:properties', 'object:file', new Handlers\FilePropertiesHook());
+		elgg_register_plugin_hook_handler('graph:properties', 'object:messages', new Handlers\MessagePropertiesHook());
 
-		elgg_register_plugin_hook_handler('graph:properties', 'metadata', array($this->hooks, 'getExtenderProperties'));
-		elgg_register_plugin_hook_handler('graph:properties', 'annotation', array($this->hooks, 'getExtenderProperties'));
-		elgg_register_plugin_hook_handler('graph:properties', 'relationship', array($this->hooks, 'getRelationshipProperties'));
-		elgg_register_plugin_hook_handler('graph:properties', 'river:item', array($this->hooks, 'getRiverProperties'));
+		elgg_register_plugin_hook_handler('graph:properties', 'metadata', new Handlers\ExtenderPropertiesHook());
+		elgg_register_plugin_hook_handler('graph:properties', 'annotation', new Handlers\ExtenderPropertiesHook());
+		elgg_register_plugin_hook_handler('graph:properties', 'relationship', new Handlers\RelationshipPropertiesHook());
+		elgg_register_plugin_hook_handler('graph:properties', 'river:item', new Handlers\RiverPropertiesHook());
 
 	}
 	
