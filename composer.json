@@ -1,6 +1,6 @@
 {
 	"name": "hypejunction/hypeapps",
-	"version": "5.x-dev",
+	"version": "5.0.0",
 	"type": "elgg-plugin",
 	"description": "hypeJunction plugin bootstrap",
 	"homepage": "http://hypejunction.com",
