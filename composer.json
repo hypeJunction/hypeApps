@@ -29,7 +29,10 @@
 	"autoload": {
 		"psr-0": {
 			"": "classes/"
-		}
+		},
+		"classmap": [
+			"vendors/de77/"
+		]
 	},
 	"autoload-dev": {
 		"psr-0": {

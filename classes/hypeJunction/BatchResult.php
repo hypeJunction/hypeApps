@@ -107,9 +107,7 @@ class BatchResult {
 		unset($options['sort']);
 
 		if (!is_array($sort)) {
-			$sort = array(
-				'time_created' => 'DESC',
-			);
+			return $options;
 		}
 
 		$dbprefix = elgg_get_config('dbprefix');
