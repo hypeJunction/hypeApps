@@ -67,7 +67,9 @@ class IconFactory {
 		$icon_sizes = $this->getSizes($entity, elgg_extract('icon_sizes', $options, array()));
 
 		foreach ($icon_sizes as $size => $props) {
-
+			if (empty($props)) {
+				continue;
+			}
 			if (!isset($props['croppable'])) {
 				$props['croppable'] = in_array($size, $this->config->getCroppableSizes());
 			}
