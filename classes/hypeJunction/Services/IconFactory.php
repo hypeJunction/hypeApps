@@ -82,6 +82,11 @@ class IconFactory {
 
 				$image = new \hypeJunction\Files\Image($source);
 				$image->resize($props, $coords);
+
+				if (!$icon->exists()) {
+					$icon->open('write');
+					$icon->close();
+				}
 				$image->save($icon->getFilenameOnFilestore(), $this->config->getIconCompressionOpts());
 
 				$icons[$size] = $icon;
@@ -107,6 +112,10 @@ class IconFactory {
 			// store the original icon source file
 			$src = $this->getIconFile($entity);
 			$srcimg = new \hypeJunction\Files\Image($source);
+			if (!$src->exists()) {
+				$src->open('write');
+				$src->close();
+			}
 			$srcimg->save($src->getFilenameOnFilestore(), $this->config->getSrcCompressionOpts());
 		}
 
@@ -224,7 +233,7 @@ class IconFactory {
 	 * @param string      $size   Size
 	 * @return \ElggFile
 	 */
-	public function getIconFile(\ElggEntity $entity, $size = '') {
+	public function getIconFile(\ElggEntity $entity, $size = '', $create) {
 
 		$dir = $this->getIconDirectory($entity, $size);
 		$filename = $this->getIconFilename($entity, $size);
@@ -232,10 +241,6 @@ class IconFactory {
 		$file = new \ElggFile();
 		$file->owner_guid = ($entity instanceof \ElggUser) ? $entity->guid : $entity->owner_guid;
 		$file->setFilename("{$dir}/{$filename}");
-		if (!file_exists($file->getFilenameOnFilestore())) {
-			$file->open('write');
-			$file->close();
-		}
 		$file->mimetype = $file->detectMimeType();
 
 		return $file;
@@ -246,12 +251,15 @@ class IconFactory {
 	 *
 	 * @param \ElggEntity $entity Entity
 	 * @param string      $size   Size
-	 * @return \ElggFile
+	 * @return string|null
 	 */
 	public function getURL(\ElggEntity $entity, $size = '') {
 
 		$icon = $this->getIconFile($entity, $size);
-
+		if (!$icon->exists()) {
+			return;
+		}
+		
 		$key = get_site_secret();
 		$guid = $entity->guid;
 		$path = $icon->getFilename();
