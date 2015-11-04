@@ -45,13 +45,11 @@ class Image {
 			$y2 = elgg_extract('y2', $coords, self::MASTER);
 
 			// scale to master size and then crop
-			$this->source = $this->source->resize($master_width, $master_height, 'inside', 'down')->crop($x1, $y1, $x2 - $x1, $y2 - $y1);
-		}
-
-		if ($croppable) {
+			$this->source = $this->source->resize($master_width, $master_height, 'inside', 'down')->crop($x1, $y1, $x2 - $x1, $y2 - $y1)->resize($width);
+		} else if ($croppable) {
 			// crop to icon width and height
 			$this->source = $this->source->resize($width, $height, 'outside', 'any')->crop('center', 'center', $width, $height);
-		} else if (!is_array($coords)) {
+		} else {
 			$this->source = $this->source->resize($width, $height, 'inside', 'down');
 		}
 
@@ -71,7 +69,7 @@ class Image {
 		$jpeg_quality = elgg_extract('jpeg_quality', $quality);
 		$png_quality = elgg_extract('png_quality', $quality);
 		$png_filter = elgg_extract('png_filter', $quality);
-		
+
 		switch ($ext) {
 			default :
 				$this->source->saveToFile($path, $jpeg_quality);
@@ -85,7 +83,7 @@ class Image {
 				$this->source->saveToFile($path, $png_quality, $png_filter);
 				break;
 		}
-		
+
 		return $this;
 	}
 

@@ -136,7 +136,7 @@ class Upload {
 	 * @return string
 	 */
 	public function detectMimeType() {
-		return (new \ElggFile)->detectMimeType($this->tmp_name, $this->type);
+		return (new \ElggFile)->detectMimeType($this->tmp_name, $this->type) ? : $this->type;
 	}
 
 	/**
