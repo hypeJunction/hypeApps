@@ -28,7 +28,11 @@ class Integration {
 
 		global $CONFIG;
 		if (!isset($CONFIG)) {
-			require_once self::getRootPath() . '/settings.php';
+			$path = self::getRootPath() . '/engine/settings.php';
+			if (!is_file($path)) {
+				$path = self::getRootPath() . '/elgg-config/settings.php';
+			}
+			require_once $path;
 		}
 
 		return new \Elgg\Di\ServiceProvider(new \Elgg\Config($CONFIG));
