@@ -1,3 +1,17 @@
+<a name="5.1.0"></a>
+# [5.1.0](https://github.com/hypeJunction/hypeApps/compare/5.0.2...v5.1.0) (2015-12-25)
+
+
+### Bug Fixes
+
+* **icons:** remove erraneous third parameter ([566a506](https://github.com/hypeJunction/hypeApps/commit/566a506))
+
+### Features
+
+* **releases:** improved automated releases ([d210b3a](https://github.com/hypeJunction/hypeApps/commit/d210b3a))
+
+
+
 <a name="5.0.2"></a>
 ## [5.0.2](https://github.com/hypeJunction/hypeApps/compare/5.0.2...v5.0.2) (2015-12-25)
 

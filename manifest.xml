@@ -3,7 +3,7 @@
 
 	<name>hypeApps</name>
 	<id>hypeApps</id>
-	<version type="dist">5.0.2</version>
+	<version type="dist">5.1.0</version>
 
 	<description>Bootstrap for hypeJunction plugins</description>
 	<category>dependency</category>
