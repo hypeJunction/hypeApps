@@ -233,7 +233,7 @@ class IconFactory {
 	 * @param string      $size   Size
 	 * @return \ElggFile
 	 */
-	public function getIconFile(\ElggEntity $entity, $size = '', $create) {
+	public function getIconFile(\ElggEntity $entity, $size = '') {
 
 		$dir = $this->getIconDirectory($entity, $size);
 		$filename = $this->getIconFilename($entity, $size);
