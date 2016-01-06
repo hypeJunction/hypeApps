@@ -1,3 +1,13 @@
+<a name="5.1.1"></a>
+## [5.1.1](https://github.com/hypeJunction/hypeApps/compare/5.1.0...v5.1.1) (2016-01-06)
+
+
+### Bug Fixes
+
+* **icons:** remove redundant argument that generates warnings ([b6732dc](https://github.com/hypeJunction/hypeApps/commit/b6732dc))
+
+
+
 <a name="5.1.0"></a>
 # [5.1.0](https://github.com/hypeJunction/hypeApps/compare/5.0.2...v5.1.0) (2015-12-25)
 
