@@ -238,8 +238,16 @@ class IconFactory {
 		$dir = $this->getIconDirectory($entity, $size);
 		$filename = $this->getIconFilename($entity, $size);
 
+		if ($entity instanceof \ElggUser) {
+			$owner_guid = $entity->guid;
+		} else if ($entity->owner_guid) {
+			$owner_guid = $entity->owner_guid;
+		} else {
+			$owner_guid = elgg_get_site_entity();
+		}
+		
 		$file = new \ElggFile();
-		$file->owner_guid = ($entity instanceof \ElggUser) ? $entity->guid : $entity->owner_guid;
+		$file->owner_guid = $owner_guid;
 		$file->setFilename("{$dir}/{$filename}");
 		$file->mimetype = $file->detectMimeType();
 
