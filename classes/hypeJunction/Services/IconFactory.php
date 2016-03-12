@@ -262,32 +262,8 @@ class IconFactory {
 	 * @return string|null
 	 */
 	public function getURL(\ElggEntity $entity, $size = '') {
-
 		$icon = $this->getIconFile($entity, $size);
-		if (!$icon->exists()) {
-			return;
-		}
-		
-		$key = get_site_secret();
-		$guid = $entity->guid;
-		$path = $icon->getFilename();
-
-		$hmac = hash_hmac('sha256', $guid . $path, $key);
-
-		$query = serialize(array(
-			'uid' => $guid,
-			'd' => ($entity instanceof \ElggUser) ? $entity->guid : $entity->owner_guid, // guid of the dir owner
-			'dts' => ($entity instanceof \ElggUser) ? $entity->time_created : $entity->getOwnerEntity()->time_created,
-			'path' => $path,
-			'ts' => $entity->icontime,
-			'mac' => $hmac,
-		));
-
-		$url = elgg_http_add_url_query_elements('mod/hypeApps/servers/icon.php', array(
-			'q' => base64_encode($query),
-		));
-
-		return elgg_normalize_url($url);
+		return elgg_get_inline_url($icon, true);
 	}
 
 	/**

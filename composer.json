@@ -23,6 +23,7 @@
 	"require": {
 		"php": ">=5.5",
 		"composer/installers": "~1.0",
+		"hypejunction/proxy": "~2.0",
 		"smottt/wideimage": "~1.1.1"
 	},
 	"autoload": {

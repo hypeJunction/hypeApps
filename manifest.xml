@@ -23,4 +23,10 @@
 		<name>hypeFilestore</name>
 	</provides>
 
+	<requires>
+		<type>plugin</type>
+		<name>proxy</name>
+		<version>2.0</version>
+	</requires>
+	
 </plugin_manifest>
