@@ -103,12 +103,15 @@ class BatchResult
             switch ($field) {
                 case 'alpha':
                     if (elgg_extract('types', $options) == 'user') {
+                        // WARNING: users_entity subtable removed in Elgg 3.0 — rewrite this SQL
                         $options['joins']['ue'] = "JOIN {$dbprefix}users_entity ue ON ue.guid = e.guid";
                         $order_by[] = "ue.name  {$direction}";
                     } else if (elgg_extract('types', $options) == 'group') {
+                        // WARNING: groups_entity subtable removed in Elgg 3.0 — rewrite this SQL
                         $options['joins']['ge'] = "JOIN {$dbprefix}groups_entity ge ON ge.guid = e.guid";
                         $order_by[] = "ge.name  {$direction}";
                     } else if (elgg_extract('types', $options) == 'object') {
+                        // WARNING: objects_entity subtable removed in Elgg 3.0 — rewrite this SQL
                         $options['joins']['oe'] = "JOIN {$dbprefix}objects_entity oe ON oe.guid = e.guid";
                         $order_by[] = "oe.title {$direction}";
                     }
