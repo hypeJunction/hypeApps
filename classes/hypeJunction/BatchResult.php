@@ -92,28 +92,26 @@ class BatchResult
         if (!is_array($sort)) {
             return $options;
         }
-        $dbprefix = elgg_get_config('dbprefix');
         $order_by = array();
         foreach ($sort as $field => $direction) {
-            $field = sanitize_string($field);
-            $direction = strtoupper(sanitize_string($direction));
+            $field = preg_replace('/[^a-z_]/', '', $field);
+            $direction = strtoupper(preg_replace('/[^A-Z]/', '', strtoupper($direction)));
             if (!in_array($direction, array('ASC', 'DESC'))) {
                 $direction = 'ASC';
             }
             switch ($field) {
                 case 'alpha':
-                    if (elgg_extract('types', $options) == 'user') {
-                        // WARNING: users_entity subtable removed in Elgg 3.0 — rewrite this SQL
-                        $options['joins']['ue'] = "JOIN {$dbprefix}users_entity ue ON ue.guid = e.guid";
-                        $order_by[] = "ue.name  {$direction}";
-                    } else if (elgg_extract('types', $options) == 'group') {
-                        // WARNING: groups_entity subtable removed in Elgg 3.0 — rewrite this SQL
-                        $options['joins']['ge'] = "JOIN {$dbprefix}groups_entity ge ON ge.guid = e.guid";
-                        $order_by[] = "ge.name  {$direction}";
+                    // In Elgg 3.x, name/title are metadata - use metadata sorting
+                    if (elgg_extract('types', $options) == 'user' || elgg_extract('types', $options) == 'group') {
+                        $options['sort_by'] = [
+                            'property' => 'name',
+                            'direction' => $direction,
+                        ];
                     } else if (elgg_extract('types', $options) == 'object') {
-                        // WARNING: objects_entity subtable removed in Elgg 3.0 — rewrite this SQL
-                        $options['joins']['oe'] = "JOIN {$dbprefix}objects_entity oe ON oe.guid = e.guid";
-                        $order_by[] = "oe.title {$direction}";
+                        $options['sort_by'] = [
+                            'property' => 'title',
+                            'direction' => $direction,
+                        ];
                     }
                     break;
                 case 'type':
@@ -121,7 +119,6 @@ class BatchResult
                 case 'guid':
                 case 'owner_guid':
                 case 'container_guid':
-                case 'site_guid':
                 case 'enabled':
                 case 'time_created':
                 case 'time_updated':
@@ -131,7 +128,9 @@ class BatchResult
                     break;
             }
         }
-        $options['order_by'] = implode(',', $order_by);
+        if (!empty($order_by)) {
+            $options['order_by'] = implode(',', $order_by);
+        }
         return $options;
     }
 }

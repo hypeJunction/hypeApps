@@ -29,7 +29,7 @@ class Values {
 	}
 
 	public static function stringToTagArray(PropertyInterface $prop, $value = null, array $params = null) {
-		return string_to_tag_array($value);
+		return elgg_string_to_array($value);
 	}
 
 	public static function htmlSpecialChars(PropertyInterface $prop, $value = null, array $params = null) {
