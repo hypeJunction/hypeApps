@@ -7,21 +7,20 @@ class EntityIconUrlHook {
 	/**
 	 * Filter icon URLs to route requests via a faster handler
 	 *
-	 * @param string $hook   "entity:icon:url"
-	 * @param string $type   "all"
-	 * @param string $return URL
-	 * @param array  $params Hook params
-	 * @return string
+	 * @param \Elgg\Hook $hook Hook
+	 * @return string|void
 	 */
-	public function __invoke($hook, $type, $return, $params) {
+	public static function handle(\Elgg\Hook $hook) {
+
+		$return = $hook->getValue();
 
 		if (!is_null($return)) {
 			// another plugin has already replaced the icon URL
 			return $return;
 		}
 
-		$entity = elgg_extract('entity', $params);
-		$size = elgg_extract('size', $params, 'medium');
+		$entity = $hook->getParam('entity');
+		$size = $hook->getParam('size') ?: 'medium';
 
 		if (!$entity->icontime || !array_key_exists($size, hypeApps()->iconFactory->getSizes($entity))) {
 			// icon has not yet been created or the icon size is unknown

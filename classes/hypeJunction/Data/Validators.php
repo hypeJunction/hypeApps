@@ -22,14 +22,15 @@ class Validators {
 
 	public static function isValidUsername(\PropertyInterface $prop, $value = null, array $params = array()) {
 		try {
-			return validate_username($value);
+			elgg()->accounts->assertValidUsername($value);
+			return true;
 		} catch (\Exception $ex) {
 			throw new \hypeJunction\Exceptions\ActionValidationException($ex->getMessage());
 		}
 	}
 
 	public static function isAvailableUsername(\PropertyInterface $prop, $value = null, array $params = array()) {
-		$access_status = access_get_show_hidden_status();
+		$access_status = elgg()->session->getDisabledEntityVisibility();
 		access_show_hidden_entities(true);
 
 		$available = true;

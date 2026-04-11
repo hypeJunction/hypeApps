@@ -6,7 +6,13 @@ use hypeJunction\Data\Property;
 
 class MessagePropertiesHook {
 
-	public function __invoke($hook, $type, $return, $params) {
+	/**
+	 * @param \Elgg\Hook $hook Hook
+	 * @return Property[]
+	 */
+	public static function handle(\Elgg\Hook $hook) {
+
+		$return = $hook->getValue();
 
 		$remove = array('owner', 'container', 'tags', 'icon');
 		foreach ($return as $key => $property) {

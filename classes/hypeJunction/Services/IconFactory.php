@@ -268,7 +268,7 @@ class IconFactory {
 			return;
 		}
 		
-		$key = get_site_secret();
+		$key = elgg()->siteSecret->get();
 		$guid = $entity->guid;
 		$path = $icon->getFilename();
 
@@ -301,7 +301,7 @@ class IconFactory {
 		if (headers_sent()) {
 			exit;
 		}
-		$ha = access_get_show_hidden_status();
+		$ha = elgg()->session->getDisabledEntityVisibility();
 		access_show_hidden_entities(true);
 		$entity = get_entity($entity_guid);
 		if (!$entity) {
@@ -318,7 +318,7 @@ class IconFactory {
 			$contents = $filehandler->grabFile();
 			$filehandler->close();
 		} else {
-			forward('', '404');
+			throw new \Elgg\Exceptions\Http\PageNotFoundException();
 		}
 		$mimetype = ($entity->mimetype) ? $entity->mimetype : 'image/jpeg';
 		access_show_hidden_entities($ha);

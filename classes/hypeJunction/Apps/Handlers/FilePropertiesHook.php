@@ -6,7 +6,13 @@ use hypeJunction\Data\Property;
 
 class FilePropertiesHook {
 
-	public function __invoke($hook, $type, $return, $params) {
+	/**
+	 * @param \Elgg\Hook $hook Hook
+	 * @return Property[]
+	 */
+	public static function handle(\Elgg\Hook $hook) {
+
+		$return = $hook->getValue();
 
 		foreach (array('simpletype', 'mimetype', 'originalfilename', 'origin') as $key) {
 			$return[] = new Property($key, array(

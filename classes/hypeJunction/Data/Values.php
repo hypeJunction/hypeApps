@@ -76,11 +76,12 @@ class Values {
 	}
 
 	public static function setLocation(PropertyInterface $prop, $object, $value = null) {
-		return is_callable(array($object, 'setLocation')) ? $object->setLocation($value) : null;
+		$object->location = $value;
+		return $object;
 	}
 
 	public static function getLocation(PropertyInterface $prop, $object) {
-		return is_callable(array($object, 'getLocation')) ? $object->getLocation() : null;
+		return isset($object->location) ? $object->location : null;
 	}
 
 	public static function setEntity(PropertyInterface $prop, $object, $value = null, array $params = null) {

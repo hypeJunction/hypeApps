@@ -6,8 +6,13 @@ use hypeJunction\Data\Property;
 
 class ObjectPropertiesHook {
 
-	public function __invoke($hook, $type, $return, $params) {
-		$full_view = elgg_extract('full_view', $params, false);
+	/**
+	 * @param \Elgg\Hook $hook Hook
+	 * @return Property[]
+	 */
+	public static function handle(\Elgg\Hook $hook) {
+		$return = $hook->getValue();
+		$full_view = $hook->getParam('full_view') ?: false;
 
 		$return[] = new Property('guid', array(
 			'getter' => '\hypeJunction\Data\Values::getVerbatim',

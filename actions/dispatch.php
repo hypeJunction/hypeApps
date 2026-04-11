@@ -5,4 +5,4 @@ $result = hypeApps()->actions->execute($action);
 if (elgg_is_xhr()) {
 	echo $result->output;
 }
-forward($result->getForwardURL(), $result->getForwardReason());
+return elgg_redirect_response($result->getForwardURL());

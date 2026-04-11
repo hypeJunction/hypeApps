@@ -6,7 +6,13 @@ use hypeJunction\Data\Property;
 
 class SitePropertiesHook {
 
-	public function __invoke($hook, $type, $return, $params) {
+	/**
+	 * @param \Elgg\Hook $hook Hook
+	 * @return Property[]
+	 */
+	public static function handle(\Elgg\Hook $hook) {
+
+		$return = $hook->getValue();
 
 		foreach (array('name', 'description', 'email', 'url', 'guid') as $key) {
 			$return[] = new Property($key, array(

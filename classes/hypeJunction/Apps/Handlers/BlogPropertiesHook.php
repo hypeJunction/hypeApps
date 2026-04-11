@@ -6,7 +6,12 @@ use hypeJunction\Data\Property;
 
 class BlogPropertiesHook {
 
-	public function __invoke($hook, $type, $return, $params) {
+	/**
+	 * @param \Elgg\Hook $hook Hook
+	 * @return Property[]
+	 */
+	public static function handle(\Elgg\Hook $hook) {
+		$return = $hook->getValue();
 		$return[] = new Property('status', array(
 			'getter' => '\hypeJunction\Data\Values::getVerbatim',
 			'setter' => '\hypeJunction\Data\Values::setVerbatim',

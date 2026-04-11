@@ -9,13 +9,12 @@ class PropertiesHook {
 	/**
 	 * Returns object property definitions
 	 *
-	 * @param string     $hook
-	 * @param string     $type
-	 * @param Property[] $return
-	 * @param array      $params
+	 * @param \Elgg\Hook $hook Hook
 	 * @return Property[]
 	 */
-	public function __invoke($hook, $type, $return, $params) {
+	public static function handle(\Elgg\Hook $hook) {
+
+		$return = $hook->getValue();
 
 		$return[] = new Property('alias', array(
 			'getter' => '\hypeJunction\Data\Values::getAlias',

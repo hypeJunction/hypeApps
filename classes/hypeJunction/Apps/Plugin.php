@@ -52,42 +52,10 @@ final class Plugin extends \hypeJunction\Plugin {
 	 */
 	public static function factory() {
 		if (null === self::$instance) {
-			$plugin = elgg_get_plugin_from_id('hypeApps');
+			$plugin = elgg_get_plugin_from_id('hypeapps');
 			self::$instance = new self($plugin);
 		}
 		return self::$instance;
 	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function boot() {
-		elgg_register_event_handler('init', 'system', array($this, 'init'));
-	}
-
-	/**
-	 * 'init','system' callback
-	 */
-	public function init() {
-		elgg_register_plugin_hook_handler('entity:icon:url', 'all', new Handlers\EntityIconUrlHook());
-
-		elgg_register_plugin_hook_handler('graph:properties', 'all', new Handlers\PropertiesHook());
-
-		elgg_register_plugin_hook_handler('graph:properties', 'user', new Handlers\UserPropertiesHook());
-		elgg_register_plugin_hook_handler('graph:properties', 'group', new Handlers\GroupPropertiesHook());
-		elgg_register_plugin_hook_handler('graph:properties', 'site', new Handlers\SitePropertiesHook());
-
-		elgg_register_plugin_hook_handler('graph:properties', 'object', new Handlers\ObjectPropertiesHook());
-		elgg_register_plugin_hook_handler('graph:properties', 'object:blog', new Handlers\BlogPropertiesHook());
-		elgg_register_plugin_hook_handler('graph:properties', 'object:file', new Handlers\FilePropertiesHook());
-		elgg_register_plugin_hook_handler('graph:properties', 'object:messages', new Handlers\MessagePropertiesHook());
-
-		elgg_register_plugin_hook_handler('graph:properties', 'metadata', new Handlers\ExtenderPropertiesHook());
-		elgg_register_plugin_hook_handler('graph:properties', 'annotation', new Handlers\ExtenderPropertiesHook());
-		elgg_register_plugin_hook_handler('graph:properties', 'relationship', new Handlers\RelationshipPropertiesHook());
-		elgg_register_plugin_hook_handler('graph:properties', 'river:item', new Handlers\RiverPropertiesHook());
-
-	}
-	
 
 }

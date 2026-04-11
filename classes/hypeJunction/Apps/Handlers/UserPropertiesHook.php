@@ -9,15 +9,13 @@ class UserPropertiesHook {
 	/**
 	 * Returns object property definitions
 	 *
-	 * @param string     $hook
-	 * @param string     $type
-	 * @param Property[] $return
-	 * @param array      $params
+	 * @param \Elgg\Hook $hook Hook
 	 * @return Property[]
 	 */
-	public function __invoke($hook, $type, $return, $params) {
+	public static function handle(\Elgg\Hook $hook) {
 
-		$full_view = elgg_extract('full_view', $params, false);
+		$return = $hook->getValue();
+		$full_view = $hook->getParam('full_view') ?: false;
 
 		$return[] = new Property('guid', array(
 			'getter' => '\hypeJunction\Data\Values::getVerbatim',

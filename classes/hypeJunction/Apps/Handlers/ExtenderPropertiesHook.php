@@ -6,7 +6,13 @@ use hypeJunction\Data\Property;
 
 class ExtenderPropertiesHook {
 
-	public function getExtenderProperties($hook, $type, $return, $params) {
+	/**
+	 * @param \Elgg\Hook $hook Hook
+	 * @return Property[]
+	 */
+	public static function handle(\Elgg\Hook $hook) {
+
+		$return = $hook->getValue();
 
 		$return[] = new Property('id', array(
 			'getter' => '\hypeJunction\Data\Values::getVerbatim',
