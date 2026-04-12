@@ -20,7 +20,11 @@ class IconServer extends Server {
 		}
 
 		$query = $this->get('q');
-		$query = unserialize(base64_decode($query));
+		$query = json_decode(base64_decode($query), true);
+		if (!is_array($query)) {
+			header("HTTP/1.1 400 Bad Request");
+			exit;
+		}
 
 		$this->uid = $query['uid'];
 		$this->d = $query['d'];

@@ -274,7 +274,7 @@ class IconFactory {
 
 		$hmac = hash_hmac('sha256', $guid . $path, $key);
 
-		$query = serialize(array(
+		$query = json_encode(array(
 			'uid' => $guid,
 			'd' => ($entity instanceof \ElggUser) ? $entity->guid : $entity->owner_guid, // guid of the dir owner
 			'dts' => ($entity instanceof \ElggUser) ? $entity->time_created : $entity->getOwnerEntity()->time_created,
