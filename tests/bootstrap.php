@@ -1,14 +1,41 @@
 <?php
+/**
+ * PHPUnit bootstrap for hypeApps plugin tests.
+ * Plugin must be installed at {elgg_root}/mod/hypeapps/
+ */
 
-date_default_timezone_set('Europe/Berlin');
-error_reporting(E_ALL | E_STRICT);
-$CONFIG = (object) array('dbprefix' => 'elgg_', 'boot_complete' => false, 'wwwroot' => 'http://localhost/');
-$engine = dirname(dirname(dirname(dirname(__FILE__)))) . '/engine';
-require_once "{$engine}/lib/autoloader.php";
-require_once "{$engine}/lib/elgglib.php";
-require_once "{$engine}/lib/sessions.php";
-require_once dirname(dirname(__FILE__)) . '/lib/autoloader.php';
-function elgg_get_config($name)
-{
-    return $CONFIG->{$name};
+// tests/ -> mod/hypeapps/ -> mod/ -> elgg_root/
+$elggRoot = dirname(dirname(dirname(__DIR__)));
+
+require_once $elggRoot . '/vendor/autoload.php';
+
+// Load Elgg test classes (UnitTestCase, IntegrationTestCase, etc.)
+$testClassesDir = $elggRoot . '/vendor/elgg/elgg/engine/tests/classes';
+spl_autoload_register(function ($class) use ($testClassesDir) {
+    $file = $testClassesDir . '/' . str_replace('\\', '/', $class) . '.php';
+    if (file_exists($file)) {
+        require_once $file;
+    }
+});
+
+// Load plugin autoloader if present
+$pluginRoot = dirname(__DIR__);
+if (file_exists($pluginRoot . '/vendor/autoload.php')) {
+    require_once $pluginRoot . '/vendor/autoload.php';
 }
+if (file_exists($pluginRoot . '/autoloader.php')) {
+    require_once $pluginRoot . '/autoloader.php';
+}
+
+// Register hypeJunction classes manually in case plugin is not active in test DB
+spl_autoload_register(function ($class) use ($pluginRoot) {
+    if (strncmp($class, 'hypeJunction\\', 13) !== 0) {
+        return;
+    }
+    $file = $pluginRoot . '/classes/' . str_replace('\\', '/', $class) . '.php';
+    if (file_exists($file)) {
+        require_once $file;
+    }
+});
+
+\Elgg\Application::loadCore();
