@@ -262,7 +262,7 @@ class Property implements PropertyInterface {
 		$sanitizers = (array) $this->sanitizers;
 		foreach ($sanitizers as $sanitizer) {
 			if (is_callable($sanitizer)) {
-				call_user_func($sanitizer, $this, $value, $params);
+				$sanitizer($this, $value, $params);
 			}
 		}
 	}

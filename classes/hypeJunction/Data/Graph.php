@@ -49,7 +49,7 @@ class Graph implements GraphInterface {
 		$subtype = $object->getSubtype();
 
 		$types = elgg_extract($type, $this->getAliases());
-		if (is_string($types) && !$subtype) {
+		if (is_string($types)) {
 			return $types;
 		}
 
