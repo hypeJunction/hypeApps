@@ -252,7 +252,13 @@ class Property implements PropertyInterface {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function sanitize(&$value, array $params = array()) {
+	public function sanitize($object, &$value = null, array $params = array()) {
+		// Backward-compat: old callers passed (&$value, $params) with two args.
+		// With object arg, $object is the owning object; with legacy, $object IS the value.
+		if (func_num_args() < 2 || !is_object($object)) {
+			$legacyValue = &$object;
+			$value = $legacyValue;
+		}
 		$sanitizers = (array) $this->sanitizers;
 		foreach ($sanitizers as $sanitizer) {
 			if (is_callable($sanitizer)) {
@@ -264,7 +270,12 @@ class Property implements PropertyInterface {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function validate($value, array $params = array()) {
+	public function validate($object, $value = null, array $params = array()) {
+		// Backward-compat: old callers passed ($value, $params). Shift if only first arg provided.
+		if (func_num_args() === 1 && !is_object($object)) {
+			$value = $object;
+			$object = null;
+		}
 
 		$result = new \stdClass();
 		$result->valid = true;

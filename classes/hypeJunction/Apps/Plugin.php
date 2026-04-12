@@ -58,4 +58,11 @@ final class Plugin extends \hypeJunction\Plugin {
 		return self::$instance;
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
+	public function boot() {
+		// hypeApps registers hooks statically via elgg-plugin.php; runtime boot is a no-op.
+	}
+
 }
