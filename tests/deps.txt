@@ -1,0 +1,4 @@
+# hypeapps has no manifest.xml and no plugin dependencies — it is a
+# self-contained library plugin providing base classes + hook handlers
+# for other hype* plugins. Leave this file empty to disable the
+# manifest-based sibling-resolver in bin/elgg-migrate-run.
