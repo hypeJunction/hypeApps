@@ -25,8 +25,7 @@ class Upload
      * 
      * @param array $props Upload properties
      */
-    public function __construct(array $props = array())
-    {
+    public function __construct(array $props = array()) {
         foreach ($props as $key => $val) {
             $this->{$key} = $val;
         }
@@ -38,8 +37,7 @@ class Upload
      * @apara string $prefix     Filestore prefix
      * @return \Upload
      */
-    public function save(array $attributes = array(), $prefix = self::DEFAULT_FILESTORE_PREFIX)
-    {
+    public function save(array $attributes = array(), $prefix = self::DEFAULT_FILESTORE_PREFIX) {
         $this->error_code = $this->error;
         $this->error = $this->getError();
         $this->filesize = $this->size;
@@ -94,16 +92,14 @@ class Upload
      * Check if upload was successful
      * @return boolean
      */
-    public function isSuccessful()
-    {
+    public function isSuccessful() {
         return !$this->getError();
     }
     /**
      * Get human readable upload error
      * @return string|boolean
      */
-    public function getError()
-    {
+    public function getError() {
         switch ($this->error_code) {
             case UPLOAD_ERR_OK:
                 return false;
@@ -121,16 +117,14 @@ class Upload
      * Detects mime type of the upload
      * @return string
      */
-    public function detectMimeType()
-    {
+    public function detectMimeType() {
         return (new \ElggFile())->detectMimeType($this->tmp_name, $this->type) ?: $this->type;
     }
     /**
      * Parses simple type of the upload
      * @return string
      */
-    public function parseSimpleType()
-    {
+    public function parseSimpleType() {
         if (is_callable('elgg_get_file_simple_type')) {
             return elgg_get_file_simple_type($this->detectMimeType());
         }

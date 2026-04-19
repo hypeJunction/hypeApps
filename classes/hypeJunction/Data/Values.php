@@ -116,7 +116,7 @@ class Values {
 			'guids' => isset($object->$id) ? $object->$id : 0,
 			'limit' => Graph::LIMIT_MAX,
 		);
-		return new \hypeJunction\Graph\BatchResult('elgg_get_entities', $options);
+		return new \hypeJunction\BatchResult('elgg_get_entities', $options);
 	}
 
 	public static function getAtomTime(PropertyInterface $prop, $object) {
@@ -134,7 +134,7 @@ class Values {
 		$size = elgg_extract('size', $params);
 		if ($size && array_key_exists($size, $icon_sizes)) {
 			$icon = $icon_sizes[$size];
-			$icon['url'] = $object->getIconURL(array(
+$icon['url'] = $object->getIconURL(array(
 				'size' => $size,
 				'name' => $prop->getAttributeName(),
 			));

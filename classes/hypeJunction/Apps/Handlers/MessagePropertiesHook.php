@@ -21,7 +21,7 @@ class MessagePropertiesHook {
 			}
 		}
 
-		$return[] = new Property('status', array(
+$return[] = new Property('status', array(
 			'getter' => '\hypeJunction\Data\Values::getVerbatim',
 			'setter' => '\hypeJunction\Data\Values::setVerbatim',
 			'type' => 'enum',
@@ -36,7 +36,7 @@ class MessagePropertiesHook {
 			),
 		));
 
-		$return[] = new Property('sender', array(
+$return[] = new Property('sender', array(
 			'attribute' => 'fromId',
 			'getter' => '\hypeJunction\Data\Values::getEntity',
 			'setter' => '\hypeJunction\Data\Values::setEntity',
@@ -49,7 +49,7 @@ class MessagePropertiesHook {
 			)
 		));
 
-		$return[] = new Property('recipients', array(
+$return[] = new Property('recipients', array(
 			'attribute' => 'toId',
 			'getter' => '\hypeJunction\Data\Values::getEntityBatch',
 			'setter' => '\hypeJunction\Data\Values::setEntityBatch',

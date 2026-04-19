@@ -15,8 +15,8 @@ class ActionResult {
 		$this->setForwardURL();
 	}
 
-	public function setForwardURL($url = REFERER) {
-		$this->forwardUrl = $url;
+	public function setForwardURL($url = null) {
+		$this->forwardUrl = $url ?? REFERER;
 	}
 
 	public function getForwardURL() {

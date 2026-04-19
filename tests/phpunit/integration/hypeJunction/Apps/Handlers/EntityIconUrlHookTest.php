@@ -17,7 +17,7 @@ class EntityIconUrlHookTest extends IntegrationTestCase {
 	protected function mockHook($value, $params = []): Hook {
 		$hook = $this->getMockBuilder(Hook::class)->getMock();
 		$hook->method('getValue')->willReturn($value);
-		$hook->method('getParam')->willReturnCallback(function ($name, $default = null) use ($params) {
+$hook->method('getParam')->willReturnCallback(function ($name, $default = null) use ($params) {
 			return $params[$name] ?? $default;
 		});
 		$hook->method('getParams')->willReturn($params);

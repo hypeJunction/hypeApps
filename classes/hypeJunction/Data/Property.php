@@ -150,7 +150,7 @@ class Property implements PropertyInterface {
 	 * {@inheritdoc}
 	 */
 	public function getLabel($object, $lang = null, $raw = false) {
-		$key = implode(':', array_filter(array(
+$key = implode(':', array_filter(array(
 			'label',
 			$object->getType(),
 			$object->getSubtype(),
@@ -183,7 +183,7 @@ class Property implements PropertyInterface {
 	 */
 	public function getDescription($object, $lang = null, $raw = false) {
 
-		$key = implode(':', array_filter(array(
+$key = implode(':', array_filter(array(
 			'help',
 			$object->getType(),
 			$object->getSubtype(),
@@ -304,7 +304,7 @@ class Property implements PropertyInterface {
 				$result->valid = false;
 			}
 
-			$result->data[] = (object) array_merge(array(
+$result->data[] = (object) array_merge(array(
 						'rule' => $rule,
 						'expecation' => $expectation,
 						'valid' => $valid,
@@ -362,7 +362,7 @@ class Property implements PropertyInterface {
 	 * @return array
 	 */
 	public function toArray() {
-		return array_filter(array(
+return array_filter(array(
 			'name' => $this->getAttributeName(),
 			'required' => $this->required,
 			'type' => $this->type,

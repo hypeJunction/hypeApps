@@ -12,7 +12,7 @@ class BlogPropertiesHook {
 	 */
 	public static function handle(\Elgg\Hook $hook) {
 		$return = $hook->getValue();
-		$return[] = new Property('status', array(
+$return[] = new Property('status', array(
 			'getter' => '\hypeJunction\Data\Values::getVerbatim',
 			'setter' => '\hypeJunction\Data\Values::setVerbatim',
 			'type' => 'enum',
@@ -29,7 +29,7 @@ class BlogPropertiesHook {
 			),
 		));
 
-		$return[] = new Property('comments_on', array(
+$return[] = new Property('comments_on', array(
 			'getter' => '\hypeJunction\Data\Values::getVerbatim',
 			'setter' => '\hypeJunction\Data\Values::setVerbatim',
 			'type' => 'enum',
@@ -45,7 +45,7 @@ class BlogPropertiesHook {
 			),
 		));
 
-		$return[] = new Property('excerpt', array(
+$return[] = new Property('excerpt', array(
 			'getter' => '\hypeJunction\Data\Values::getVerbatim',
 			'setter' => '\hypeJunction\Data\Values::setVerbatim',
 			'type' => 'string',

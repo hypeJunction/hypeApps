@@ -10,7 +10,7 @@ class PropertyTest extends UnitTestCase {
 	public function down() {}
 
 	public function testConstructorAssignsIdAndOptions() {
-		$prop = new Property('title', [
+$prop = new Property('title', [
 			'type' => 'string',
 			'required' => true,
 		]);
@@ -35,14 +35,14 @@ class PropertyTest extends UnitTestCase {
 	}
 
 	public function testGetEnumOptionsFromArray() {
-		$prop = new Property('status', [
+$prop = new Property('status', [
 			'enum' => ['Published' => 1, 'Draft' => 0],
 		]);
 		$this->assertSame(['Published' => 1, 'Draft' => 0], $prop->getEnumOptions());
 	}
 
 	public function testGetEnumOptionsFromCallable() {
-		$prop = new Property('status', [
+$prop = new Property('status', [
 			'enum' => function () { return ['A' => 'a']; },
 		]);
 		$this->assertSame(['A' => 'a'], $prop->getEnumOptions());
@@ -55,7 +55,7 @@ class PropertyTest extends UnitTestCase {
 
 	public function testSanitizersAreCalled() {
 		$called = false;
-		$prop = new Property('title', [
+$prop = new Property('title', [
 			'sanitizers' => [function ($p, &$v) use (&$called) { $called = true; }],
 		]);
 		$value = 'x';
@@ -64,7 +64,7 @@ class PropertyTest extends UnitTestCase {
 	}
 
 	public function testGetterInvokedOnGetValue() {
-		$prop = new Property('title', [
+$prop = new Property('title', [
 			'getter' => function ($p, $obj) { return $obj->title ?? null; },
 		]);
 		$obj = (object) ['title' => 'Hello'];
@@ -72,7 +72,7 @@ class PropertyTest extends UnitTestCase {
 	}
 
 	public function testSetterInvokedOnSetValue() {
-		$prop = new Property('title', [
+$prop = new Property('title', [
 			'setter' => function ($p, $obj, $value) { $obj->title = $value; },
 		]);
 		$obj = new \stdClass();
@@ -81,7 +81,7 @@ class PropertyTest extends UnitTestCase {
 	}
 
 	public function testToArrayExportsFields() {
-		$prop = new Property('title', [
+$prop = new Property('title', [
 			'type' => 'string',
 			'required' => true,
 			'default' => 'foo',

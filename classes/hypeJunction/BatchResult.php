@@ -25,8 +25,7 @@ class BatchResult
      * @param callable $getter  Getter function
      * @param array    $options Accepts all options of the getter function plus $options['sort'] an a array of $field => $direction pairs
      */
-    public function __construct(callable $getter = null, array $options = array())
-    {
+    public function __construct(callable $getter = null, array $options = array()) {
         $this->getter = $getter;
         $this->options = $options;
     }
@@ -34,8 +33,7 @@ class BatchResult
      * Returns count of entities in a batch
      * @return int
      */
-    public function getCount()
-    {
+    public function getCount() {
         $options = $this->prepareBatchOptions($this->options);
         $options['count'] = true;
         return (int) call_user_func($this->getter, $options);
@@ -44,16 +42,14 @@ class BatchResult
      * Returns an iterator instance
      * @return \ElggBatch
      */
-    public function getBatch()
-    {
+    public function getBatch() {
         return new ElggBatch($this->getter, $this->prepareBatchOptions($this->options));
     }
     /**
      * Returns an array of items in the batch
      * @return array
      */
-    public function getItems()
-    {
+    public function getItems() {
         $batch = $this->getBatch();
         $items = array();
         foreach ($batch as $b) {
@@ -67,8 +63,7 @@ class BatchResult
      * @param array $params Export params
      * @return array
      */
-    public function export(array $params = array())
-    {
+    public function export(array $params = array()) {
         $result = array('type' => 'list', 'count' => $this->getCount(), 'limit' => elgg_extract('limit', $this->options, elgg_get_config('default_limit')), 'offset' => elgg_extract('offset', $this->options, 0), 'items' => array());
         $batch = $this->getBatch();
         foreach ($batch as $entity) {
@@ -82,8 +77,7 @@ class BatchResult
      * @param array $options ege* options
      * @return array
      */
-    protected function prepareBatchOptions(array $options = array())
-    {
+    protected function prepareBatchOptions(array $options = array()) {
         if (!in_array($this->getter, array('elgg_get_entities', 'elgg_get_entities', 'elgg_get_entities'))) {
             return $options;
         }

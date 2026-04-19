@@ -15,7 +15,7 @@ class FilePropertiesHook {
 		$return = $hook->getValue();
 
 		foreach (array('simpletype', 'mimetype', 'originalfilename', 'origin') as $key) {
-			$return[] = new Property($key, array(
+$return[] = new Property($key, array(
 				'getter' => '\hypeJunction\Data\Values::getVerbatim',
 				'setter' => '\hypeJunction\Data\Values::setVerbatim',
 			));

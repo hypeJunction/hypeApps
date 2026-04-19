@@ -22,7 +22,7 @@ class DiContainerTest extends UnitTestCase {
 
 	public function testSetFactoryProducesValueFromCallable() {
 		$c = new DiContainer();
-		$c->setFactory('service', function () {
+$c->setFactory('service', function () {
 			return new \stdClass();
 		});
 		$this->assertInstanceOf(\stdClass::class, $c->service);
@@ -30,7 +30,7 @@ class DiContainerTest extends UnitTestCase {
 
 	public function testSharedFactoryReturnsSameInstance() {
 		$c = new DiContainer();
-		$c->setFactory('svc', function () {
+$c->setFactory('svc', function () {
 			return new \stdClass();
 		}, true);
 		$a = $c->svc;
@@ -40,7 +40,7 @@ class DiContainerTest extends UnitTestCase {
 
 	public function testNonSharedFactoryReturnsNewInstance() {
 		$c = new DiContainer();
-		$c->setFactory('svc', function () {
+$c->setFactory('svc', function () {
 			return new \stdClass();
 		}, false);
 		$a = $c->svc;
@@ -51,7 +51,7 @@ class DiContainerTest extends UnitTestCase {
 	public function testFactoryReceivesContainerAsArg() {
 		$c = new DiContainer();
 		$received = null;
-		$c->setFactory('svc', function ($container) use (&$received) {
+$c->setFactory('svc', function ($container) use (&$received) {
 			$received = $container;
 			return 1;
 		});

@@ -12,18 +12,18 @@ class RelationshipPropertiesHook {
 	 */
 	public static function handle(\Elgg\Hook $hook) {
 		$return = $hook->getValue();
-		$return[] = new Property('id', array(
+$return[] = new Property('id', array(
 			'getter' => '\hypeJunction\Data\Values::getVerbatim',
 			'read_only' => true,
 		));
 
-		$return[] = new Property('subject', array(
+$return[] = new Property('subject', array(
 			'attribute' => 'guid_one',
 			'getter' => '\hypeJunction\Data\Values::getEntity',
 			'read_only' => true,
 		));
 
-		$return[] = new Property('object', array(
+$return[] = new Property('object', array(
 			'attribute' => 'guid_two',
 			'getter' => '\hypeJunction\Data\Values::getEntity',
 			'read_only' => true,

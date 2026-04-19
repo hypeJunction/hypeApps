@@ -14,42 +14,42 @@ class RiverPropertiesHook {
 
 		$return = $hook->getValue();
 
-		$return[] = new Property('id', array(
+$return[] = new Property('id', array(
 			'getter' => '\hypeJunction\Data\Values::getVerbatim',
 			'read_only' => true,
 		));
 
-		$return[] = new Property('action', array(
+$return[] = new Property('action', array(
 			'attribute' => 'action_type',
 			'getter' => '\hypeJunction\Data\Values::getVerbatim',
 			'read_only' => true,
 		));
 
-		$return[] = new Property('subject', array(
+$return[] = new Property('subject', array(
 			'attribute' => 'subject_guid',
 			'getter' => '\hypeJunction\Data\Values::getEntity',
 			'read_only' => true,
 		));
 
-		$return[] = new Property('object', array(
+$return[] = new Property('object', array(
 			'attribute' => 'object_guid',
 			'getter' => '\hypeJunction\Data\Values::getEntity',
 			'read_only' => true,
 		));
 
-		$return[] = new Property('target', array(
+$return[] = new Property('target', array(
 			'attribute' => 'target_guid',
 			'getter' => '\hypeJunction\Data\Values::getEntity',
 			'read_only' => true,
 		));
 
-		$return[] = new Property('annotation', array(
+$return[] = new Property('annotation', array(
 			'attribute' => 'annotation_id',
 			'getter' => '\hypeJunction\Data\Values::getAnnotation',
 			'read_only' => true,
 		));
 
-		$return[] = new Property('access', array(
+$return[] = new Property('access', array(
 			'attribute' => 'access_id',
 			'getter' => '\hypeJunction\Data\Values::getAccess',
 			'read_only' => true,
@@ -61,7 +61,7 @@ class RiverPropertiesHook {
 			}
 		}
 
-		$return[] = new Property('time_created', array(
+$return[] = new Property('time_created', array(
 			'attribute' => 'posted',
 			'getter' => '\hypeJunction\Data\Values::getAtomTime',
 			'read_only' => true,

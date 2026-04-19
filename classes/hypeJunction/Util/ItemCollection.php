@@ -65,7 +65,7 @@ final class ItemCollection {
 	 * @return int
 	 */
 	protected function toGUID($entity = null) {
-		if ($entity instanceof ElggEntity) {
+		if ($entity instanceof \ElggEntity) {
 			return (int) $entity->getGUID();
 		} else if ($this->exists($entity)) {
 			return (int) $entity;

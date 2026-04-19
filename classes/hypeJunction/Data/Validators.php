@@ -20,7 +20,7 @@ class Validators {
 		return $result;
 	}
 
-	public static function isValidUsername(\PropertyInterface $prop, $value = null, array $params = array()) {
+	public static function isValidUsername(PropertyInterface $prop, $value = null, array $params = array()) {
 		try {
 			elgg()->accounts->assertValidUsername($value);
 			return true;
@@ -29,7 +29,7 @@ class Validators {
 		}
 	}
 
-	public static function isAvailableUsername(\PropertyInterface $prop, $value = null, array $params = array()) {
+	public static function isAvailableUsername(PropertyInterface $prop, $value = null, array $params = array()) {
 		$access_status = elgg()->session->getDisabledEntityVisibility();
 		access_show_hidden_entities(true);
 

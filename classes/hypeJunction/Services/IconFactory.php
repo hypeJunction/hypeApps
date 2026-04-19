@@ -147,7 +147,7 @@ class IconFactory {
 		$defaults = ($entity && $entity->getSubtype() == 'file') ? $this->config->getFileIconSizes() : $this->config->getGlobalIconSizes();
 		$sizes = array_merge($defaults, $icon_sizes);
 
-		return elgg_trigger_plugin_hook('entity:icon:sizes', $entity->getType(), array(
+return elgg_trigger_plugin_hook('entity:icon:sizes', $entity->getType(), array(
 			'entity' => $entity,
 			'subtype' => $entity->getSubtype(),
 				), $sizes);
@@ -182,7 +182,7 @@ class IconFactory {
 			}
 		}
 
-		$directory = elgg_trigger_plugin_hook('entity:icon:directory', $entity->getType(), array(
+$directory = elgg_trigger_plugin_hook('entity:icon:directory', $entity->getType(), array(
 			'entity' => $entity,
 			'size' => $size,
 				), $directory);
@@ -220,7 +220,7 @@ class IconFactory {
 		if (!$filename) {
 			$filename = "{$entity->guid}{$size}.{$ext}";
 		}
-		return elgg_trigger_plugin_hook('entity:icon:directory', $entity->getType(), array(
+return elgg_trigger_plugin_hook('entity:icon:directory', $entity->getType(), array(
 			'entity' => $entity,
 			'size' => $size,
 				), $filename);
@@ -274,7 +274,7 @@ class IconFactory {
 
 		$hmac = hash_hmac('sha256', $guid . $path, $key);
 
-		$query = json_encode(array(
+$query = json_encode(array(
 			'uid' => $guid,
 			'd' => ($entity instanceof \ElggUser) ? $entity->guid : $entity->owner_guid, // guid of the dir owner
 			'dts' => ($entity instanceof \ElggUser) ? $entity->time_created : $entity->getOwnerEntity()->time_created,
@@ -283,7 +283,7 @@ class IconFactory {
 			'mac' => $hmac,
 		));
 
-		$url = elgg_http_add_url_query_elements('mod/hypeApps/servers/icon.php', array(
+$url = elgg_http_add_url_query_elements('mod/hypeApps/servers/icon.php', array(
 			'q' => base64_encode($query),
 		));
 

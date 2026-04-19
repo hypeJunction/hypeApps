@@ -16,12 +16,12 @@ class GroupPropertiesHook {
 		$return = $hook->getValue();
 		$full_view = $hook->getParam('full_view') ?: false;
 
-		$return[] = new Property('guid', array(
+$return[] = new Property('guid', array(
 			'getter' => '\hypeJunction\Data\Values::getVerbatim',
 			'read_only' => true,
 		));
 
-		$return[] = new Property('name', array(
+$return[] = new Property('name', array(
 			'getter' => '\hypeJunction\Data\Values::getVerbatim',
 			'setter' => '\hypeJunction\Data\Values::setVerbatim',
 			'required' => true,
@@ -31,7 +31,7 @@ class GroupPropertiesHook {
 			'sanitizers' => '\hypeJunction\Data\Values::htmlSpecialCharts',
 		));
 
-		$return[] = new Property('icon', array(
+$return[] = new Property('icon', array(
 			'getter' => '\hypeJunction\Data\Values::getIcon',
 			'setter' => '\hypeJunction\Data\Files::setIcon',
 			'type' => 'file',
@@ -42,7 +42,7 @@ class GroupPropertiesHook {
 			)
 		));
 
-		$return[] = new Property('briefdescription', array(
+$return[] = new Property('briefdescription', array(
 			'getter' => '\hypeJunction\Data\Values::getVerbatim',
 			'setter' => '\hypeJunction\Data\Values::setVerbatim',
 			'required' => true,
@@ -51,7 +51,7 @@ class GroupPropertiesHook {
 			'output' => 'longtext',
 		));
 
-		$return[] = new Property('owner', array(
+$return[] = new Property('owner', array(
 			'attribute' => 'owner_guid',
 			'getter' => '\hypeJunction\Data\Values::getEntity',
 			'setter' => '\hypeJunction\Data\Values::setEntity',
@@ -59,7 +59,7 @@ class GroupPropertiesHook {
 			'type' => 'guid',
 		));
 
-		$return[] = new Property('container', array(
+$return[] = new Property('container', array(
 			'attribute' => 'container_guid',
 			'getter' => '\hypeJunction\Data\Values::getEntity',
 			'setter' => '\hypeJunction\Data\Values::setEntity',
@@ -67,7 +67,7 @@ class GroupPropertiesHook {
 			'type' => 'guid',
 		));
 
-		$return[] = new Property('content_access_mode', array(
+$return[] = new Property('content_access_mode', array(
 			'getter' => '\hypeJunction\Data\Values::getAccess',
 			'setter' => '\hypeJunction\Data\Values::setGroupContentAccessMode',
 			'type' => 'enum',
@@ -83,7 +83,7 @@ class GroupPropertiesHook {
 			)
 		));
 
-		$return[] = new Property('membership', array(
+$return[] = new Property('membership', array(
 			'getter' => '\hypeJunction\Data\Values::getAccess',
 			'setter' => '\hypeJunction\Data\Values::setVerbatim',
 			'type' => 'enum',
@@ -99,12 +99,12 @@ class GroupPropertiesHook {
 			)
 		));
 
-		$return[] = new Property('group_acl', array(
+$return[] = new Property('group_acl', array(
 			'getter' => '\hypeJunction\Data\Values::getAccess',
 			'read_only' => true,
 		));
 
-		$return[] = new Property('access', array(
+$return[] = new Property('access', array(
 			'attribute' => 'access_id',
 			'getter' => '\hypeJunction\Data\Values::getAccess',
 			'setter' => '\hypeJunction\Data\Values::setVerbatim',

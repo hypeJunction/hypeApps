@@ -14,29 +14,29 @@ class ExtenderPropertiesHook {
 
 		$return = $hook->getValue();
 
-		$return[] = new Property('id', array(
+$return[] = new Property('id', array(
 			'getter' => '\hypeJunction\Data\Values::getVerbatim',
 			'read_only' => true,
 		));
 
-		$return[] = new Property('value', array(
+$return[] = new Property('value', array(
 			'getter' => '\hypeJunction\Data\Values::getVerbatim',
 			'read_only' => true,
 		));
 
-		$return[] = new Property('entity', array(
+$return[] = new Property('entity', array(
 			'attribute' => 'entity_guid',
 			'getter' => '\hypeJunction\Data\Values::getEntity',
 			'read_only' => true,
 		));
 
-		$return[] = new Property('owner', array(
+$return[] = new Property('owner', array(
 			'attribute' => 'owner_guid',
 			'getter' => '\hypeJunction\Data\Values::getEntity',
 			'read_only' => true,
 		));
 
-		$return[] = new Property('access', array(
+$return[] = new Property('access', array(
 			'attribute' => 'access_id',
 			'getter' => '\hypeJunction\Data\Values::getAccess',
 			'read_only' => true,

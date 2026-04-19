@@ -5,7 +5,6 @@ namespace hypeJunction\Apps;
 /**
  * @property-read \ElggPlugin                        $plugin
  * @property-read \hypeJunction\Apps\Config          $config
- * @property-read \hypeJunction\Apps\HookHandlers    $hooks
  * @property-read \hypeJunction\Controllers\Actions  $actions
  * @property-read \hypeJunction\Services\Uploader    $uploader
  * @property-read \hypeJunction\Services\IconFactory $iconFactory
@@ -26,23 +25,23 @@ final class Plugin extends \hypeJunction\Plugin {
 
 		$this->setValue('plugin', $plugin);
 
-		$this->setFactory('config', function (Plugin $p) {
+$this->setFactory('config', function (Plugin $p) {
 			return new \hypeJunction\Apps\Config($p->plugin);
 		});
 
-		$this->setFactory('actions', function(Plugin $p) {
+$this->setFactory('actions', function(Plugin $p) {
 			return new \hypeJunction\Controllers\Actions(new \hypeJunction\Controllers\ActionResult());
 		});
 
-		$this->setFactory('uploader', function(Plugin $p) {
+$this->setFactory('uploader', function(Plugin $p) {
 			return new \hypeJunction\Services\Uploader($p->config, $p->iconFactory);
 		});
 
-		$this->setFactory('iconFactory', function(Plugin $p) {
+$this->setFactory('iconFactory', function(Plugin $p) {
 			return new \hypeJunction\Services\IconFactory($p->config);
 		});
 
-		$this->setFactory('graph', function(Plugin $p) {
+$this->setFactory('graph', function(Plugin $p) {
 			return new \hypeJunction\Data\Graph($p->config);
 		});
 	}

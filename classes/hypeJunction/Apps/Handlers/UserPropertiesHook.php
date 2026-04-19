@@ -17,12 +17,12 @@ class UserPropertiesHook {
 		$return = $hook->getValue();
 		$full_view = $hook->getParam('full_view') ?: false;
 
-		$return[] = new Property('guid', array(
+$return[] = new Property('guid', array(
 			'getter' => '\hypeJunction\Data\Values::getVerbatim',
 			'read_only' => true,
 		));
 
-		$return[] = new Property('name', array(
+$return[] = new Property('name', array(
 			'getter' => '\hypeJunction\Data\Values::getVerbatim',
 			'setter' => '\hypeJunction\Data\Values::setVerbatim',
 			'required' => true,
@@ -32,7 +32,7 @@ class UserPropertiesHook {
 			'sanitizers' => '\hypeJunction\Data\Values::htmlSpecialCharts',
 		));
 
-		$return[] = new Property('username', array(
+$return[] = new Property('username', array(
 			'getter' => '\hypeJunction\Data\Values::getVerbatim',
 			'setter' => '\hypeJunction\Data\Values::setVerbatim',
 			'required' => true,
@@ -49,7 +49,7 @@ class UserPropertiesHook {
 			),
 		));
 
-		$return[] = new Property('icon', array(
+$return[] = new Property('icon', array(
 			'getter' => '\hypeJunction\Data\Values::getIcon',
 			'setter' => '\hypeJunction\Data\Files::setIcon',
 			'type' => 'file',
@@ -60,17 +60,17 @@ class UserPropertiesHook {
 			)
 		));
 
-		$return[] = new Property('admin', array(
+$return[] = new Property('admin', array(
 			'getter' => '\hypeJunction\Data\Values::isAdmin',
 			'read_only' => true,
 		));
 
-		$return[] = new Property('banned', array(
+$return[] = new Property('banned', array(
 			'getter' => '\hypeJunction\Data\Values::isBanned',
 			'read_only' => true,
 		));
 
-		$return[] = new Property('validated', array(
+$return[] = new Property('validated', array(
 			'getter' => '\hypeJunction\Data\Values::getVerbatim',
 			'read_only' => true,
 		));

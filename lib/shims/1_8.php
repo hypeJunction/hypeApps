@@ -10,7 +10,7 @@ if (!function_exists('elgg_format_element')) {
 			$is_void = $options['is_void'];
 		} else {
 			// from http://www.w3.org/TR/html-markup/syntax.html#syntax-elements
-			$is_void = in_array(strtolower($tag_name), array(
+$is_void = in_array(strtolower($tag_name), array(
 				'area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'keygen', 'link', 'menuitem',
 				'meta', 'param', 'source', 'track', 'wbr'
 			));

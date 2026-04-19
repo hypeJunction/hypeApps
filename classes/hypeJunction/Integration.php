@@ -12,16 +12,14 @@ class Integration
      * Returns root directory of Elgg installation
      * @return string
      */
-    public static function getRootPath()
-    {
+    public static function getRootPath() {
         return dirname(dirname(dirname(dirname(dirname(__FILE__)))));
     }
     /**
      * Returns Elgg ServiceProvider instance
      * @return ServiceProvider
      */
-    public static function getServiceProvider()
-    {
+    public static function getServiceProvider() {
         if (is_callable('_elgg_services')) {
             return _elgg_services();
         }
@@ -38,8 +36,7 @@ class Integration
      * Returns Elgg version
      * @return string|false
      */
-    public static function getElggVersion()
-    {
+    public static function getElggVersion() {
         if (isset(self::$version)) {
             return self::$version;
         }
@@ -60,8 +57,7 @@ class Integration
      * @param string $version Version to compare
      * @return boolean
      */
-    public static function isElggVersionBelow($version = '0.0.0')
-    {
+    public static function isElggVersionBelow($version = '0.0.0') {
         return version_compare(self::getElggVersion(), $version, '<');
     }
     /**
@@ -70,8 +66,7 @@ class Integration
      * @param string $version Version to compare
      * @return boolean
      */
-    public static function isElggVersionAbove($version = '0.0.0')
-    {
+    public static function isElggVersionAbove($version = '0.0.0') {
         return version_compare(self::getElggVersion(), $version, '>');
     }
 }
