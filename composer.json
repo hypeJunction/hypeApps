@@ -18,12 +18,16 @@
 		}
 	],
 	"extra": {
-		"installer-name": "hypeApps"
+		"installer-name": "hypeApps",
+		"elgg-plugin": {
+			"id": "hypeapps"
+		}
 	},
 	"require": {
 		"php": ">=7.4",
-		"composer/installers": "~1.0",
-		"smottt/wideimage": "~1.1.1"
+		"composer/installers": "^2.0",
+		"smottt/wideimage": "~1.1.1",
+		"elgg/elgg": "^4.0"
 	},
 	"autoload": {
 		"psr-0": {
