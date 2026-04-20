@@ -1,3 +1,28 @@
+<a name="6.0.0"></a>
+# 6.0.0 (2026-04-11)
+
+### Breaking Changes
+
+* **elgg:** raise minimum to Elgg 4.x (PHP 7.4+). Plugins on Elgg 3.x must stay on hypeApps 5.x.
+
+### Migration (3.x → 4.x)
+
+* **bootstrap:** deleted `start.php` and `manifest.xml`. Plugin metadata now lives in `composer.json` + `elgg-plugin.php` only.
+* **plugin id:** updated `Plugin::factory()` to use lowercase `hypeapps` id — Elgg 4.x plugin lookups are case-sensitive and camelCase silently returns false.
+* **bootstrap class:** introduced `hypeJunction\Apps\Bootstrap` extending `Elgg\DefaultPluginBootstrap`; loads `autoloader.php` from `boot()`.
+* **declarative config:** all hook handlers moved to `elgg-plugin.php` `hooks` key; handlers rewritten to static `handle(\Elgg\Hook $hook)` signatures.
+* **removed APIs:** `forward()` → `elgg_redirect_response()` + `throw PageNotFoundException`; `validate_username()` → `elgg()->accounts->assertValidUsername()`; `access_get_show_hidden_status()` → `elgg()->session->getDisabledEntityVisibility()`; `ElggEntity::setLocation()/getLocation()` → direct property access; `get_site_secret()` → `elgg()->siteSecret->get()`.
+
+### Security Fixes
+
+* **IconServer RCE:** replaced `unserialize(base64_decode($query))` with `json_decode()` in `IconServer::handle()`. The previous code deserialized user-supplied input before HMAC validation, allowing PHP object injection via `__wakeup` magic methods.
+
+### Dependency Updates
+
+* `elgg/elgg ^4.0`, `composer/installers ^2.0`, PHP `>=7.4`
+
+---
+
 <a name="5.1.1"></a>
 ## [5.1.1](https://github.com/hypeJunction/hypeApps/compare/5.1.0...v5.1.1) (2016-01-06)
 
