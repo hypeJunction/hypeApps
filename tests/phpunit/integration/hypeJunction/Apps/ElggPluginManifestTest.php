@@ -32,22 +32,22 @@ class ElggPluginManifestTest extends IntegrationTestCase {
 
 	public function testHooksSectionExists() {
 		$manifest = $this->loadManifest();
-		$this->assertArrayHasKey('hooks', $manifest);
-		$this->assertIsArray($manifest['hooks']);
+		$this->assertArrayHasKey('events', $manifest);
+		$this->assertIsArray($manifest['events']);
 	}
 
 	public function testEntityIconUrlHookRegistered() {
 		$manifest = $this->loadManifest();
-		$this->assertArrayHasKey('entity:icon:url', $manifest['hooks']);
-		$this->assertArrayHasKey('all', $manifest['hooks']['entity:icon:url']);
-		$handlers = $manifest['hooks']['entity:icon:url']['all'];
+		$this->assertArrayHasKey('entity:icon:url', $manifest['events']);
+		$this->assertArrayHasKey('all', $manifest['events']['entity:icon:url']);
+		$handlers = $manifest['events']['entity:icon:url']['all'];
 		$this->assertArrayHasKey(\hypeJunction\Apps\Handlers\EntityIconUrlHook::class . '::handle', $handlers);
 	}
 
 	public function testGraphPropertiesHookHasExpectedTypes() {
 		$manifest = $this->loadManifest();
-		$this->assertArrayHasKey('graph:properties', $manifest['hooks']);
-		$types = array_keys($manifest['hooks']['graph:properties']);
+		$this->assertArrayHasKey('graph:properties', $manifest['events']);
+		$types = array_keys($manifest['events']['graph:properties']);
 		foreach (['all', 'user', 'group', 'site', 'object', 'object:blog', 'object:file', 'object:messages', 'metadata', 'annotation', 'relationship', 'river:item'] as $type) {
 			$this->assertContains($type, $types, "Missing graph:properties handler for '$type'");
 		}
@@ -55,7 +55,7 @@ class ElggPluginManifestTest extends IntegrationTestCase {
 
 	public function testEveryHookHandlerClassExists() {
 		$manifest = $this->loadManifest();
-		foreach ($manifest['hooks'] as $hookName => $byType) {
+		foreach ($manifest['events'] as $hookName => $byType) {
 			foreach ($byType as $type => $handlers) {
 				foreach ($handlers as $spec => $opts) {
 					[$class, $method] = explode('::', $spec);

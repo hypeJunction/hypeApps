@@ -2,7 +2,7 @@
 
 namespace hypeJunction\Apps\Handlers;
 
-use Elgg\Hook;
+use Elgg\Event;
 use Elgg\IntegrationTestCase;
 use hypeJunction\Data\Property;
 
@@ -15,8 +15,8 @@ class PropertiesHookTest extends IntegrationTestCase {
 		return '';
 	}
 
-	protected function mockHook($value = []): Hook {
-		$hook = $this->getMockBuilder(Hook::class)->getMock();
+	protected function mockHook($value = []): Event {
+		$hook = $this->getMockBuilder(Event::class)->disableOriginalConstructor()->getMock();
 		$hook->method('getValue')->willReturn($value);
 		$hook->method('getParams')->willReturn([]);
 		$hook->method('getParam')->willReturn(null);

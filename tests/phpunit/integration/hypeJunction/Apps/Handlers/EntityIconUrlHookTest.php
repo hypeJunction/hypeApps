@@ -2,7 +2,7 @@
 
 namespace hypeJunction\Apps\Handlers;
 
-use Elgg\Hook;
+use Elgg\Event;
 use Elgg\IntegrationTestCase;
 
 class EntityIconUrlHookTest extends IntegrationTestCase {
@@ -14,8 +14,8 @@ class EntityIconUrlHookTest extends IntegrationTestCase {
 		return '';
 	}
 
-	protected function mockHook($value, $params = []): Hook {
-		$hook = $this->getMockBuilder(Hook::class)->getMock();
+	protected function mockHook($value, $params = []): Event {
+		$hook = $this->getMockBuilder(Event::class)->disableOriginalConstructor()->getMock();
 		$hook->method('getValue')->willReturn($value);
 $hook->method('getParam')->willReturnCallback(function ($name, $default = null) use ($params) {
 			return $params[$name] ?? $default;
