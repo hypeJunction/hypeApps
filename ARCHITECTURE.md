@@ -1,16 +1,16 @@
-# hypeApps plugin architecture (Elgg 4.x)
+# hypeApps plugin architecture (Elgg 5.x)
 
 Foundational bootstrap library shared by every hypeJunction plugin. Provides a
 DI-container–based Plugin singleton pattern, controller/action infrastructure, file
-upload helpers, icon handling, and a `graph:properties` hook system for serialising
+upload helpers, icon handling, and a `graph:properties` event system for serialising
 any Elgg entity to a property map.
 
 ## Layout
 
 ```
 hypeapps/
-├── composer.json             plugin metadata; requires smottt/wideimage ~1.1.1 + elgg ^4.0
-├── elgg-plugin.php           declarative config — bootstrap + hooks; no routes or actions declared here
+├── composer.json             plugin metadata; requires smottt/wideimage ~1.1.1 + elgg ^5.0
+├── elgg-plugin.php           declarative config — bootstrap + events; no routes or actions declared here
 ├── autoloader.php            loads vendor/ autoload + lib/shims/
 ├── lib/
 │   ├── autoloader.php        classmap + psr-0 shim
@@ -31,7 +31,7 @@ hypeapps/
 │   │   ├── ParameterBag.php / ParameterBagInterface.php       typed request param accessor
 │   │   └── ControllerException.php
 │   ├── Data/
-│   │   ├── Graph.php / GraphInterface.php                     assembles entity property maps via hook
+│   │   ├── Graph.php / GraphInterface.php                     assembles entity property maps via event
 │   │   ├── Property.php / PropertyInterface.php               single named property carrier
 │   │   ├── Values.php                                         multi-value property set
 │   │   └── Validators.php                                     shared validation helpers
@@ -65,23 +65,25 @@ hypeapps/
 │           └── EntityIconUrlHook.php       entity:icon:url / all
 ```
 
-## Registered hooks/events (elgg-plugin.php)
+## Registered events (elgg-plugin.php)
 
-| Kind | Identifier | Handler |
-|------|-----------|---------|
-| hook  | `entity:icon:url` / `all`          | `EntityIconUrlHook::handle` |
-| hook  | `graph:properties` / `all`         | `PropertiesHook::handle` |
-| hook  | `graph:properties` / `user`        | `UserPropertiesHook::handle` |
-| hook  | `graph:properties` / `group`       | `GroupPropertiesHook::handle` |
-| hook  | `graph:properties` / `site`        | `SitePropertiesHook::handle` |
-| hook  | `graph:properties` / `object`      | `ObjectPropertiesHook::handle` |
-| hook  | `graph:properties` / `object:blog` | `BlogPropertiesHook::handle` |
-| hook  | `graph:properties` / `object:file` | `FilePropertiesHook::handle` |
-| hook  | `graph:properties` / `object:messages` | `MessagePropertiesHook::handle` |
-| hook  | `graph:properties` / `metadata`    | `ExtenderPropertiesHook::handle` |
-| hook  | `graph:properties` / `annotation`  | `ExtenderPropertiesHook::handle` |
-| hook  | `graph:properties` / `relationship`| `ExtenderPropertiesHook::handle` |
-| hook  | `graph:properties` / `river:item`  | `RiverPropertiesHook::handle` |
+| Kind  | Identifier | Handler |
+|-------|-----------|---------|
+| event | `entity:icon:url` / `all`          | `EntityIconUrlHook::handle` |
+| event | `graph:properties` / `all`         | `PropertiesHook::handle` |
+| event | `graph:properties` / `user`        | `UserPropertiesHook::handle` |
+| event | `graph:properties` / `group`       | `GroupPropertiesHook::handle` |
+| event | `graph:properties` / `site`        | `SitePropertiesHook::handle` |
+| event | `graph:properties` / `object`      | `ObjectPropertiesHook::handle` |
+| event | `graph:properties` / `object:blog` | `BlogPropertiesHook::handle` |
+| event | `graph:properties` / `object:file` | `FilePropertiesHook::handle` |
+| event | `graph:properties` / `object:messages` | `MessagePropertiesHook::handle` |
+| event | `graph:properties` / `metadata`    | `ExtenderPropertiesHook::handle` |
+| event | `graph:properties` / `annotation`  | `ExtenderPropertiesHook::handle` |
+| event | `graph:properties` / `relationship`| `ExtenderPropertiesHook::handle` |
+| event | `graph:properties` / `river:item`  | `RiverPropertiesHook::handle` |
+
+All handlers have the signature `public static function handle(\Elgg\Event $event)`.
 
 ## Routes
 
@@ -95,23 +97,26 @@ endpoint, and action dispatch uses `actions/dispatch.php` as a catch-all.
 
 ## Entities
 
-No custom entity classes. Operates on any `ElggEntity` / extender via hooks.
+No custom entity classes. Operates on any `ElggEntity` / extender via events.
 
 ## Dependencies
 
 | Package | Constraint | Role |
 |---------|-----------|------|
-| `elgg/elgg` | `^4.0` | framework |
+| `elgg/elgg` | `^5.0` | framework |
 | `smottt/wideimage` | `~1.1.1` | image resize/crop |
 | `composer/installers` | `^2.0` | Elgg plugin install path |
 
-## Migration notes (3.x → 4.x)
+## Migration notes (4.x → 5.x)
 
-- Plugin id is `hypeapps` (lowercase). All `elgg_get_plugin_from_id` / settings
-  calls use `'hypeapps'`; camelCase `'hypeApps'` silently returns false in Elgg 4.
-- The `\hypeJunction\Plugin` base class and `DiContainer` are still valid in Elgg 4
-  (no Elgg core dependency in the base classes themselves).
-- `graph:properties` is a hypeApps-internal hook — not part of Elgg core. Other
+- `'hooks'` key in `elgg-plugin.php` renamed to `'events'` per Elgg 5.x unified events API.
+- All handler signatures changed from `\Elgg\Hook` to `\Elgg\Event`; both classes have
+  the same `getValue()`, `getParam()`, `getType()`, `getName()` interface.
+- `add_translation()` removed; language files must now `return []`.
+- `version.php` removed from Elgg core; version is now via `elgg_get_config('version')`.
+- `DiContainer` and `ParameterBag` annotated with `#[\AllowDynamicProperties]`
+  to silence PHP 8.2 deprecation (both classes intentionally store values as properties).
+- `graph:properties` is a hypeApps-internal event (not part of Elgg core). Other
   plugins that consume it must list `hypeapps` as a `required` dependency.
 - Icon sizes defined in `Config::SIZE_*` constants are referenced by other
   hypeJunction plugins; do not rename without auditing callsites.

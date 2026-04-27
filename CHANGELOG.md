@@ -1,3 +1,21 @@
+<a name="7.0.0"></a>
+# 7.0.0 (2026-04-27)
+
+### Breaking Changes
+
+* **elgg:** raise minimum to Elgg 5.x (PHP 8.2+). Plugins on Elgg 4.x must stay on hypeApps 6.x.
+
+### Migration (4.x → 5.x)
+
+* **events:** renamed `'hooks'` → `'events'` key in `elgg-plugin.php` per Elgg 5.x unified events API.
+* **handler signatures:** replaced `\Elgg\Hook` → `\Elgg\Event` in all 12 handler class signatures (including docblocks).
+* **language files:** converted `add_translation('en', ...)` → `return [...]` (add_translation removed in Elgg 5.x).
+* **PHP 8.2:** added `#[\AllowDynamicProperties]` to `DiContainer` and `ParameterBag` — dynamic property creation deprecated in PHP 8.2.
+* **Integration::getElggVersion():** removed `version.php` include fallback (file removed in Elgg 5.x); now uses `elgg_get_config('version')`.
+* **docker:** updated test stack from PHP 7.4/MySQL 5.7/Elgg 4.x to PHP 8.2/MySQL 8.0/Elgg 5.x.
+
+---
+
 <a name="6.0.0"></a>
 # 6.0.0 (2026-04-11)
 
