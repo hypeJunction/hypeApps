@@ -2,6 +2,7 @@
 
 namespace hypeJunction\Controllers;
 
+#[\AllowDynamicProperties]
 class ParameterBag implements ParameterBagInterface {
 
 	/**

@@ -2,7 +2,7 @@
 
 return [
 	'bootstrap' => \hypeJunction\Apps\Bootstrap::class,
-	'hooks' => [
+	'events' => [
 		'entity:icon:url' => [
 			'all' => [
 				'hypeJunction\Apps\Handlers\EntityIconUrlHook::handle' => [],

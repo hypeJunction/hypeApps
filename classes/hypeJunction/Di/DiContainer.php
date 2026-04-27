@@ -32,6 +32,7 @@ use ReflectionProperty;
  * @package Elgg.Core
  * @since   1.9
  */
+#[\AllowDynamicProperties]
 class DiContainer {
 
 	/**

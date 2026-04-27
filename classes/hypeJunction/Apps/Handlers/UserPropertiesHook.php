@@ -9,10 +9,10 @@ class UserPropertiesHook {
 	/**
 	 * Returns object property definitions
 	 *
-	 * @param \Elgg\Hook $hook Hook
+	 * @param \Elgg\Event $hook Hook
 	 * @return Property[]
 	 */
-	public static function handle(\Elgg\Hook $hook) {
+	public static function handle(\Elgg\Event $hook) {
 
 		$return = $hook->getValue();
 		$full_view = $hook->getParam('full_view') ?: false;

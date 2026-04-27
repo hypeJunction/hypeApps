@@ -15,4 +15,4 @@ $actions = array(
 	'apps:item' => 'item',
 );
 
-add_translation('en', array_merge($general, $actions));
+return array_merge($general, $actions);

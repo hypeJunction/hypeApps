@@ -7,10 +7,10 @@ class EntityIconUrlHook {
 	/**
 	 * Filter icon URLs to route requests via a faster handler
 	 *
-	 * @param \Elgg\Hook $hook Hook
+	 * @param \Elgg\Event $hook Hook
 	 * @return string|void
 	 */
-	public static function handle(\Elgg\Hook $hook) {
+	public static function handle(\Elgg\Event $hook) {
 
 		$return = $hook->getValue();
 

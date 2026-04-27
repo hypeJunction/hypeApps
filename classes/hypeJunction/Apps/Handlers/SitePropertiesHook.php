@@ -7,10 +7,10 @@ use hypeJunction\Data\Property;
 class SitePropertiesHook {
 
 	/**
-	 * @param \Elgg\Hook $hook Hook
+	 * @param \Elgg\Event $hook Hook
 	 * @return Property[]
 	 */
-	public static function handle(\Elgg\Hook $hook) {
+	public static function handle(\Elgg\Event $hook) {
 
 		$return = $hook->getValue();
 

@@ -41,15 +41,17 @@ class Integration
             return self::$version;
         }
         if (is_callable('elgg_get_version')) {
-            return elgg_get_version(true);
-        } else {
-            $path = self::getRootPath() . '/version.php';
-            if (!include $path) {
-                return false;
-            }
-            self::$version = $release;
+            self::$version = elgg_get_version(true);
             return self::$version;
         }
+        if (is_callable('elgg_get_config')) {
+            $v = elgg_get_config('version');
+            if ($v) {
+                self::$version = $v;
+                return self::$version;
+            }
+        }
+        return false;
     }
     /**
      * Compares a given version to current version
