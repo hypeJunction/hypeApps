@@ -1,8 +1,6 @@
 <?php
 
-$general = array();
-
-$actions = array(
+return [
 	'apps:action:error' => 'An error has occurred and has been logged. Please contact site administrator if the error persists',
 	'apps:validation:error' => 'One or more inputs are incomplete or contain malformatted data. Please double check your submission',
 	'apps:validation:error:prop' => 'Value for \'%s\' is invalid',
@@ -13,6 +11,4 @@ $actions = array(
 	'apps:delete:error' => '%s can not be deleted',
 
 	'apps:item' => 'item',
-);
-
-add_translation('en', array_merge($general, $actions));
+];
