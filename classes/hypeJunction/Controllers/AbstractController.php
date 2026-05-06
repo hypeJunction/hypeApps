@@ -27,7 +27,7 @@ abstract class AbstractController implements ControllerInterface {
 
 	/**
 	 * Request
-	 * 
+	 *
 	 * @param RequestInterface $request Http request
 	 * @param GraphInterface   $graph   Node lib
 	 */
@@ -38,10 +38,12 @@ abstract class AbstractController implements ControllerInterface {
 
 	/**
 	 * Throws API exception for unknown methods
-	 * 
+	 *
 	 * @param string $name      Method name
 	 * @param array  $arguments Arguments
-	 * @thorws ControllerException
+	 *
+	 * @return mixed
+	 * @throws ControllerException
 	 */
 	public function __call($name, $arguments) {
 		throw new ControllerException("Method $name not allowed", Response::HTTP_METHOD_NOT_ALLOWED);
@@ -59,8 +61,8 @@ abstract class AbstractController implements ControllerInterface {
 		$call = strtolower($method);
 		$params = $this->params($method);
 
-		if ($params === false || $params === null || !is_callable(array($this, $call))) {
-			throw new ControllerException("Method not allowed", Response::HTTP_METHOD_NOT_ALLOWED);
+		if ($params === false || $params === null || !is_callable([$this, $call])) {
+			throw new ControllerException('Method not allowed', Response::HTTP_METHOD_NOT_ALLOWED);
 		}
 
 		return $this->$call(new ParameterBag());
@@ -70,28 +72,27 @@ abstract class AbstractController implements ControllerInterface {
 	 * {@inheritdoc}
 	 */
 	public function get(ParameterBagInterface $params) {
-		throw new ControllerException("Method not allowed", Response::HTTP_METHOD_NOT_ALLOWED);
+		throw new ControllerException('Method not allowed', Response::HTTP_METHOD_NOT_ALLOWED);
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function post(ParameterBagInterface $params) {
-		throw new ControllerException("Method not allowed", Response::HTTP_METHOD_NOT_ALLOWED);
+		throw new ControllerException('Method not allowed', Response::HTTP_METHOD_NOT_ALLOWED);
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function put(ParameterBagInterface $params) {
-		throw new ControllerException("Method not allowed", Response::HTTP_METHOD_NOT_ALLOWED);
+		throw new ControllerException('Method not allowed', Response::HTTP_METHOD_NOT_ALLOWED);
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function delete(ParameterBagInterface $params) {
-		throw new ControllerException("Method not allowed", Response::HTTP_METHOD_NOT_ALLOWED);
+		throw new ControllerException('Method not allowed', Response::HTTP_METHOD_NOT_ALLOWED);
 	}
-
 }

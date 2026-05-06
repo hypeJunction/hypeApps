@@ -8,7 +8,7 @@ use ReflectionProperty;
 
 /**
  * Clone of Elgg's core Di Container
- * 
+ *
  * Container holding values which can be resolved upon reading and optionally stored and shared
  * across reads.
  *
@@ -33,12 +33,15 @@ use ReflectionProperty;
  * @since   1.9
  */
 #[\AllowDynamicProperties]
+/**
+ * DiContainer class.
+ */
 class DiContainer {
 
 	/**
 	 * @var array each element is an array: ['callable' => mixed $factory, 'shared' => bool $isShared]
 	 */
-	private $factories_ = array();
+	private $factories_ = [];
 
 	const CLASS_NAME_PATTERN_53 = '/^(\\\\?[a-z_\x7f-\xff][a-z0-9_\x7f-\xff]*)+$/i';
 
@@ -53,6 +56,7 @@ class DiContainer {
 		if (!isset($this->factories_[$name])) {
 			throw new Exception("Value or factory was not set for: $name");
 		}
+
 		$value = $this->build($this->factories_[$name]['callable'], $name);
 
 		// Why check existence of factory here? A: the builder function may have set the value
@@ -60,6 +64,7 @@ class DiContainer {
 		if (!empty($this->factories_[$name]) && $this->factories_[$name]['shared']) {
 			$this->{$name} = $value;
 		}
+
 		return $value;
 	}
 
@@ -75,6 +80,7 @@ class DiContainer {
 		if (is_callable($factory)) {
 			return call_user_func($factory, $this);
 		}
+
 		$msg = "Factory for '$name' was uncallable";
 		if (is_string($factory)) {
 			$msg .= ": '$factory'";
@@ -82,9 +88,10 @@ class DiContainer {
 			if (is_string($factory[0])) {
 				$msg .= ": '{$factory[0]}::{$factory[1]}'";
 			} else {
-				$msg .= ": " . get_class($factory[0]) . "->{$factory[1]}";
+				$msg .= ': ' . get_class($factory[0]) . "->{$factory[1]}";
 			}
 		}
+
 		throw new Exception($msg);
 	}
 
@@ -100,6 +107,7 @@ class DiContainer {
 		if (substr($name, -1) === '_') {
 			throw new InvalidArgumentException('$name cannot end with "_"');
 		}
+
 		$this->remove($name);
 		$this->{$name} = $value;
 		return $this;
@@ -118,14 +126,16 @@ class DiContainer {
 		if (substr($name, -1) === '_') {
 			throw new InvalidArgumentException('$name cannot end with "_"');
 		}
+
 		if (!is_callable($callable, true)) {
 			throw new InvalidArgumentException('$factory must appear callable');
 		}
+
 		$this->remove($name);
-		$this->factories_[$name] = array(
+		$this->factories_[$name] = [
 			'callable' => $callable,
 			'shared' => $shared,
-		);
+		];
 		return $this;
 	}
 
@@ -142,10 +152,12 @@ class DiContainer {
 		if (substr($name, -1) === '_') {
 			throw new InvalidArgumentException('$name cannot end with "_"');
 		}
+
 		$classname_pattern = self::CLASS_NAME_PATTERN_53;
 		if (!is_string($class_name) || !preg_match($classname_pattern, $class_name)) {
 			throw new InvalidArgumentException('Class names must be valid PHP class names');
 		}
+
 		$func = function () use ($class_name) {
 			return new $class_name();
 		};
@@ -162,6 +174,7 @@ class DiContainer {
 		if (substr($name, -1) === '_') {
 			throw new InvalidArgumentException('$name cannot end with "_"');
 		}
+
 		unset($this->{$name});
 		unset($this->factories_[$name]);
 		return $this;
@@ -177,10 +190,12 @@ class DiContainer {
 		if (isset($this->factories_[$name])) {
 			return true;
 		}
+
 		if (substr($name, -1) === '_') {
 			return false;
 		}
-		return (bool)property_exists($this, $name);
+
+		return (bool) property_exists($this, $name);
 	}
 
 	/**
@@ -197,6 +212,7 @@ class DiContainer {
 		foreach ($refl->getProperties(ReflectionProperty::IS_PUBLIC) as $prop) {
 			$names[] = $prop->name;
 		}
+
 		foreach (array_keys($this->factories_) as $name) {
 			$names[] = $name;
 		}

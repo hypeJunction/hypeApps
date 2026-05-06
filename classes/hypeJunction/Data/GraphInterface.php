@@ -5,6 +5,9 @@ namespace hypeJunction\Data;
 use ElggData;
 use ElggRiverItem;
 
+/**
+ * GraphInterface interface.
+ */
 interface GraphInterface {
 
 	/**
@@ -20,7 +23,7 @@ interface GraphInterface {
 	 * @param array                  $params Additional params
 	 * @return Property[]
 	 */
-	public function getProperties($object = null, array $params = array());
+	public function getProperties($object = null, array $params = []);
 
 	/**
 	 * Returns an alias for a object
@@ -40,7 +43,7 @@ interface GraphInterface {
 
 	/**
 	 * Returns uid of an object
-	 * 
+	 *
 	 * @param ElggData|ElggRiverItem $object Object
 	 * @return string
 	 */
@@ -53,7 +56,7 @@ interface GraphInterface {
 	 * @param array $params Additionl params
 	 * @return array
 	 */
-	public function export($data, array $params = array());
+	public function export($data, array $params = []);
 
 	/**
 	 * Test if object is exportable

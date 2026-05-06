@@ -19,7 +19,13 @@ class Actions {
 	 */
 	private $result;
 
-
+	/**
+	 * __construct.
+	 *
+	 * @param ActionResult $result result
+	 *
+	 * @return mixed
+	 */
 	public function __construct(ActionResult $result) {
 		$this->result = $result;
 	}
@@ -29,13 +35,12 @@ class Actions {
 	 * Triggers 'action:after', $ation hook that allows you to filter the Result object
 	 *
 	 * @param Action $controller Action name or instance of Action
-	 * @param bool  $feedback    Display errors and messages
+	 * @param bool   $feedback   Display errors and messages
 	 * @return ActionResult
 	 */
 	public function execute(Action $controller, $feedback = true) {
 
 		try {
-
 			$action = $this->parseActionName();
 
 			elgg_make_sticky_form($action);
@@ -44,6 +49,7 @@ class Actions {
 			if ($controller->validate() === false) {
 				throw new ActionValidationException("Invalid input for action $action");
 			}
+
 			$controller->execute();
 			$this->result = $controller->getResult();
 		} catch (ActionValidationException $ex) {
@@ -72,6 +78,7 @@ class Actions {
 			foreach ($errors as $error) {
 				elgg_register_error_message($error);
 			}
+
 			foreach ($messages as $message) {
 				elgg_register_success_message($message);
 			}
@@ -91,7 +98,7 @@ class Actions {
 		if ($handler == 'action') {
 			return implode('/', $segments);
 		}
+
 		return $uri;
 	}
-
 }

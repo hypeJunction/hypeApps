@@ -4,6 +4,9 @@ namespace hypeJunction\Apps\Handlers;
 
 use hypeJunction\Data\Property;
 
+/**
+ * FilePropertiesHook class.
+ */
 class FilePropertiesHook {
 
 	/**
@@ -14,14 +17,13 @@ class FilePropertiesHook {
 
 		$return = $hook->getValue();
 
-		foreach (array('simpletype', 'mimetype', 'originalfilename', 'origin') as $key) {
-$return[] = new Property($key, array(
+		foreach (['simpletype', 'mimetype', 'originalfilename', 'origin'] as $key) {
+			$return[] = new Property($key, [
 				'getter' => '\hypeJunction\Data\Values::getVerbatim',
 				'setter' => '\hypeJunction\Data\Values::setVerbatim',
-			));
+			]);
 		}
 
 		return $return;
 	}
-
 }

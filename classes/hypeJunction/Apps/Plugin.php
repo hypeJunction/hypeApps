@@ -16,7 +16,7 @@ final class Plugin extends \hypeJunction\Plugin {
 	 * Instance
 	 * @var self
 	 */
-	static $instance;
+	public static $instance;
 
 	/**
 	 * {@inheritdoc}
@@ -25,23 +25,23 @@ final class Plugin extends \hypeJunction\Plugin {
 
 		$this->setValue('plugin', $plugin);
 
-$this->setFactory('config', function (Plugin $p) {
+		$this->setFactory('config', function (Plugin $p) {
 			return new \hypeJunction\Apps\Config($p->plugin);
 		});
 
-$this->setFactory('actions', function(Plugin $p) {
+		$this->setFactory('actions', function(Plugin $p) {
 			return new \hypeJunction\Controllers\Actions(new \hypeJunction\Controllers\ActionResult());
 		});
 
-$this->setFactory('uploader', function(Plugin $p) {
+		$this->setFactory('uploader', function(Plugin $p) {
 			return new \hypeJunction\Services\Uploader($p->config, $p->iconFactory);
 		});
 
-$this->setFactory('iconFactory', function(Plugin $p) {
+		$this->setFactory('iconFactory', function(Plugin $p) {
 			return new \hypeJunction\Services\IconFactory($p->config);
 		});
 
-$this->setFactory('graph', function(Plugin $p) {
+		$this->setFactory('graph', function(Plugin $p) {
 			return new \hypeJunction\Data\Graph($p->config);
 		});
 	}
@@ -50,10 +50,11 @@ $this->setFactory('graph', function(Plugin $p) {
 	 * {@inheritdoc}
 	 */
 	public static function factory() {
-		if (null === self::$instance) {
+		if (self::$instance === null) {
 			$plugin = elgg_get_plugin_from_id('hypeapps');
 			self::$instance = new self($plugin);
 		}
+
 		return self::$instance;
 	}
 
@@ -63,5 +64,4 @@ $this->setFactory('graph', function(Plugin $p) {
 	public function boot() {
 		// hypeApps registers hooks statically via elgg-plugin.php; runtime boot is a no-op.
 	}
-
 }

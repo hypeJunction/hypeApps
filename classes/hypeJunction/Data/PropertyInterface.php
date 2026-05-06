@@ -5,15 +5,18 @@ namespace hypeJunction\Data;
 use ElggData;
 use ElggRiverItem;
 
+/**
+ * PropertyInterface interface.
+ */
 interface PropertyInterface {
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param string $id      Property identifier
 	 * @param array  $options Property options
 	 */
-	public function __construct($id, $options = array());
+	public function __construct($id, $options = []);
 
 	/**
 	 * Access protected object prop
@@ -77,49 +80,49 @@ interface PropertyInterface {
 	/**
 	 * Get value of this property for the given object
 	 *
-	 * @param ElggData|ElggRiverItem $object
+	 * @param ElggData|ElggRiverItem $object Object to read the value from
 	 * @param array                  $params Additional params
 	 * @return mixed
 	 */
-	public function getValue($object, array $params = array());
+	public function getValue($object, array $params = []);
 
 	/**
 	 * Set value of this property on the given object and return it
 	 *
-	 * @param ElggData|ElggRiverItem $object
+	 * @param ElggData|ElggRiverItem $object Object to set the value on
 	 * @param mixed                  $value  Value to set
 	 * @param array                  $params Additional params
 	 * @return ElggData|ElggRiverItem
 	 */
-	public function setValue(&$object, $value, array $params = array());
+	public function setValue(&$object, $value, array $params = []);
 
 	/**
 	 * Get default value of this property
 	 *
-	 * @param ElggData|ElggRiverItem $object
+	 * @param ElggData|ElggRiverItem $object Object to read the default for
 	 * @return mixed
 	 */
 	public function getDefault($object);
 
 	/**
 	 * Validate the value before it is set on an entity
-	 * 
-	 * @param ElggData|ElggRiverItem $object
+	 *
+	 * @param ElggData|ElggRiverItem $object Object the value belongs to
 	 * @param mixed                  $value  Value to validate
 	 * @param array                  $params Additional params
 	 * @return \stdClass with 'valid' & 'data' properties
 	 */
-	public function validate($object, $value, array $params = array());
+	public function validate($object, $value, array $params = []);
 
 	/**
 	 * Sanitize and prepare the value
-	 * 
-	 * @param ElggData|ElggRiverItem $object
+	 *
+	 * @param ElggData|ElggRiverItem $object Object the value belongs to
 	 * @param mixed                  $value  Value to sanitize
 	 * @param array                  $params Additional params
 	 * @return mixed
 	 */
-	public function sanitize($object, &$value, array $params = array());
+	public function sanitize($object, &$value, array $params = []);
 
 	/**
 	 * Get input data

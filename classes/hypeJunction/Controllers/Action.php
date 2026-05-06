@@ -4,6 +4,9 @@ namespace hypeJunction\Controllers;
 
 use hypeJunction\Exceptions\ActionValidationException;
 
+/**
+ * Action class.
+ */
 abstract class Action {
 
 	/**
@@ -25,8 +28,8 @@ abstract class Action {
 	 * @param ParameterBag $params Parameter bag
 	 */
 	public function __construct(ActionResult $result = null, ParameterBag $params = null) {
-		$this->result = ($result) ? : new ActionResult();
-		$this->params = ($params) ? : new ParameterBag();
+		$this->result = ($result) ?: new ActionResult();
+		$this->params = ($params) ?: new ParameterBag();
 	}
 
 	/**
@@ -83,7 +86,7 @@ abstract class Action {
 	 */
 	public function setup() {
 		$input_keys = array_keys((array) elgg_get_config('input'));
-		$request_keys = array_keys((array) $_REQUEST);
+		$request_keys = array_keys(array_merge((array) $_GET, (array) $_POST));
 		$keys = array_unique(array_merge($input_keys, $request_keys));
 		foreach ($keys as $key) {
 			if ($key) {
@@ -97,11 +100,11 @@ abstract class Action {
 	 * @throws ActionValidationException
 	 * @return bool
 	 */
-	abstract function validate();
+	abstract public function validate();
 
 	/**
 	 * Executes an action
 	 * @return void
 	 */
-	abstract function execute();
+	abstract public function execute();
 }

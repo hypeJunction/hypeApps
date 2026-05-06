@@ -2,6 +2,9 @@
 
 namespace hypeJunction\Data;
 
+/**
+ * Property class.
+ */
 class Property implements PropertyInterface {
 
 	const TYPE_STRING = 'string';
@@ -19,7 +22,7 @@ class Property implements PropertyInterface {
 
 	/**
 	 * Property attribute name
-	 * @var string 
+	 * @var string
 	 */
 	protected $attribute;
 
@@ -49,7 +52,7 @@ class Property implements PropertyInterface {
 
 	/**
 	 * Callbacks to sanitize/prepare values for validation and setting
-	 * @var [] 
+	 * @var []
 	 */
 	protected $sanitizers;
 
@@ -99,10 +102,11 @@ class Property implements PropertyInterface {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function __construct($id, $options = array()) {
+	public function __construct($id, $options = []) {
 		foreach ((array) $options as $key => $value) {
 			$this->$key = $value;
 		}
+
 		$this->id = $id;
 	}
 
@@ -117,7 +121,7 @@ class Property implements PropertyInterface {
 	 * {@inheritdoc}
 	 */
 	public function getDefault($object) {
-		return $this->default ? : $this->getValue($object);
+		return $this->default ?: $this->getValue($object);
 	}
 
 	/**
@@ -129,7 +133,8 @@ class Property implements PropertyInterface {
 		} else if ($this->enum && is_callable($this->enum)) {
 			return call_user_func($this->enum, $this);
 		}
-		return array();
+
+		return [];
 	}
 
 	/**
@@ -143,19 +148,19 @@ class Property implements PropertyInterface {
 	 * {@inheritdoc}
 	 */
 	public function getAttributeName() {
-		return $this->attribute ? : $this->id;
+		return $this->attribute ?: $this->id;
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function getLabel($object, $lang = null, $raw = false) {
-$key = implode(':', array_filter(array(
+		$key = implode(':', array_filter([
 			'label',
 			$object->getType(),
 			$object->getSubtype(),
 			$this->getIdentifier()
-		)));
+		]));
 
 		if ($raw) {
 			return $key;
@@ -175,7 +180,7 @@ $key = implode(':', array_filter(array(
 			$translation = elgg_extract($lang, $this->label);
 		}
 
-		return ($translation) ? $translation : elgg_echo($key, array(), $lang);
+		return ($translation) ? $translation : elgg_echo($key, [], $lang);
 	}
 
 	/**
@@ -183,12 +188,12 @@ $key = implode(':', array_filter(array(
 	 */
 	public function getDescription($object, $lang = null, $raw = false) {
 
-$key = implode(':', array_filter(array(
+		$key = implode(':', array_filter([
 			'help',
 			$object->getType(),
 			$object->getSubtype(),
 			$this->getIdentifier()
-		)));
+		]));
 
 		if ($raw) {
 			return $key;
@@ -213,13 +218,13 @@ $key = implode(':', array_filter(array(
 		}
 
 
-		return ($translation) ? $translation : elgg_echo($key, array(), $lang);
+		return ($translation) ? $translation : elgg_echo($key, [], $lang);
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getValue($object, array $params = array()) {
+	public function getValue($object, array $params = []) {
 		if ($this->getter && is_callable($this->getter)) {
 			return call_user_func($this->getter, $this, $object, $params);
 		}
@@ -228,10 +233,11 @@ $key = implode(':', array_filter(array(
 	/**
 	 * {@inheritdoc}
 	 */
-	public function setValue(&$object, $value, array $params = array()) {
+	public function setValue(&$object, $value, array $params = []) {
 		if ($this->setter && is_callable($this->setter)) {
 			call_user_func($this->setter, $this, $object, $value, $params);
 		}
+
 		return $object;
 	}
 
@@ -252,13 +258,14 @@ $key = implode(':', array_filter(array(
 	/**
 	 * {@inheritdoc}
 	 */
-	public function sanitize($object, &$value = null, array $params = array()) {
+	public function sanitize($object, &$value = null, array $params = []) {
 		// Backward-compat: old callers passed (&$value, $params) with two args.
 		// With object arg, $object is the owning object; with legacy, $object IS the value.
 		if (func_num_args() < 2 || !is_object($object)) {
 			$legacyValue = &$object;
 			$value = $legacyValue;
 		}
+
 		$sanitizers = (array) $this->sanitizers;
 		foreach ($sanitizers as $sanitizer) {
 			if (is_callable($sanitizer)) {
@@ -270,7 +277,7 @@ $key = implode(':', array_filter(array(
 	/**
 	 * {@inheritdoc}
 	 */
-	public function validate($object, $value = null, array $params = array()) {
+	public function validate($object, $value = null, array $params = []) {
 		// Backward-compat: old callers passed ($value, $params). Shift if only first arg provided.
 		if (func_num_args() === 1 && !is_object($object)) {
 			$value = $object;
@@ -279,17 +286,18 @@ $key = implode(':', array_filter(array(
 
 		$result = new \stdClass();
 		$result->valid = true;
-		$result->data = array();
+		$result->data = [];
 
-		$rules = (array) elgg_extract('rules', (array) $this->validation, array());
-		$callbacks = (array) elgg_extract('callbacks', (array) $this->validation, array());
+		$rules = (array) elgg_extract('rules', (array) $this->validation, []);
+		$callbacks = (array) elgg_extract('callbacks', (array) $this->validation, []);
 
 		foreach ($rules as $rule => $expectation) {
 			$valid = true;
-			$messages = array();
+			$messages = [];
 			if (!$rule) {
 				continue;
 			}
+
 			try {
 				$validation_result = (array) call_user_func('\hypeJunction\Data\Validators::validateRule', $this, $value, $rule, $expectation, $params);
 			} catch (\hypeJunction\Exceptions\ActionValidationException $ex) {
@@ -304,20 +312,21 @@ $key = implode(':', array_filter(array(
 				$result->valid = false;
 			}
 
-$result->data[] = (object) array_merge(array(
-						'rule' => $rule,
-						'expecation' => $expectation,
-						'valid' => $valid,
-						'messages' => $messages,
-							), $validation_result);
+			$result->data[] = (object) array_merge([
+				'rule' => $rule,
+				'expecation' => $expectation,
+				'valid' => $valid,
+				'messages' => $messages,
+			], $validation_result);
 		}
 
 		foreach ($callbacks as $rule => $callback) {
 			$valid = true;
-			$messages = array();
+			$messages = [];
 			if (!is_callable($callback)) {
 				continue;
 			}
+
 			try {
 				$valid = call_user_func($callback, $this, $value, $params);
 			} catch (\hypeJunction\Exceptions\ActionValidationException $ex) {
@@ -332,12 +341,12 @@ $result->data[] = (object) array_merge(array(
 				$result->valid = false;
 			}
 
-			$result->data[] = (object) array(
-						'rule' => $rule,
-						'callback' => $callback,
-						'valid' => $valid,
-						'messages' => $messages,
-			);
+			$result->data[] = (object) [
+				'rule' => $rule,
+				'callback' => $callback,
+				'valid' => $valid,
+				'messages' => $messages,
+			];
 		}
 
 		return $result;
@@ -362,12 +371,12 @@ $result->data[] = (object) array_merge(array(
 	 * @return array
 	 */
 	public function toArray() {
-return array_filter(array(
+		return array_filter([
 			'name' => $this->getAttributeName(),
 			'required' => $this->required,
 			'type' => $this->type,
 			'enum' => $this->getEnumOptions(),
 			'default' => $this->default,
-		));
+		]);
 	}
 }

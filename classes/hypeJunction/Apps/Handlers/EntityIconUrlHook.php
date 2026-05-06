@@ -2,6 +2,9 @@
 
 namespace hypeJunction\Apps\Handlers;
 
+/**
+ * EntityIconUrlHook class.
+ */
 class EntityIconUrlHook {
 
 	/**
@@ -29,5 +32,4 @@ class EntityIconUrlHook {
 
 		return hypeApps()->iconFactory->getURL($entity, $size);
 	}
-
 }

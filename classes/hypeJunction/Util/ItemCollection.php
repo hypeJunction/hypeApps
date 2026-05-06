@@ -7,7 +7,7 @@ namespace hypeJunction\Util;
  */
 final class ItemCollection {
 
-	protected $guids = array();
+	protected $guids = [];
 
 	/**
 	 * Create a new group from a mixed data set
@@ -38,6 +38,7 @@ final class ItemCollection {
 				sort($this->guids);
 			}
 		}
+
 		return $this;
 	}
 
@@ -54,7 +55,7 @@ final class ItemCollection {
 	 * @return ElggEntity[]
 	 */
 	public function entities() {
-		$entities = array_map(array($this, 'toEntity'), $this->guids);
+		$entities = array_map([$this, 'toEntity'], $this->guids);
 		return array_filter($entities);
 	}
 
@@ -70,6 +71,7 @@ final class ItemCollection {
 		} else if ($this->exists($entity)) {
 			return (int) $entity;
 		}
+
 		return false;
 	}
 
@@ -94,5 +96,4 @@ final class ItemCollection {
 	protected function exists($guid = null) {
 		return elgg_entity_exists($guid);
 	}
-
 }

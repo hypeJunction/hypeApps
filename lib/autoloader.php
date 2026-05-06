@@ -18,7 +18,7 @@ if (file_exists("{$plugin_root}/vendor/autoload.php")) {
 }
 
 if (\hypeJunction\Integration::isElggVersionBelow('1.9.0')) {
-	require_once __DIR__ . "/shims/1_8.php";
+	require_once __DIR__ . '/shims/1_8.php';
 }
 
 /**
@@ -34,6 +34,12 @@ function hypeApps() {
  * @return \hypeJunction\Apps\Plugin
  */
 if (!elgg_is_active_plugin('hypeFilestore')) {
+
+	/**
+	 * hypeFilestore.
+	 *
+	 * @return mixed
+	 */
 	function hypeFilestore() {
 		return hypeApps();
 	}

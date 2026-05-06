@@ -4,6 +4,9 @@ namespace hypeJunction\Apps\Handlers;
 
 use hypeJunction\Data\Property;
 
+/**
+ * RelationshipPropertiesHook class.
+ */
 class RelationshipPropertiesHook {
 
 	/**
@@ -12,24 +15,23 @@ class RelationshipPropertiesHook {
 	 */
 	public static function handle(\Elgg\Event $hook) {
 		$return = $hook->getValue();
-$return[] = new Property('id', array(
+		$return[] = new Property('id', [
 			'getter' => '\hypeJunction\Data\Values::getVerbatim',
 			'read_only' => true,
-		));
+		]);
 
-$return[] = new Property('subject', array(
+		$return[] = new Property('subject', [
 			'attribute' => 'guid_one',
 			'getter' => '\hypeJunction\Data\Values::getEntity',
 			'read_only' => true,
-		));
+		]);
 
-$return[] = new Property('object', array(
+		$return[] = new Property('object', [
 			'attribute' => 'guid_two',
 			'getter' => '\hypeJunction\Data\Values::getEntity',
 			'read_only' => true,
-		));
+		]);
 
 		return $return;
 	}
-
 }

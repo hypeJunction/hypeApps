@@ -8,6 +8,7 @@ namespace hypeJunction;
 abstract class Config {
 
 	private $plugin;
+
 	private $settings;
 
 	/**
@@ -42,13 +43,15 @@ abstract class Config {
 		if (!isset($this->settings)) {
 			$this->settings = array_merge($this->getDefaults(), $this->plugin->getAllSettings());
 		}
+
 		return $this->settings;
 	}
 
 	/**
 	 * Returns a plugin setting
 	 *
-	 * @param string $name Setting name
+	 * @param string $name    Setting name
+	 * @param mixed  $default Default value if the setting is not configured
 	 * @return mixed
 	 */
 	public function get($name, $default = null) {
@@ -70,5 +73,4 @@ abstract class Config {
 	public function getID() {
 		return $this->plugin->getID();
 	}
-
 }

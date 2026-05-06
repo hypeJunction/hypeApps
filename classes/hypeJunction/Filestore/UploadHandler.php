@@ -21,14 +21,15 @@ class UploadHandler {
 	 * @param array  $config     Additional config
 	 * @return ElggFile[] An array of file entities created
 	 */
-	public function makeFiles($input, array $attributes = array(), array $config = array()) {
-		$files = array();
+	public function makeFiles($input, array $attributes = [], array $config = []) {
+		$files = [];
 		$uploads = hypeApps()->uploader->handle($input, $attributes, $config);
 		foreach ($uploads as $upload) {
 			if ($upload->file instanceof \ElggEntity) {
 				$files[] = $upload->file;
 			}
 		}
+
 		return $files;
 	}
 
@@ -40,8 +41,7 @@ class UploadHandler {
 	 * @param array  $config     Additional config
 	 * @return Upload[] An array of file entities created
 	 */
-	public static function handle($input, array $attributes = array(), array $config = array()) {
+	public static function handle($input, array $attributes = [], array $config = []) {
 		return hypeApps()->uploader->handle($input, $attributes, $config);
 	}
-
 }

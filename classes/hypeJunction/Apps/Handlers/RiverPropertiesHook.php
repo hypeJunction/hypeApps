@@ -4,6 +4,9 @@ namespace hypeJunction\Apps\Handlers;
 
 use hypeJunction\Data\Property;
 
+/**
+ * RiverPropertiesHook class.
+ */
 class RiverPropertiesHook {
 
 	/**
@@ -14,46 +17,46 @@ class RiverPropertiesHook {
 
 		$return = $hook->getValue();
 
-$return[] = new Property('id', array(
+		$return[] = new Property('id', [
 			'getter' => '\hypeJunction\Data\Values::getVerbatim',
 			'read_only' => true,
-		));
+		]);
 
-$return[] = new Property('action', array(
+		$return[] = new Property('action', [
 			'attribute' => 'action_type',
 			'getter' => '\hypeJunction\Data\Values::getVerbatim',
 			'read_only' => true,
-		));
+		]);
 
-$return[] = new Property('subject', array(
+		$return[] = new Property('subject', [
 			'attribute' => 'subject_guid',
 			'getter' => '\hypeJunction\Data\Values::getEntity',
 			'read_only' => true,
-		));
+		]);
 
-$return[] = new Property('object', array(
+		$return[] = new Property('object', [
 			'attribute' => 'object_guid',
 			'getter' => '\hypeJunction\Data\Values::getEntity',
 			'read_only' => true,
-		));
+		]);
 
-$return[] = new Property('target', array(
+		$return[] = new Property('target', [
 			'attribute' => 'target_guid',
 			'getter' => '\hypeJunction\Data\Values::getEntity',
 			'read_only' => true,
-		));
+		]);
 
-$return[] = new Property('annotation', array(
+		$return[] = new Property('annotation', [
 			'attribute' => 'annotation_id',
 			'getter' => '\hypeJunction\Data\Values::getAnnotation',
 			'read_only' => true,
-		));
+		]);
 
-$return[] = new Property('access', array(
+		$return[] = new Property('access', [
 			'attribute' => 'access_id',
 			'getter' => '\hypeJunction\Data\Values::getAccess',
 			'read_only' => true,
-		));
+		]);
 
 		foreach ($return as $key => $value) {
 			if ($value instanceof Property && $value->getIdentifier() == 'time_created') {
@@ -61,13 +64,12 @@ $return[] = new Property('access', array(
 			}
 		}
 
-$return[] = new Property('time_created', array(
+		$return[] = new Property('time_created', [
 			'attribute' => 'posted',
 			'getter' => '\hypeJunction\Data\Values::getAtomTime',
 			'read_only' => true,
-		));
+		]);
 
 		return $return;
 	}
-
 }

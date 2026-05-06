@@ -16,7 +16,9 @@ use hypeJunction\Inbox\Exceptions\PermissionsException;
 class DeleteAction extends Action {
 
 	/**
-	 * {@inheridoc}
+	 * {@inheritdoc}
+	 *
+	 * @return void
 	 */
 	public function setup() {
 		parent::setup();
@@ -30,7 +32,8 @@ class DeleteAction extends Action {
 		if (!$this->entity) {
 			throw new InvalidEntityException(elgg_echo('apps:entity:error'));
 		}
-		if (is_callable(array($this->entity, 'canDelete'))) {
+
+		if (is_callable([$this->entity, 'canDelete'])) {
 			if (!$this->entity->canDelete()) {
 				throw new PermissionsException('apps:permissions:error');
 			}
@@ -64,7 +67,7 @@ class DeleteAction extends Action {
 
 		if ($this->entity->delete()) {
 			unset($this->entity);
-			$this->result->addMessage(elgg_echo('apps:delete:success', array($display_name)));
+			$this->result->addMessage(elgg_echo('apps:delete:success', [$display_name]));
 			if ($container) {
 				$this->result->setForwardURL($forward_url);
 			}
@@ -72,5 +75,4 @@ class DeleteAction extends Action {
 			$this->result->addError(elgg_echo('apps:delete:error'));
 		}
 	}
-
 }

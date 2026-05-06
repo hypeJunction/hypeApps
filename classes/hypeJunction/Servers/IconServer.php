@@ -2,12 +2,19 @@
 
 namespace hypeJunction\Servers;
 
+/**
+ * IconServer class.
+ */
 class IconServer extends Server {
 
 	private $uid;
+
 	private $d;
+
 	private $ts;
+
 	private $path;
+
 	private $hmac;
 
 	/**
@@ -22,7 +29,7 @@ class IconServer extends Server {
 		$query = $this->get('q');
 		$query = json_decode(base64_decode($query), true);
 		if (!is_array($query)) {
-			header("HTTP/1.1 400 Bad Request");
+			header('HTTP/1.1 400 Bad Request');
 			exit;
 		}
 
@@ -33,7 +40,7 @@ class IconServer extends Server {
 		$this->hmac = $query['mac'];
 
 		if (!$this->uid || !$this->ts || !$this->path || !$this->hmac) {
-			header("HTTP/1.1 400 Bad Request");
+			header('HTTP/1.1 400 Bad Request');
 			exit;
 		}
 
@@ -44,10 +51,10 @@ class IconServer extends Server {
 			exit;
 		}
 
-		$values = $this->getDatalistValue(array('dataroot', '__site_secret__'));
+		$values = $this->getDatalistValue(['dataroot', '__site_secret__']);
 
 		if (empty($values)) {
-			header("HTTP/1.1 404 Not Found");
+			header('HTTP/1.1 404 Not Found');
 			exit;
 		}
 
@@ -56,7 +63,7 @@ class IconServer extends Server {
 
 		$hmac = hash_hmac('sha256', $this->uid . $this->path, $key);
 		if ($this->hmac !== $hmac) {
-			header("HTTP/1.1 403 Forbidden");
+			header('HTTP/1.1 403 Forbidden');
 			exit;
 		}
 
@@ -66,37 +73,36 @@ class IconServer extends Server {
 		$filename = "{$data_root}{$d}{$this->path}";
 
 		if (!file_exists($filename) || !is_readable($filename)) {
-			header("HTTP/1.1 404 Not Found");
+			header('HTTP/1.1 404 Not Found');
 			exit;
 		}
 
 		$filesize = filesize($filename);
 		$ext = pathinfo($filename, PATHINFO_EXTENSION);
 		switch ($ext) {
-			default :
+			default:
 				$mimetype = 'application/otcet-stream';
 				break;
-			case 'jpg' :
-			case 'jpeg' :
+			case 'jpg':
+			case 'jpeg':
 				$mimetype = 'image/jpeg';
 				break;
-			case 'png' :
+			case 'png':
 				$mimetype = 'image/png';
 				break;
-			case 'gif' :
+			case 'gif':
 				$mimetype = 'image/gif';
 				break;
 		}
 
 		header("Content-type: $mimetype");
-		header("Content-disposition: inline");
-		header('Expires: ' . gmdate('D, d M Y H:i:s \G\M\T', strtotime("+6 months")), true);
-		header("Pragma: public");
-		header("Cache-Control: public");
+		header('Content-disposition: inline');
+		header('Expires: ' . gmdate('D, d M Y H:i:s \G\M\T', strtotime('+6 months')), true);
+		header('Pragma: public');
+		header('Cache-Control: public');
 		header("Content-Length: $filesize");
 		header("ETag: \"$etag\"");
 		readfile($filename);
 		exit;
 	}
-
 }

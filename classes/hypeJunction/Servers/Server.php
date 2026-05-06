@@ -20,7 +20,7 @@ abstract class Server {
 	 * @param array $names Parameter names to retreive
 	 * @return array
 	 */
-	protected function getDatalistValue(array $names = array()) {
+	protected function getDatalistValue(array $names = []) {
 
 		$services = \hypeJunction\Integration::getServiceProvider();
 		foreach ($names as $name) {
@@ -41,6 +41,7 @@ abstract class Server {
 		if (isset($_GET[$name])) {
 			return $_GET[$name];
 		}
+
 		return $default;
 	}
 }

@@ -2,6 +2,9 @@
 
 namespace hypeJunction\Services;
 
+/**
+ * IconFactory class.
+ */
 class IconFactory {
 
 	/**
@@ -30,7 +33,7 @@ class IconFactory {
 	 *                             'coords'                Cropping coords
 	 * @return \ElggFile[]|false Created icons
 	 */
-	public function create(\ElggEntity $entity, $source = null, array $options = array()) {
+	public function create(\ElggEntity $entity, $source = null, array $options = []) {
 
 		if (!$entity instanceof \ElggEntity) {
 			return false;
@@ -51,32 +54,35 @@ class IconFactory {
 		$coords = elgg_extract('coords', $options, false);
 		$dir = $this->getIconDirectory($entity, elgg_extract('icon_filestore_prefix', $options));
 
-		$entity->icon_mimetype = (new \ElggFile)->detectMimeType($source, $entity->mimetype ? : 'image/jpeg');
+		$entity->icon_mimetype = (new \ElggFile)->detectMimeType($source, $entity->mimetype ?: 'image/jpeg');
 		$entity->icon_directory = $dir;
 
 		// reset
 		unset($entity->icontime);
-		foreach (array('x1', 'x2', 'y1', 'y2') as $coord) {
+		foreach (['x1', 'x2', 'y1', 'y2'] as $coord) {
 			unset($entity->$coord);
 		}
 
 		$error = false;
-		$icons = array();
-		$icons_meta = array();
+		$icons = [];
+		$icons_meta = [];
 
-		$icon_sizes = $this->getSizes($entity, elgg_extract('icon_sizes', $options, array()));
+		$icon_sizes = $this->getSizes($entity, elgg_extract('icon_sizes', $options, []));
 
 		foreach ($icon_sizes as $size => $props) {
 			if (empty($props)) {
 				continue;
 			}
+
 			if (!isset($props['croppable'])) {
 				$props['croppable'] = in_array($size, $this->config->getCroppableSizes());
 			}
+
 			if (is_array($coords) && !isset($coords['master_width'])) {
 				$coords['master_width'] = $this->config->get('master_size_length');
 				$coords['master_height'] = $this->config->get('master_size_length');
 			}
+
 			try {
 				$icon = $this->getIconFile($entity, $size);
 
@@ -87,6 +93,7 @@ class IconFactory {
 					$icon->open('write');
 					$icon->close();
 				}
+
 				$image->save($icon->getFilenameOnFilestore(), $this->config->getIconCompressionOpts());
 
 				$icons[$size] = $icon;
@@ -105,6 +112,7 @@ class IconFactory {
 			foreach ($icons as $icon) {
 				$icon->delete();
 			}
+
 			return false;
 		}
 
@@ -116,6 +124,7 @@ class IconFactory {
 				$src->open('write');
 				$src->close();
 			}
+
 			$srcimg->save($src->getFilenameOnFilestore(), $this->config->getSrcCompressionOpts());
 		}
 
@@ -139,26 +148,26 @@ class IconFactory {
 	 * Get icon size config
 	 *
 	 * @param \ElggEntity $entity     Entity
-	 * @param array      $icon_sizes Predefined icon sizes
+	 * @param array       $icon_sizes Predefined icon sizes
 	 * @return array
 	 */
-	public function getSizes(\ElggEntity $entity, array $icon_sizes = array()) {
+	public function getSizes(\ElggEntity $entity, array $icon_sizes = []) {
 
 		$defaults = ($entity && $entity->getSubtype() == 'file') ? $this->config->getFileIconSizes() : $this->config->getGlobalIconSizes();
 		$sizes = array_merge($defaults, $icon_sizes);
 
-return elgg_trigger_plugin_hook('entity:icon:sizes', $entity->getType(), array(
+		return elgg_trigger_plugin_hook('entity:icon:sizes', $entity->getType(), [
 			'entity' => $entity,
 			'subtype' => $entity->getSubtype(),
-				), $sizes);
+		], $sizes);
 	}
 
 	/**
 	 * Determines and normalizes the directory in which the icon is stored
 	 *
 	 * @param \ElggEntity $entity    Entity
-	 * @param string     $size      Icon size
-	 * @param string     $directory Default directory
+	 * @param string      $size      Icon size
+	 * @param string      $directory Default directory
 	 * @return string
 	 */
 	public function getIconDirectory(\ElggEntity $entity, $size = null, $directory = null) {
@@ -172,7 +181,7 @@ return elgg_trigger_plugin_hook('entity:icon:sizes', $entity->getType(), array(
 		}
 
 		if ($directory === null) {
-			$directory = $directory ? : $entity->icon_directory;
+			$directory = $directory ?: $entity->icon_directory;
 			if ($entity instanceof \ElggUser) {
 				$directory = 'profile';
 			} else if ($entity instanceof \ElggGroup) {
@@ -182,10 +191,10 @@ return elgg_trigger_plugin_hook('entity:icon:sizes', $entity->getType(), array(
 			}
 		}
 
-$directory = elgg_trigger_plugin_hook('entity:icon:directory', $entity->getType(), array(
+		$directory = elgg_trigger_plugin_hook('entity:icon:directory', $entity->getType(), [
 			'entity' => $entity,
 			'size' => $size,
-				), $directory);
+		], $directory);
 
 		return trim($directory, '/');
 	}
@@ -199,15 +208,15 @@ $directory = elgg_trigger_plugin_hook('entity:icon:directory', $entity->getType(
 	 */
 	public function getIconFilename(\ElggEntity $entity, $size = '') {
 
-		$mimetype = $entity->icon_mimetype ? : $entity->mimetype;
+		$mimetype = $entity->icon_mimetype ?: $entity->mimetype;
 		switch ($mimetype) {
-			default :
+			default:
 				$ext = 'jpg';
 				break;
-			case 'image/png' :
+			case 'image/png':
 				$ext = 'png';
 				break;
-			case 'image/gif' :
+			case 'image/gif':
 				$ext = 'gif';
 				break;
 		}
@@ -217,13 +226,15 @@ $directory = elgg_trigger_plugin_hook('entity:icon:directory', $entity->getType(
 			$md_name = $sizes[$size]['metadata_name'];
 			$filename = $entity->$md_name;
 		}
+
 		if (!$filename) {
 			$filename = "{$entity->guid}{$size}.{$ext}";
 		}
-return elgg_trigger_plugin_hook('entity:icon:directory', $entity->getType(), array(
+
+		return elgg_trigger_plugin_hook('entity:icon:directory', $entity->getType(), [
 			'entity' => $entity,
 			'size' => $size,
-				), $filename);
+		], $filename);
 	}
 
 	/**
@@ -274,18 +285,18 @@ return elgg_trigger_plugin_hook('entity:icon:directory', $entity->getType(), arr
 
 		$hmac = hash_hmac('sha256', $guid . $path, $key);
 
-$query = json_encode(array(
+		$query = json_encode([
 			'uid' => $guid,
 			'd' => ($entity instanceof \ElggUser) ? $entity->guid : $entity->owner_guid, // guid of the dir owner
 			'dts' => ($entity instanceof \ElggUser) ? $entity->time_created : $entity->getOwnerEntity()->time_created,
 			'path' => $path,
 			'ts' => $entity->icontime,
 			'mac' => $hmac,
-		));
+		]);
 
-$url = elgg_http_add_url_query_elements('mod/hypeApps/servers/icon.php', array(
+		$url = elgg_http_add_url_query_elements('mod/hypeApps/servers/icon.php', [
 			'q' => base64_encode($query),
-		));
+		]);
 
 		return elgg_normalize_url($url);
 	}
@@ -301,14 +312,16 @@ $url = elgg_http_add_url_query_elements('mod/hypeApps/servers/icon.php', array(
 		if (headers_sent()) {
 			exit;
 		}
+
 		$ha = elgg()->session->getDisabledEntityVisibility();
 		access_show_hidden_entities(true);
 		$entity = get_entity($entity_guid);
 		if (!$entity) {
 			exit;
 		}
-		$size = strtolower($size ? : 'medium');
-		$filename = "icons/" . $entity->guid . $size . ".jpg";
+
+		$size = strtolower($size ?: 'medium');
+		$filename = 'icons/' . $entity->guid . $size . '.jpg';
 		$etag = md5($entity->icontime . $size);
 		$filehandler = new \ElggFile();
 		$filehandler->owner_guid = $entity->owner_guid;
@@ -320,16 +333,16 @@ $url = elgg_http_add_url_query_elements('mod/hypeApps/servers/icon.php', array(
 		} else {
 			throw new \Elgg\Exceptions\Http\PageNotFoundException();
 		}
+
 		$mimetype = ($entity->mimetype) ? $entity->mimetype : 'image/jpeg';
 		access_show_hidden_entities($ha);
 		header("Content-type: $mimetype");
 		header("Etag: $etag");
 		header('Expires: ' . date('r', time() + 864000));
-		header("Pragma: public");
-		header("Cache-Control: public");
-		header("Content-Length: " . strlen($contents));
+		header('Pragma: public');
+		header('Cache-Control: public');
+		header('Content-Length: ' . strlen($contents));
 		echo $contents;
 		exit;
 	}
-
 }

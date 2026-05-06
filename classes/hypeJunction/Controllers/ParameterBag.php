@@ -3,6 +3,9 @@
 namespace hypeJunction\Controllers;
 
 #[\AllowDynamicProperties]
+/**
+ * ParameterBag class.
+ */
 class ParameterBag implements ParameterBagInterface {
 
 	/**
@@ -25,5 +28,4 @@ class ParameterBag implements ParameterBagInterface {
 	public function __get($name) {
 		return get_input($name);
 	}
-
 }

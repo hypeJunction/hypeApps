@@ -13,16 +13,16 @@ interface ControllerInterface {
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param RequestInterface $request Http Request
-	 * @param GraphInterface    $graph  Graph
+	 * @param GraphInterface   $graph   Graph
 	 */
 	public function __construct(RequestInterface $request, GraphInterface $graph);
 
 	/**
 	 * Returns parameter config for a given HTTP method
 	 * Returns false to indicate that the method is not allowed
-	 * 
+	 *
 	 * @param string $method HTTP request method
 	 * @return PropertyInterface[]|false
 	 */

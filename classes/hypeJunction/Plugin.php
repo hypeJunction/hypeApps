@@ -20,5 +20,4 @@ abstract class Plugin extends \hypeJunction\Di\DiContainer {
 	 * @return void
 	 */
 	abstract public function boot();
-
 }

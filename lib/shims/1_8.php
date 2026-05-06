@@ -1,7 +1,18 @@
 <?php
 
 if (!function_exists('elgg_format_element')) {
-	function elgg_format_element($tag_name, array $attributes = array(), $text = '', array $options = array()) {
+
+	/**
+	 * elgg_format_element.
+	 *
+	 * @param mixed $tag_name   tag_name
+	 * @param array $attributes attributes
+	 * @param mixed $text       text
+	 * @param array $options    options
+	 *
+	 * @return mixed
+	 */
+	function elgg_format_element($tag_name, array $attributes = [], $text = '', array $options = []) {
 		if (!is_string($tag_name)) {
 			throw new \InvalidArgumentException('$tag_name is required');
 		}
@@ -10,10 +21,10 @@ if (!function_exists('elgg_format_element')) {
 			$is_void = $options['is_void'];
 		} else {
 			// from http://www.w3.org/TR/html-markup/syntax.html#syntax-elements
-$is_void = in_array(strtolower($tag_name), array(
+			$is_void = in_array(strtolower($tag_name), [
 				'area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'keygen', 'link', 'menuitem',
 				'meta', 'param', 'source', 'track', 'wbr'
-			));
+			]);
 		}
 
 		if (!empty($options['encode_text'])) {

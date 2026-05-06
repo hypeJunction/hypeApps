@@ -21,12 +21,12 @@ class Config extends \hypeJunction\Config {
 	 * {@inheritdoc}
 	 */
 	public function getDefaults() {
-		return array(
+		return [
 			'filestore_prefix' => 'file',
 			'icon_filestore_prefix' => 'icons',
 			'default_size' => self::SIZE_MEDIUM,
 			'master_size_length' => 550,
-		);
+		];
 	}
 
 	/**
@@ -50,13 +50,13 @@ class Config extends \hypeJunction\Config {
 	 * @return array
 	 */
 	public function getCroppableSizes() {
-		return array(
+		return [
 			self::SIZE_LARGE,
 			self::SIZE_MEDIUM,
 			self::SIZE_SMALL,
 			self::SIZE_TINY,
 			self::SIZE_TOPBAR,
-		);
+		];
 	}
 
 	/**
@@ -64,29 +64,29 @@ class Config extends \hypeJunction\Config {
 	 * @return array
 	 */
 	public function getFileIconSizes() {
-		return array(
-			'small' => array(
+		return [
+			'small' => [
 				'w' => 60,
 				'h' => 60,
 				'square' => true,
 				'upscale' => true,
 				'metadata_name' => 'thumbnail',
-			),
-			'medium' => array(
+			],
+			'medium' => [
 				'w' => 153,
 				'h' => 153,
 				'square' => true,
 				'upscale' => true,
 				'metadata_name' => 'smallthumb',
-			),
-			'large' => array(
+			],
+			'large' => [
 				'w' => 600,
 				'h' => 600,
 				'square' => true,
 				'upscacle' => true,
 				'metadata_name' => 'largethumb',
-			)
-		);
+			]
+		];
 	}
 
 	/**
@@ -102,11 +102,11 @@ class Config extends \hypeJunction\Config {
 	 * @return array
 	 */
 	public function getIconCompressionOpts() {
-		return array(
+		return [
 			'jpeg_quality' => $this->get('icon_jpeg_quality', 80),
 			'png_compression' => $this->get('icon_png_compression', 0),
 			'png_filter' => $this->get('icon_png_filter', PNG_NO_FILTER),
-		);
+		];
 	}
 
 	/**
@@ -114,11 +114,10 @@ class Config extends \hypeJunction\Config {
 	 * @return array
 	 */
 	public function getSrcCompressionOpts() {
-		return array(
+		return [
 			'jpeg_quality' => $this->get('jpeg_quality', 100),
 			'png_compression' => $this->get('png_compression', 0),
 			'png_filter' => $this->get('png_filter', PNG_NO_FILTER),
-		);
+		];
 	}
-
 }

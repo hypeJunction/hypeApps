@@ -2,6 +2,9 @@
 
 namespace hypeJunction\Data;
 
+/**
+ * Graph class.
+ */
 class Graph implements GraphInterface {
 
 	const LIMIT_MAX = 100;
@@ -10,29 +13,29 @@ class Graph implements GraphInterface {
 	 * {@inheritdoc}
 	 */
 	public function getAliases() {
-		$aliases = array(
+		$aliases = [
 			'user' => ':user',
 			'site' => ':site',
 			'group' => ':group',
-			'object' => array(
+			'object' => [
 				'blog' => ':blog',
 				'comment' => ':comment',
 				'file' => ':file',
 				'messages' => ':message',
-			),
-			'river' => array(
+			],
+			'river' => [
 				'item' => ':activity',
-			),
-			'annotation' => array(
+			],
+			'annotation' => [
 				'likes' => ':like',
-			),
-			'relationship' => array(
+			],
+			'relationship' => [
 				'member' => ':member',
 				'membership_request' => ':membership_request',
 				'invited' => ':invitation',
 				'friend' => ':friend',
-			),
-		);
+			],
+		];
 		
 		return elgg_trigger_plugin_hook('aliases', 'graph', null, $aliases);
 	}
@@ -62,12 +65,12 @@ class Graph implements GraphInterface {
 	public function get($uid = '') {
 
 		switch ($uid) {
-			case 'me' :
-				$uid = "ue" . elgg_get_logged_in_user_guid();
+			case 'me':
+				$uid = 'ue' . elgg_get_logged_in_user_guid();
 				break;
 
-			case 'site' :
-				$uid = "se" . elgg_get_site_entity()->guid;
+			case 'site':
+				$uid = 'se' . elgg_get_site_entity()->guid;
 				break;
 		}
 
@@ -78,33 +81,33 @@ class Graph implements GraphInterface {
 				$object = elgg_get_annotation_from_id($id);
 				break;
 
-			case 'md' :
+			case 'md':
 				$id = (int) substr($uid, 2);
 				$object = elgg_get_metadata_from_id($id);
 				break;
 
-			case 'rl' :
+			case 'rl':
 				$id = (int) substr($uid, 2);
 				$object = get_relationship($id);
 				break;
 
-			case 'rv' :
+			case 'rv':
 				$id = (int) substr($uid, 2);
-				$river = elgg_get_river(array(
+				$river = elgg_get_river([
 					'ids' => sanitize_int($id),
-				));
+				]);
 				$object = $river ? $river[0] : false;
 				break;
 
-			case 'ue' :
-			case 'se' :
-			case 'oe' :
-			case 'ge' :
+			case 'ue':
+			case 'se':
+			case 'oe':
+			case 'ge':
 				$id = (int) substr($uid, 2);
 				$object = get_entity($id);
 				break;
 
-			default :
+			default:
 				$object = get_user_by_username($uid);
 				if (!$object && is_numeric($uid)) {
 					$object = get_entity($uid);
@@ -130,25 +133,25 @@ class Graph implements GraphInterface {
 			case 'object':
 				return "ue{$object->guid}";
 
-			case 'site' :
+			case 'site':
 				return "se{$object->guid}";
 
-			case 'user' :
+			case 'user':
 				return "ue{$object->guid}";
 
-			case 'group' :
+			case 'group':
 				return "ge{$object->guid}";
 
-			case 'river' :
+			case 'river':
 				return "rv{$object->id}";
 
-			case 'relationship' :
+			case 'relationship':
 				return "rl{$object->id}";
 
-			case 'annotation' :
+			case 'annotation':
 				return "an{$object->id}";
 
-			case 'metadata' :
+			case 'metadata':
 				return "md{$object->id}";
 		}
 	}
@@ -163,17 +166,18 @@ class Graph implements GraphInterface {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function export($data, array $params = array()) {
+	public function export($data, array $params = []) {
 
 		if (empty($data)) {
 			return $data;
 		}
 
 		if ($data instanceof \ElggBatch) {
-			$return = array('items' => array());
+			$return = ['items' => []];
 			foreach ($data as $v) {
 				$return['items'][] = $this->export($v, $params);
 			}
+
 			$data = $return;
 		}
 
@@ -183,26 +187,26 @@ class Graph implements GraphInterface {
 		$export_params = $params;
 		$export_params['depth'] = $depth + 1;
 		if ($depth > 0 && !$recursive) {
-			$export_params['fields'] = array('type', 'subtype', 'uid', 'guid', 'id', 'url');
+			$export_params['fields'] = ['type', 'subtype', 'uid', 'guid', 'id', 'url'];
 		}
 
 		if (is_array($data)) {
-			$return = array();
+			$return = [];
 			foreach ($data as $key => $v) {
 				$return[$key] = $this->export($v, $export_params);
 			}
+
 			return $return;
 		} else if ($data instanceof \hypeJunction\BatchResult) {
 			return $data->export($export_params);
 		} else if ($this->isExportable($data)) {
+			$type = is_callable([$data, 'getType']) ? $data->getType() : 'unknown';
+			$subtype = is_callable([$data, 'getSubtype']) ? $data->getSubtype() : false;
 
-			$type = is_callable(array($data, 'getType')) ? $data->getType() : 'unknown';
-			$subtype = is_callable(array($data, 'getSubtype')) ? $data->getSubtype() : false;
-
-			$fields = (array) elgg_extract('fields', $params, array());
+			$fields = (array) elgg_extract('fields', $params, []);
 			$properties = $this->getProperties($data, $params);
 
-			$return = array();
+			$return = [];
 			foreach ($properties as $prop) {
 				if (empty($fields) || in_array($prop->getIdentifier(), $fields)) {
 					$return[$prop->getIdentifier()] = $prop->getValue($data, $params);
@@ -229,16 +233,16 @@ class Graph implements GraphInterface {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getProperties($object = null, array $params = array()) {
+	public function getProperties($object = null, array $params = []) {
 
-		$fields = array();
+		$fields = [];
 
 		if (!$object instanceof \ElggData && !$object instanceof \ElggRiverItem) {
 			return $fields;
 		}
 
-		$type = is_callable(array($object, 'getType')) ? $object->getType() : 'unknown';
-		$subtype = is_callable(array($object, 'getSubtype')) ? $object->getSubtype() : false;
+		$type = is_callable([$object, 'getType']) ? $object->getType() : 'unknown';
+		$subtype = is_callable([$object, 'getSubtype']) ? $object->getSubtype() : false;
 
 		$params['object'] = $object;
 
@@ -249,5 +253,4 @@ class Graph implements GraphInterface {
 
 		return (array) $fields;
 	}
-
 }

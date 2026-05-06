@@ -4,6 +4,9 @@ namespace hypeJunction\Apps\Handlers;
 
 use hypeJunction\Data\Property;
 
+/**
+ * MessagePropertiesHook class.
+ */
 class MessagePropertiesHook {
 
 	/**
@@ -14,55 +17,54 @@ class MessagePropertiesHook {
 
 		$return = $hook->getValue();
 
-		$remove = array('owner', 'container', 'tags', 'icon');
+		$remove = ['owner', 'container', 'tags', 'icon'];
 		foreach ($return as $key => $property) {
 			if ($property instanceof Property && in_array($property->getIdentifier(), $remove)) {
 				unset($return[$key]);
 			}
 		}
 
-$return[] = new Property('status', array(
+		$return[] = new Property('status', [
 			'getter' => '\hypeJunction\Data\Values::getVerbatim',
 			'setter' => '\hypeJunction\Data\Values::setVerbatim',
 			'type' => 'enum',
-			'enum' => array(
+			'enum' => [
 				'read',
 				'unread',
-			),
-			'validate' => array(
-				'rules' => array(
+			],
+			'validate' => [
+				'rules' => [
 					'type' => 'enum',
-				)
-			),
-		));
+				]
+			],
+		]);
 
-$return[] = new Property('sender', array(
+		$return[] = new Property('sender', [
 			'attribute' => 'fromId',
 			'getter' => '\hypeJunction\Data\Values::getEntity',
 			'setter' => '\hypeJunction\Data\Values::setEntity',
 			'required' => true,
 			'type' => 'guid',
-			'validation' => array(
-				'rules' => array(
+			'validation' => [
+				'rules' => [
 					'type' => 'guid',
-				)
-			)
-		));
+				]
+			]
+		]);
 
-$return[] = new Property('recipients', array(
+		$return[] = new Property('recipients', [
 			'attribute' => 'toId',
 			'getter' => '\hypeJunction\Data\Values::getEntityBatch',
 			'setter' => '\hypeJunction\Data\Values::setEntityBatch',
 			'required' => true,
 			'type' => 'guid',
-			'validation' => array(
-				'rules' => array(
+			'validation' => [
+				'rules' => [
 					'type' => 'guid',
-				)
-			)
-		));
+				]
+			]
+		]);
 
 		return $return;
 	}
-
 }

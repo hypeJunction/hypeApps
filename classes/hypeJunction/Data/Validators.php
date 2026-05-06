@@ -2,9 +2,23 @@
 
 namespace hypeJunction\Data;
 
+/**
+ * Validators class.
+ */
 class Validators {
 
-	public static function validateRule(PropertyInterface $prop, $value = null, $rule = '', $expectation = null, array $params = array()) {
+	/**
+	 * validateRule.
+	 *
+	 * @param PropertyInterface $prop        prop
+	 * @param mixed             $value       value
+	 * @param mixed             $rule        rule
+	 * @param mixed             $expectation expectation
+	 * @param array             $params      params
+	 *
+	 * @return mixed
+	 */
+	public static function validateRule(PropertyInterface $prop, $value = null, $rule = '', $expectation = null, array $params = []) {
 
 		$params['value'] = $value;
 		$params['rule'] = $rule;
@@ -14,13 +28,22 @@ class Validators {
 		$result = elgg_trigger_plugin_hook("validate:$rule", 'action', $params, true);
 
 		if ($result === false) {
-			throw new \hypeJunction\Exceptions\ActionValidationException(elgg_echo('apps:validation:error:prop', array($prop->getIdentifier())));
+			throw new \hypeJunction\Exceptions\ActionValidationException(elgg_echo('apps:validation:error:prop', [$prop->getIdentifier()]));
 		}
 
 		return $result;
 	}
 
-	public static function isValidUsername(PropertyInterface $prop, $value = null, array $params = array()) {
+	/**
+	 * isValidUsername.
+	 *
+	 * @param PropertyInterface $prop   prop
+	 * @param mixed             $value  value
+	 * @param array             $params params
+	 *
+	 * @return mixed
+	 */
+	public static function isValidUsername(PropertyInterface $prop, $value = null, array $params = []) {
 		try {
 			elgg()->accounts->assertValidUsername($value);
 			return true;
@@ -29,7 +52,16 @@ class Validators {
 		}
 	}
 
-	public static function isAvailableUsername(PropertyInterface $prop, $value = null, array $params = array()) {
+	/**
+	 * isAvailableUsername.
+	 *
+	 * @param PropertyInterface $prop   prop
+	 * @param mixed             $value  value
+	 * @param array             $params params
+	 *
+	 * @return mixed
+	 */
+	public static function isAvailableUsername(PropertyInterface $prop, $value = null, array $params = []) {
 		$access_status = elgg()->session->getDisabledEntityVisibility();
 		access_show_hidden_entities(true);
 
@@ -42,5 +74,4 @@ class Validators {
 
 		return $available;
 	}
-
 }

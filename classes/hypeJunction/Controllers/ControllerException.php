@@ -2,4 +2,8 @@
 
 namespace hypeJunction\Controllers;
 
-class ControllerException extends \Exception {}
+/**
+ * ControllerException class.
+ */
+class ControllerException extends \Exception {
+}
