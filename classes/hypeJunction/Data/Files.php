@@ -1,8 +1,4 @@
 <?php
-// phpcs:disable -- pre-existing bug: setIcon is static but uses $this; tracked
-// in elgg-migrate-47y1. Fix requires a refactor of Files + 3 hook callsites,
-// so it is intentionally suppressed here rather than papered over with
-// docblocks. Re-enable phpcs after that bug is closed.
 
 namespace hypeJunction\Data;
 
@@ -11,6 +7,15 @@ namespace hypeJunction\Data;
  */
 class Files {
 
+	/**
+	 * Set entity icon from uploaded file property.
+	 *
+	 * @param PropertyInterface $prop   Property definition
+	 * @param \ElggEntity       $entity Entity to set icon on
+	 * @param mixed             $value  Upload data
+	 * @param array             $params Hook parameters
+	 * @return \ElggEntity|void
+	 */
 	public static function setIcon(PropertyInterface $prop, \ElggEntity $entity, $value = null, array $params = null) {
 
 		$prop_id = $prop->getIdentifier();
@@ -50,48 +55,42 @@ class Files {
 			$y2 = (int) elgg_extract('y2', $coords);
 
 			if ($x2 <= $x1 || $y2 <= $y1) {
-				// do not crop
-				$this->tmp_coords = false;
+				$tmp_coords = false;
 			} else {
-				$this->tmp_coords = $coords;
-				$this->tmp_coords['master_width'] = $master_width;
-				$this->tmp_coords['master_height'] = $master_height;
+				$tmp_coords = $coords;
+				$tmp_coords['master_width'] = $master_width;
+				$tmp_coords['master_height'] = $master_height;
 			}
 
 			if (!isset($icon_size['name'])) {
 				$icon_size['name'] = $icon_name;
 			}
 
-			$this->tmp_icon_sizes = [
+			$tmp_icon_sizes = [
 				$icon_size['name'] => $icon_size,
 			];
 			$options = [
-				'icon_sizes' => $this->tmp_icon_sizes,
-				'coords' => $this->tmp_coords,
+				'icon_sizes' => $tmp_icon_sizes,
+				'coords' => $tmp_coords,
 			];
 
-			elgg_register_plugin_hook_handler('entity:icon:sizes', 'object', [$this, 'resetIconSizesHook'], 999);
+			$reset_hook = static function() use ($tmp_icon_sizes) {
+				return $tmp_icon_sizes;
+			};
+
+			elgg_register_plugin_hook_handler('entity:icon:sizes', 'object', $reset_hook, 999);
 			if (hypeApps()->iconFactory->create($entity, $_FILES[$prop_id]['tmp_name'], $options)) {
 				foreach (['x1', 'x2', 'y1', 'y2'] as $c) {
-					$entity->{"_coord_{$ratio}_{$coord}"} = elgg_extract($c, $coords, 0);
+					$entity->{"_coord_{$ratio}_{$c}"} = elgg_extract($c, $coords, 0);
 					if ($ratio === 1) {
 						$entity->$c = elgg_extract($c, $coords, 0);
 					}
 				}
 			}
 
-			elgg_unregister_plugin_hook_handler('entity:icon:sizes', 'object', [$this, 'resetIconSizesHook']);
+			elgg_unregister_plugin_hook_handler('entity:icon:sizes', 'object', $reset_hook);
 		}
 
 		return $entity;
-	}
-
-	/**
-	 * Callback for icon size hook
-	 * We do not want to regenerate default icons due to custom cropping logic
-	 * @return array
-	 */
-	public function resetIconSizesHook() {
-		return $this->tmp_icon_sizes;
 	}
 }
