@@ -36,7 +36,7 @@ class ActionResult {
 	 * @return mixed
 	 */
 	public function setForwardURL($url = null) {
-		$this->forwardUrl = $url ?? REFERER;
+		$this->forwardUrl = $url ?? REFERRER;
 	}
 
 	/**
@@ -45,7 +45,7 @@ class ActionResult {
 	 * @return mixed
 	 */
 	public function getForwardURL() {
-		return ($this->forwardUrl) ?: REFERER;
+		return ($this->forwardUrl) ?: REFERRER;
 	}
 
 	/**

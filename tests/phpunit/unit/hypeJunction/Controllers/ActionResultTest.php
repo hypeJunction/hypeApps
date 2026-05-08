@@ -4,10 +4,7 @@ namespace hypeJunction\Controllers;
 
 use Elgg\UnitTestCase;
 
-// REFERER constant is defined by Elgg core but fall back for unit tests
-if (!defined('REFERER')) {
-	define('REFERER', -1);
-}
+// REFERRER constant is defined by Elgg core but fall back for unit tests
 if (!defined('REFERRER')) {
 	define('REFERRER', -1);
 }
