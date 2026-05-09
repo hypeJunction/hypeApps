@@ -1,3 +1,18 @@
+<a name="8.0.0"></a>
+# 8.0.0 (2026-05-09)
+
+### Breaking Changes
+
+* **elgg:** raise minimum to Elgg 6.x (PHP 8.2+). Plugins on Elgg 5.x must stay on hypeApps 7.x.
+
+### Migration (5.x → 6.x)
+
+* **composer:** bumped `elgg/elgg` constraint to `^6.0`.
+* No AMD JS in this plugin — no JS conversion needed.
+* Docker stack upgraded to Elgg 6.x, PHPUnit ~10.5.
+
+---
+
 <a name="7.0.0"></a>
 # 7.0.0 (2026-04-27)
 

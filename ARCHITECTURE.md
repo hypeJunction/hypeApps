@@ -1,4 +1,4 @@
-# hypeApps plugin architecture (Elgg 5.x)
+# hypeApps plugin architecture (Elgg 6.x)
 
 Foundational bootstrap library shared by every hypeJunction plugin. Provides a
 DI-container–based Plugin singleton pattern, controller/action infrastructure, file
