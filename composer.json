@@ -3,7 +3,7 @@
 	"version": "7.0.0",
 	"type": "elgg-plugin",
 	"description": "hypeJunction plugin bootstrap",
-	"homepage": "http://hypejunction.com",
+	"homepage": "https://github.com/hypeJunction/hypeApps",
 	"keywords": [
 		"elgg",
 		"plugin",
@@ -14,7 +14,7 @@
 	"authors": [
 		{
 			"name": "Ismayil Khayredinov",
-			"email": "info@hypejunction.com"
+			"email": "ismayil.khayredinov@gmail.com"
 		}
 	],
 	"extra": {

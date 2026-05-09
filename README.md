@@ -1,6 +1,6 @@
 hypeApps
 ========
-![Elgg 2.0](https://img.shields.io/badge/Elgg-2.0.x-orange.svg?style=flat-square)
+![Elgg 5.x](https://img.shields.io/badge/Elgg-5.x-orange.svg?style=flat-square)
 
 Bootstrap for hypeJunction plugins
 
@@ -8,9 +8,7 @@ Bootstrap for hypeJunction plugins
 * Provides shims for forward compatibility
 * Succeeds hypeFilestore to provide upload handling and fast icon serving
 
-
 ## Installation
-
 
 ### Composer
 
@@ -44,8 +42,6 @@ Elgg 1.9 - 1.12:
 	}
 }
 ```
-
-
 
 ### Self-contained Release Package
 
