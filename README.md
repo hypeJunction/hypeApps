@@ -1,6 +1,6 @@
 hypeApps
 ========
-![Elgg 5.x](https://img.shields.io/badge/Elgg-5.x-orange.svg?style=flat-square)
+![Elgg 7.x](https://img.shields.io/badge/Elgg-7.x-orange.svg?style=flat-square)
 
 Bootstrap for hypeJunction plugins
 
@@ -47,3 +47,9 @@ Elgg 1.9 - 1.12:
 
 If you are unfamiliar with Composer, use pre-packaged self-contained zip release.
 Releases contain all the required files.
+
+## Compatibility
+
+| Plugin version | Elgg version |
+|---|---|
+| current | 7.x |
