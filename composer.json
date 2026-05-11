@@ -18,7 +18,7 @@
 		}
 	],
 	"extra": {
-		"installer-name": "hypeApps",
+		"installer-name": "hypeapps",
 		"elgg-plugin": {
 			"id": "hypeapps"
 		}
