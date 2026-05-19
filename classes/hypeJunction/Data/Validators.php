@@ -66,7 +66,7 @@ class Validators {
 		access_show_hidden_entities(true);
 
 		$available = true;
-		if (get_user_by_username($value)) {
+		if (elgg_get_user_by_username($value)) {
 			$available = false;
 		}
 

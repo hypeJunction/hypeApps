@@ -108,7 +108,7 @@ class Graph implements GraphInterface {
 				break;
 
 			default:
-				$object = get_user_by_username($uid);
+				$object = elgg_get_user_by_username($uid);
 				if (!$object && is_numeric($uid)) {
 					$object = get_entity($uid);
 				}

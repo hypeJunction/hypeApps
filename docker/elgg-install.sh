@@ -146,9 +146,9 @@ SETTINGS_VALUES
         require_once 'vendor/autoload.php';
         \$app = \Elgg\Application::getInstance();
         \$app->bootCore();
-        \$admin = get_user_by_username('admin');
+        \$admin = elgg_get_user_by_username('admin');
         _elgg_services()->session_manager->setLoggedInUser(\$admin);
-        if (!get_user_by_username('testuser')) {
+        if (!elgg_get_user_by_username('testuser')) {
             \$user = new ElggUser();
             \$user->username = 'testuser';
             \$user->email = 'testuser@example.com';
