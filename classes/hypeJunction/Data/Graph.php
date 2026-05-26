@@ -91,7 +91,7 @@ class Graph implements GraphInterface {
 			case 'rv' :
 				$id = (int) substr($uid, 2);
 				$river = \elgg_get_river(array(
-					'ids' => sanitize_int($id),
+					'ids' => (int) $id,
 				));
 				$object = $river ? $river[0] : false;
 				break;
