@@ -51,7 +51,7 @@ $this->setFactory('graph', function(Plugin $p) {
 	 */
 	public static function factory() {
 		if (null === self::$instance) {
-			$plugin = elgg_get_plugin_from_id('hypeapps');
+			$plugin = \elgg_get_plugin_from_id('hypeapps');
 			self::$instance = new self($plugin);
 		}
 		return self::$instance;

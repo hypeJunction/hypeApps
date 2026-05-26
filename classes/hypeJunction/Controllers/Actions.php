@@ -38,7 +38,7 @@ class Actions {
 
 			$action = $this->parseActionName();
 
-			elgg_make_sticky_form($action);
+			\elgg_make_sticky_form($action);
 
 			$controller->setup();
 			if ($controller->validate() === false) {
@@ -48,36 +48,36 @@ class Actions {
 			$this->result = $controller->getResult();
 		} catch (ActionValidationException $ex) {
 			$this->result->addError($ex->getMessage());
-			elgg_log($ex->getMessage(), 'ERROR');
+			\elgg_log($ex->getMessage(), 'ERROR');
 		} catch (PermissionsException $ex) {
-			$this->result->addError(elgg_echo('apps:permissions:error'));
-			elgg_log($ex->getMessage(), 'ERROR');
+			$this->result->addError(\elgg_echo('apps:permissions:error'));
+			\elgg_log($ex->getMessage(), 'ERROR');
 		} catch (InvalidEntityException $ex) {
-			$this->result->addError(elgg_echo('apps:entity:error'));
-			elgg_log($ex->getMessage(), 'ERROR');
+			$this->result->addError(\elgg_echo('apps:entity:error'));
+			\elgg_log($ex->getMessage(), 'ERROR');
 		} catch (Exception $ex) {
-			$this->result->addError(elgg_echo('apps:action:error'));
-			elgg_log($ex->getMessage(), 'ERROR');
+			$this->result->addError(\elgg_echo('apps:action:error'));
+			\elgg_log($ex->getMessage(), 'ERROR');
 		}
 
 		$errors = $this->result->getErrors();
 		$messages = $this->result->getMessages();
 		if (empty($errors)) {
-			elgg_clear_sticky_form($action);
+			\elgg_clear_sticky_form($action);
 		} else {
 			$this->result->setForwardURL(REFERRER);
 		}
 
 		if ($feedback) {
 			foreach ($errors as $error) {
-				elgg_register_error_message($error);
+				\elgg_register_error_message($error);
 			}
 			foreach ($messages as $message) {
-				elgg_register_success_message($message);
+				\elgg_register_success_message($message);
 			}
 		}
 
-		return elgg_trigger_plugin_hook('action:after', $action, null, $this->result);
+		return \elgg_trigger_plugin_hook('action:after', $action, null, $this->result);
 	}
 
 	/**

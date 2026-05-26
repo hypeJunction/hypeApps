@@ -44,7 +44,7 @@ class Uploader {
 		$result = array();
 		$uploads = $this->getUploads($input);
 
-		$filestore_prefix = elgg_extract('filestore_prefix', $options, $this->config->getDefaultFilestorePrefix());
+		$filestore_prefix = \elgg_extract('filestore_prefix', $options, $this->config->getDefaultFilestorePrefix());
 		unset($options['filestore_prefix']);
 
 		foreach ($uploads as $props) {
@@ -156,7 +156,7 @@ class Uploader {
 				break;
 		}
 
-		return elgg_echo("upload:error:$key");
+		return \elgg_echo("upload:error:$key");
 	}
 
 }

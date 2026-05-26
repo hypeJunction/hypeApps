@@ -92,7 +92,7 @@ final class ItemCollection {
 	 * @codeCoverageIgnore
 	 */
 	protected function exists($guid = null) {
-		return elgg_entity_exists($guid);
+		return \elgg_entity_exists($guid);
 	}
 
 }

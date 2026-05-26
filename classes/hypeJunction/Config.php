@@ -52,7 +52,7 @@ abstract class Config {
 	 * @return mixed
 	 */
 	public function get($name, $default = null) {
-		return elgg_extract($name, $this->all(), $default);
+		return \elgg_extract($name, $this->all(), $default);
 	}
 
 	/**

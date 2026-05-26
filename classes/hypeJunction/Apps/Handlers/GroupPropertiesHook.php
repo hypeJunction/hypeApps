@@ -72,8 +72,8 @@ $return[] = new Property('content_access_mode', array(
 			'setter' => '\hypeJunction\Data\Values::setGroupContentAccessMode',
 			'type' => 'enum',
 			'enum' => array(
-				elgg_echo("groups:content_access_mode:unrestricted") => ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED,
-				elgg_echo("groups:content_access_mode:membersonly") => ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY,
+				\elgg_echo("groups:content_access_mode:unrestricted") => ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED,
+				\elgg_echo("groups:content_access_mode:membersonly") => ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY,
 			),
 			'input' => 'select',
 			'validate' => array(
@@ -88,8 +88,8 @@ $return[] = new Property('membership', array(
 			'setter' => '\hypeJunction\Data\Values::setVerbatim',
 			'type' => 'enum',
 			'enum' => array(
-				elgg_echo("groups:access:private") => ACCESS_PRIVATE,
-				elgg_echo("groups:access:public") => ACCESS_PUBLIC,
+				\elgg_echo("groups:access:private") => ACCESS_PRIVATE,
+				\elgg_echo("groups:access:public") => ACCESS_PUBLIC,
 			),
 			'input' => 'select',
 			'validate' => array(
@@ -118,7 +118,7 @@ $return[] = new Property('access', array(
 		));
 
 		if ($full_view) {
-			$profile_fields = (array) elgg_get_config('group');
+			$profile_fields = (array) \elgg_get_config('group');
 			foreach ($profile_fields as $shortname => $type) {
 				$return[] = new Property($shortname, array(
 					'getter' => '\hypeJunction\Data\Values::getVerbatim',

@@ -18,8 +18,8 @@ $return[] = new Property('status', array(
 			'type' => 'enum',
 			'enum' => array(
 				//elgg_echo('status:unsaved_draft') => 'unsaved_draft',
-				elgg_echo('status:draft') => 'draft',
-				elgg_echo('status:published') => 'published',
+				\elgg_echo('status:draft') => 'draft',
+				\elgg_echo('status:published') => 'published',
 			),
 			'input' => 'select',
 			'validate' => array(

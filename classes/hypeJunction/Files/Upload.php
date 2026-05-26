@@ -51,11 +51,11 @@ class Upload
         if (!$prefix) {
             $prefix = self::DEFAULT_FILESTORE_PREFIX;
         }
-        $id = elgg_strtolower(time() . $this->name);
+        $id = \elgg_strtolower(time() . $this->name);
         $filename = implode('/', array($prefix, $id));
-        $type = elgg_extract('type', $attributes, 'object');
-        $subtype = elgg_extract('subtype', $attributes, 'file');
-        $class = elgg_get_entity_class($type, $subtype);
+        $type = \elgg_extract('type', $attributes, 'object');
+        $subtype = \elgg_extract('subtype', $attributes, 'file');
+        $class = \elgg_get_entity_class($type, $subtype);
         if (!$class) {
             $class = '\ElggFile';
         }
@@ -83,8 +83,8 @@ class Upload
                 $this->file = $filehandler;
             }
         } catch (\Exception $ex) {
-            elgg_log($ex->getMessage(), 'ERROR');
-            $this->error = elgg_echo('upload:error:unknown');
+            \elgg_log($ex->getMessage(), 'ERROR');
+            $this->error = \elgg_echo('upload:error:unknown');
         }
         return $this;
     }
@@ -111,7 +111,7 @@ class Upload
             default:
                 $error = 'upload:error:unknown';
         }
-        return elgg_echo($error);
+        return \elgg_echo($error);
     }
     /**
      * Detects mime type of the upload
@@ -126,7 +126,7 @@ class Upload
      */
     public function parseSimpleType() {
         if (is_callable('elgg_get_file_simple_type')) {
-            return elgg_get_file_simple_type($this->detectMimeType());
+            return \elgg_get_file_simple_type($this->detectMimeType());
         }
         $mime_type = $this->detectMimeType();
         switch ($mime_type) {

@@ -40,7 +40,7 @@ $return[] = new Property('username', array(
 			'validation' => array(
 				'rules' => array(
 					'type' => 'string',
-					'minlength' => elgg_get_config('minusername') ? : 4,
+					'minlength' => \elgg_get_config('minusername') ? : 4,
 				),
 				'callbacks' => array(
 					'valid' => '\hypeJunction\Data\Validators::isValidUsername',
@@ -76,7 +76,7 @@ $return[] = new Property('validated', array(
 		));
 
 		if ($full_view) {
-			$profile_fields = (array) elgg_get_config('profile_fields');
+			$profile_fields = (array) \elgg_get_config('profile_fields');
 			foreach ($profile_fields as $shortname => $type) {
 				$return[] = new Property($shortname, array(
 					'getter' => '\hypeJunction\Data\Values::getVerbatim',

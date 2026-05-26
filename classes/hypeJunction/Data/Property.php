@@ -172,10 +172,10 @@ $key = implode(':', array_filter(array(
 		if (is_string($this->label)) {
 			$translation = $this->label;
 		} else if (is_array($this->label)) {
-			$translation = elgg_extract($lang, $this->label);
+			$translation = \elgg_extract($lang, $this->label);
 		}
 
-		return ($translation) ? $translation : elgg_echo($key, array(), $lang);
+		return ($translation) ? $translation : \elgg_echo($key, array(), $lang);
 	}
 
 	/**
@@ -209,11 +209,11 @@ $key = implode(':', array_filter(array(
 		if (is_string($this->desc)) {
 			$translation = $this->desc;
 		} else if (is_array($this->desc)) {
-			$translation = elgg_extract($lang, $this->desc);
+			$translation = \elgg_extract($lang, $this->desc);
 		}
 
 
-		return ($translation) ? $translation : elgg_echo($key, array(), $lang);
+		return ($translation) ? $translation : \elgg_echo($key, array(), $lang);
 	}
 
 	/**
@@ -281,8 +281,8 @@ $key = implode(':', array_filter(array(
 		$result->valid = true;
 		$result->data = array();
 
-		$rules = (array) elgg_extract('rules', (array) $this->validation, array());
-		$callbacks = (array) elgg_extract('callbacks', (array) $this->validation, array());
+		$rules = (array) \elgg_extract('rules', (array) $this->validation, array());
+		$callbacks = (array) \elgg_extract('callbacks', (array) $this->validation, array());
 
 		foreach ($rules as $rule => $expectation) {
 			$valid = true;

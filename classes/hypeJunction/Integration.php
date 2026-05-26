@@ -21,7 +21,7 @@ class Integration
      */
     public static function getServiceProvider() {
         if (is_callable('_elgg_services')) {
-            return _elgg_services();
+            return \_elgg_services();
         }
         if (!isset($CONFIG)) {
             $path = self::getRootPath() . '/engine/settings.php';
@@ -41,7 +41,7 @@ class Integration
             return self::$version;
         }
         if (is_callable('elgg_get_version')) {
-            return elgg_get_version(true);
+            return \elgg_get_version(true);
         } else {
             $path = self::getRootPath() . '/version.php';
             if (!include $path) {

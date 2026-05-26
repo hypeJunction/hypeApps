@@ -14,7 +14,7 @@ class ConfigTest extends IntegrationTestCase {
 	}
 
 	protected function getPlugin(): \ElggPlugin {
-		$plugin = elgg_get_plugin_from_id('hypeapps');
+		$plugin = \elgg_get_plugin_from_id('hypeapps');
 		if (!$plugin) {
 			$this->markTestSkipped('hypeapps plugin not installed in test DB');
 		}
