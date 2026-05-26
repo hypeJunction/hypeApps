@@ -177,10 +177,10 @@ class Property implements PropertyInterface {
 		if (is_string($this->label)) {
 			$translation = $this->label;
 		} else if (is_array($this->label)) {
-			$translation = elgg_extract($lang, $this->label);
+			$translation = \elgg_extract($lang, $this->label);
 		}
 
-		return ($translation) ? $translation : elgg_echo($key, [], $lang);
+		return ($translation) ? $translation : \elgg_echo($key, [], $lang);
 	}
 
 	/**
@@ -214,11 +214,11 @@ class Property implements PropertyInterface {
 		if (is_string($this->desc)) {
 			$translation = $this->desc;
 		} else if (is_array($this->desc)) {
-			$translation = elgg_extract($lang, $this->desc);
+			$translation = \elgg_extract($lang, $this->desc);
 		}
 
 
-		return ($translation) ? $translation : elgg_echo($key, [], $lang);
+		return ($translation) ? $translation : \elgg_echo($key, [], $lang);
 	}
 
 	/**
@@ -288,8 +288,8 @@ class Property implements PropertyInterface {
 		$result->valid = true;
 		$result->data = [];
 
-		$rules = (array) elgg_extract('rules', (array) $this->validation, []);
-		$callbacks = (array) elgg_extract('callbacks', (array) $this->validation, []);
+		$rules = (array) \elgg_extract('rules', (array) $this->validation, []);
+		$callbacks = (array) \elgg_extract('callbacks', (array) $this->validation, []);
 
 		foreach ($rules as $rule => $expectation) {
 			$valid = true;

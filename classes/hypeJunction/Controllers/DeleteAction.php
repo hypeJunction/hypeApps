@@ -30,7 +30,7 @@ class DeleteAction extends Action {
 	 */
 	public function validate() {
 		if (!$this->entity) {
-			throw new InvalidEntityException(elgg_echo('apps:entity:error'));
+			throw new InvalidEntityException(\elgg_echo('apps:entity:error'));
 		}
 
 		if (is_callable([$this->entity, 'canDelete'])) {
@@ -49,7 +49,7 @@ class DeleteAction extends Action {
 		// determine what name to show on success
 		$display_name = $this->entity->getDisplayName();
 		if (!$display_name) {
-			$display_name = ucfirst(elgg_echo('apps:item'));
+			$display_name = ucfirst(\elgg_echo('apps:item'));
 		}
 
 		$container = $this->entity->getContainerEntity();
@@ -67,12 +67,12 @@ class DeleteAction extends Action {
 
 		if ($this->entity->delete()) {
 			unset($this->entity);
-			$this->result->addMessage(elgg_echo('apps:delete:success', [$display_name]));
+			$this->result->addMessage(\elgg_echo('apps:delete:success', [$display_name]));
 			if ($container) {
 				$this->result->setForwardURL($forward_url);
 			}
 		} else {
-			$this->result->addError(elgg_echo('apps:delete:error'));
+			$this->result->addError(\elgg_echo('apps:delete:error'));
 		}
 	}
 }

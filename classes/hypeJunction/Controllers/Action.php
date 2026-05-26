@@ -85,7 +85,7 @@ abstract class Action {
 	 * @return void
 	 */
 	public function setup() {
-		$input_keys = array_keys((array) elgg_get_config('input'));
+		$input_keys = array_keys((array) \elgg_get_config('input'));
 		$request_keys = array_keys(array_merge((array) $_GET, (array) $_POST));
 		$keys = array_unique(array_merge($input_keys, $request_keys));
 		foreach ($keys as $key) {

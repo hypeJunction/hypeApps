@@ -48,7 +48,7 @@ class Values {
 	 * @return mixed
 	 */
 	public static function stringToTagArray(PropertyInterface $prop, $value = null, array $params = null) {
-		return elgg_string_to_array($value);
+		return \elgg_string_to_array($value);
 	}
 
 	/**
@@ -242,7 +242,7 @@ class Values {
 	 */
 	public static function getAnnotation(PropertyInterface $prop, $object) {
 		$id = $prop->getAttributeName();
-		return isset($object->$id) ? elgg_get_annotation_from_id($object->$id) : null;
+		return isset($object->$id) ? \elgg_get_annotation_from_id($object->$id) : null;
 	}
 
 	/**
@@ -313,7 +313,7 @@ class Values {
 		}
 
 		$icon_sizes = hypeApps()->iconFactory->getSizes($object);
-		$size = elgg_extract('size', $params);
+		$size = \elgg_extract('size', $params);
 		if ($size && array_key_exists($size, $icon_sizes)) {
 			$icon = $icon_sizes[$size];
 			$icon['url'] = $object->getIconURL([
@@ -343,7 +343,7 @@ class Values {
 		$modes = array_flip($prop->getEnumOptions());
 		return [
 			'id' => $object->$key,
-			'label' => elgg_extract($key, $modes, get_readable_access_level($object->$key)),
+			'label' => \elgg_extract($key, $modes, get_readable_access_level($object->$key)),
 		];
 	}
 
@@ -371,7 +371,7 @@ class Values {
 	 */
 	public static function getElggConfig(PropertyInterface $prop, $object) {
 		$key = $prop->getAttributeName();
-		return elgg_get_config($key);
+		return \elgg_get_config($key);
 	}
 
 	/**
@@ -391,6 +391,6 @@ class Values {
 
 		$params['src'] = $object->$key;
 		// This has a listener in hypeScraper
-		return elgg_trigger_plugin_hook('extract:meta', 'all', $params, []);
+		return \elgg_trigger_plugin_hook('extract:meta', 'all', $params, []);
 	}
 }

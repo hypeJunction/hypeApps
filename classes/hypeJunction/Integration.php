@@ -23,7 +23,7 @@ class Integration {
 	 */
 	public static function getServiceProvider() {
 		if (is_callable('_elgg_services')) {
-			return _elgg_services();
+			return \_elgg_services();
 		}
 
 		if (!isset($CONFIG)) {
@@ -48,12 +48,12 @@ class Integration {
 		}
 
 		if (is_callable('elgg_get_version')) {
-			self::$version = elgg_get_version(true);
+			self::$version = \elgg_get_version(true);
 			return self::$version;
 		}
 
 		if (is_callable('elgg_get_config')) {
-			$v = elgg_get_config('version');
+			$v = \elgg_get_config('version');
 			if ($v) {
 				self::$version = $v;
 				return self::$version;

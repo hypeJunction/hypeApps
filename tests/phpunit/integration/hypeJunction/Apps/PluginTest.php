@@ -14,7 +14,7 @@ class PluginTest extends IntegrationTestCase {
 	}
 
 	protected function skipIfPluginMissing() {
-		if (!elgg_get_plugin_from_id('hypeapps')) {
+		if (!\elgg_get_plugin_from_id('hypeapps')) {
 			$this->markTestSkipped('hypeapps plugin not installed in test DB');
 		}
 	}

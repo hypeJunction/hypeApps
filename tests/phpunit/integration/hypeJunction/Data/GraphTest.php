@@ -14,13 +14,13 @@ class GraphTest extends IntegrationTestCase {
 	}
 
 	protected function skipIfMissing() {
-		if (!elgg_get_plugin_from_id('hypeapps')) {
+		if (!\elgg_get_plugin_from_id('hypeapps')) {
 			$this->markTestSkipped('hypeapps plugin not installed in test DB');
 		}
 	}
 
 	protected function makeGraph(): Graph {
-		$plugin = elgg_get_plugin_from_id('hypeapps');
+		$plugin = \elgg_get_plugin_from_id('hypeapps');
 		$config = new \hypeJunction\Apps\Config($plugin);
 		return new Graph($config);
 	}

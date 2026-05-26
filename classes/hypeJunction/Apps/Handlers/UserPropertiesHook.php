@@ -43,7 +43,7 @@ class UserPropertiesHook {
 			'validation' => [
 				'rules' => [
 					'type' => 'string',
-					'minlength' => elgg_get_config('minusername') ?: 4,
+					'minlength' => \elgg_get_config('minusername') ?: 4,
 				],
 				'callbacks' => [
 					'valid' => '\hypeJunction\Data\Validators::isValidUsername',
@@ -79,7 +79,7 @@ class UserPropertiesHook {
 		]);
 
 		if ($full_view) {
-			$profile_fields = (array) elgg_get_config('profile_fields');
+			$profile_fields = (array) \elgg_get_config('profile_fields');
 			foreach ($profile_fields as $shortname => $type) {
 				$return[] = new Property($shortname, [
 					'getter' => '\hypeJunction\Data\Values::getVerbatim',

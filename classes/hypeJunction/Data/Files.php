@@ -20,12 +20,12 @@ class Files {
 
 		$prop_id = $prop->getIdentifier();
 		if (!is_array($value) || !isset($value)) {
-			$value = elgg_extract($prop_id, $_FILES, []);
+			$value = \elgg_extract($prop_id, $_FILES, []);
 		}
 
-		$name = elgg_extract('name', $value);
-		$tmp_name = elgg_extract('tmp_name', $value);
-		$error_type = elgg_extract('error', $value);
+		$name = \elgg_extract('name', $value);
+		$tmp_name = \elgg_extract('tmp_name', $value);
+		$error_type = \elgg_extract('error', $value);
 
 		$has_uploaded_file = $error_type != UPLOAD_ERR_NO_FILE && $name && $tmp_name;
 		if (!$has_uploaded_file) {
@@ -40,19 +40,19 @@ class Files {
 			return;
 		}
 
-		$image_upload_crop_coords = (array) elgg_extract('image_upload_crop_coords', $params, []);
-		$ratio_coords = (array) elgg_extract($prop_id, $image_upload_crop_coords, []);
+		$image_upload_crop_coords = (array) \elgg_extract('image_upload_crop_coords', $params, []);
+		$ratio_coords = (array) \elgg_extract($prop_id, $image_upload_crop_coords, []);
 
 		list($master_width, $master_height) = getimagesize($_FILES[$prop_id]['tmp_name']);
 
 		foreach ($icon_sizes as $icon_name => $icon_size) {
 			$ratio = (int) $icon_size['w'] / (int) $icon_size['h'];
-			$coords = (array) elgg_extract("$ratio", $ratio_coords, []);
+			$coords = (array) \elgg_extract("$ratio", $ratio_coords, []);
 
-			$x1 = (int) elgg_extract('x1', $coords);
-			$x2 = (int) elgg_extract('x2', $coords);
-			$y1 = (int) elgg_extract('y1', $coords);
-			$y2 = (int) elgg_extract('y2', $coords);
+			$x1 = (int) \elgg_extract('x1', $coords);
+			$x2 = (int) \elgg_extract('x2', $coords);
+			$y1 = (int) \elgg_extract('y1', $coords);
+			$y2 = (int) \elgg_extract('y2', $coords);
 
 			if ($x2 <= $x1 || $y2 <= $y1) {
 				$tmp_coords = false;
@@ -78,17 +78,17 @@ class Files {
 				return $tmp_icon_sizes;
 			};
 
-			elgg_register_plugin_hook_handler('entity:icon:sizes', 'object', $reset_hook, 999);
+			\elgg_register_plugin_hook_handler('entity:icon:sizes', 'object', $reset_hook, 999);
 			if (hypeApps()->iconFactory->create($entity, $_FILES[$prop_id]['tmp_name'], $options)) {
 				foreach (['x1', 'x2', 'y1', 'y2'] as $c) {
-					$entity->{"_coord_{$ratio}_{$c}"} = elgg_extract($c, $coords, 0);
+					$entity->{"_coord_{$ratio}_{$c}"} = \elgg_extract($c, $coords, 0);
 					if ($ratio === 1) {
-						$entity->$c = elgg_extract($c, $coords, 0);
+						$entity->$c = \elgg_extract($c, $coords, 0);
 					}
 				}
 			}
 
-			elgg_unregister_plugin_hook_handler('entity:icon:sizes', 'object', $reset_hook);
+			\elgg_unregister_plugin_hook_handler('entity:icon:sizes', 'object', $reset_hook);
 		}
 
 		return $entity;

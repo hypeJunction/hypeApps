@@ -94,7 +94,7 @@ class Config extends \hypeJunction\Config {
 	 * @return array
 	 */
 	public function getGlobalIconSizes() {
-		return elgg_get_config('icon_sizes');
+		return \elgg_get_config('icon_sizes');
 	}
 
 	/**

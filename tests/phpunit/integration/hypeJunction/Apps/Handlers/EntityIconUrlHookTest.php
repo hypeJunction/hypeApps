@@ -32,7 +32,7 @@ $hook->method('getParam')->willReturnCallback(function ($name, $default = null) 
 	}
 
 	public function testReturnsNullForEntityWithoutIcontime() {
-		if (!elgg_get_plugin_from_id('hypeapps')) {
+		if (!\elgg_get_plugin_from_id('hypeapps')) {
 			$this->markTestSkipped('hypeapps plugin not installed in test DB');
 		}
 		$user = $this->createUser();

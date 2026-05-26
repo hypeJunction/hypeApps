@@ -39,7 +39,7 @@ class CoverHandler extends IconHandler {
 			$icon_sizes = $defaults;
 		}
 
-		return elgg_trigger_plugin_hook('entity:cover:sizes', $type, [
+		return \elgg_trigger_plugin_hook('entity:cover:sizes', $type, [
 			'entity' => $entity,
 			'subtype' => $subtype,
 		], $icon_sizes);

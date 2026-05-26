@@ -37,7 +37,7 @@ class Graph implements GraphInterface {
 			],
 		];
 		
-		return elgg_trigger_plugin_hook('aliases', 'graph', null, $aliases);
+		return \elgg_trigger_plugin_hook('aliases', 'graph', null, $aliases);
 	}
 
 	/**
@@ -51,12 +51,12 @@ class Graph implements GraphInterface {
 		$type = $object->getType();
 		$subtype = $object->getSubtype();
 
-		$types = elgg_extract($type, $this->getAliases());
+		$types = \elgg_extract($type, $this->getAliases());
 		if (is_string($types)) {
 			return $types;
 		}
 
-		return elgg_extract($subtype, (array) $types, false);
+		return \elgg_extract($subtype, (array) $types, false);
 	}
 
 	/**
@@ -66,11 +66,11 @@ class Graph implements GraphInterface {
 
 		switch ($uid) {
 			case 'me':
-				$uid = 'ue' . elgg_get_logged_in_user_guid();
+				$uid = 'ue' . \elgg_get_logged_in_user_guid();
 				break;
 
 			case 'site':
-				$uid = 'se' . elgg_get_site_entity()->guid;
+				$uid = 'se' . \elgg_get_site_entity()->guid;
 				break;
 		}
 
@@ -78,12 +78,12 @@ class Graph implements GraphInterface {
 		switch ($abbr) {
 			case 'an':
 				$id = (int) substr($uid, 2);
-				$object = elgg_get_annotation_from_id($id);
+				$object = \elgg_get_annotation_from_id($id);
 				break;
 
 			case 'md':
 				$id = (int) substr($uid, 2);
-				$object = elgg_get_metadata_from_id($id);
+				$object = \elgg_get_metadata_from_id($id);
 				break;
 
 			case 'rl':
@@ -93,7 +93,7 @@ class Graph implements GraphInterface {
 
 			case 'rv':
 				$id = (int) substr($uid, 2);
-				$river = elgg_get_river([
+				$river = \elgg_get_river([
 					'ids' => sanitize_int($id),
 				]);
 				$object = $river ? $river[0] : false;
@@ -181,8 +181,8 @@ class Graph implements GraphInterface {
 			$data = $return;
 		}
 
-		$depth = elgg_extract('depth', $params, 0);
-		$recursive = elgg_extract('recursive', $params, false);
+		$depth = \elgg_extract('depth', $params, 0);
+		$recursive = \elgg_extract('recursive', $params, false);
 
 		$export_params = $params;
 		$export_params['depth'] = $depth + 1;
@@ -203,7 +203,7 @@ class Graph implements GraphInterface {
 			$type = is_callable([$data, 'getType']) ? $data->getType() : 'unknown';
 			$subtype = is_callable([$data, 'getSubtype']) ? $data->getSubtype() : false;
 
-			$fields = (array) elgg_extract('fields', $params, []);
+			$fields = (array) \elgg_extract('fields', $params, []);
 			$properties = $this->getProperties($data, $params);
 
 			$return = [];
@@ -217,9 +217,9 @@ class Graph implements GraphInterface {
 			$hook_params['object'] = $data;
 			$hook_params['fields'] = $fields;
 
-			$return = elgg_trigger_plugin_hook('graph:export', $type, $hook_params, $return);
+			$return = \elgg_trigger_plugin_hook('graph:export', $type, $hook_params, $return);
 			if ($subtype) {
-				$return = elgg_trigger_plugin_hook('graph:export', "$type:$subtype", $hook_params, $return);
+				$return = \elgg_trigger_plugin_hook('graph:export', "$type:$subtype", $hook_params, $return);
 			}
 
 			ksort($return);
@@ -246,9 +246,9 @@ class Graph implements GraphInterface {
 
 		$params['object'] = $object;
 
-		$fields = elgg_trigger_plugin_hook('graph:properties', $type, $params, $fields);
+		$fields = \elgg_trigger_plugin_hook('graph:properties', $type, $params, $fields);
 		if ($subtype) {
-			$fields = elgg_trigger_plugin_hook('graph:properties', "$type:$subtype", $params, $fields);
+			$fields = \elgg_trigger_plugin_hook('graph:properties', "$type:$subtype", $params, $fields);
 		}
 
 		return (array) $fields;

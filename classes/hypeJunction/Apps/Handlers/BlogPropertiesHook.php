@@ -21,8 +21,8 @@ class BlogPropertiesHook {
 			'type' => 'enum',
 			'enum' => [
 				//elgg_echo('status:unsaved_draft') => 'unsaved_draft',
-				elgg_echo('status:draft') => 'draft',
-				elgg_echo('status:published') => 'published',
+				\elgg_echo('status:draft') => 'draft',
+				\elgg_echo('status:published') => 'published',
 			],
 			'input' => 'select',
 			'validate' => [

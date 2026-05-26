@@ -25,10 +25,10 @@ class Validators {
 		$params['expectation'] = $expectation;
 		$params['property'] = $prop;
 
-		$result = elgg_trigger_plugin_hook("validate:$rule", 'action', $params, true);
+		$result = \elgg_trigger_plugin_hook("validate:$rule", 'action', $params, true);
 
 		if ($result === false) {
-			throw new \hypeJunction\Exceptions\ActionValidationException(elgg_echo('apps:validation:error:prop', [$prop->getIdentifier()]));
+			throw new \hypeJunction\Exceptions\ActionValidationException(\elgg_echo('apps:validation:error:prop', [$prop->getIdentifier()]));
 		}
 
 		return $result;

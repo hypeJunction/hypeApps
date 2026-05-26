@@ -72,7 +72,7 @@ class BatchResult {
 	 * @return array
 	 */
 	public function export(array $params = []) {
-		$result = ['type' => 'list', 'count' => $this->getCount(), 'limit' => elgg_extract('limit', $this->options, elgg_get_config('default_limit')), 'offset' => elgg_extract('offset', $this->options, 0), 'items' => []];
+		$result = ['type' => 'list', 'count' => $this->getCount(), 'limit' => \elgg_extract('limit', $this->options, \elgg_get_config('default_limit')), 'offset' => \elgg_extract('offset', $this->options, 0), 'items' => []];
 		$batch = $this->getBatch();
 		foreach ($batch as $entity) {
 			$result['items'][] = hypeApps()->graph->export($entity, $params);
@@ -92,7 +92,7 @@ class BatchResult {
 			return $options;
 		}
 
-		$sort = elgg_extract('sort', $options);
+		$sort = \elgg_extract('sort', $options);
 		unset($options['sort']);
 		if (!is_array($sort)) {
 			return $options;
@@ -109,12 +109,12 @@ class BatchResult {
 			switch ($field) {
 				case 'alpha':
 					// In Elgg 3.x, name/title are metadata - use metadata sorting
-					if (elgg_extract('types', $options) == 'user' || elgg_extract('types', $options) == 'group') {
+					if (\elgg_extract('types', $options) == 'user' || \elgg_extract('types', $options) == 'group') {
 						$options['sort_by'] = [
 							'property' => 'name',
 							'direction' => $direction,
 						];
-					} else if (elgg_extract('types', $options) == 'object') {
+					} else if (\elgg_extract('types', $options) == 'object') {
 						$options['sort_by'] = [
 							'property' => 'title',
 							'direction' => $direction,
