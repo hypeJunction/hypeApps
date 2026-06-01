@@ -70,10 +70,10 @@ class Actions {
 
 		if ($feedback) {
 			foreach ($errors as $error) {
-				elgg_register_error_message($error);
+				register_error($error);
 			}
 			foreach ($messages as $message) {
-				elgg_register_success_message($message);
+				system_message($message);
 			}
 		}
 
