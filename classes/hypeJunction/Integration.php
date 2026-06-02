@@ -7,7 +7,8 @@ namespace hypeJunction;
  */
 class Integration {
 
-	public static $version;
+	/** @var mixed */
+    public static $version;
 
 	/**
 	 * Returns root directory of Elgg installation

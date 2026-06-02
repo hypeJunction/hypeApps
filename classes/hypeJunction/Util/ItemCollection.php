@@ -7,7 +7,8 @@ namespace hypeJunction\Util;
  */
 final class ItemCollection {
 
-	protected $guids = [];
+	/** @var mixed */
+    protected $guids = [];
 
 	/**
 	 * Create a new group from a mixed data set

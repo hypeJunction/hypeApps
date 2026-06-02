@@ -17,10 +17,6 @@ if (file_exists("{$plugin_root}/vendor/autoload.php")) {
 	require_once "{$plugin_root}/vendor/autoload.php";
 }
 
-if (\hypeJunction\Integration::isElggVersionBelow('1.9.0')) {
-	require_once __DIR__ . '/shims/1_8.php';
-}
-
 /**
  * Plugin DI Container
  * @return \hypeJunction\Apps\Plugin

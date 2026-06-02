@@ -7,17 +7,23 @@ namespace hypeJunction\Controllers;
  */
 class ActionResult {
 
-	protected $forwardUrl;
+	/** @var mixed */
+    protected $forwardUrl;
 
-	protected $forwardReason;
+	/** @var mixed */
+    protected $forwardReason;
 
-	protected $messages = [];
+	/** @var mixed */
+    protected $messages = [];
 
-	protected $errors = [];
+	/** @var mixed */
+    protected $errors = [];
 
-	public $output = '';
+	/** @var mixed */
+    public $output = '';
 
-	public $data;
+	/** @var mixed */
+    public $data;
 
 	/**
 	 * __construct.

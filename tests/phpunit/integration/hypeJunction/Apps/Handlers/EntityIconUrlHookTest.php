@@ -10,11 +10,19 @@ class EntityIconUrlHookTest extends IntegrationTestCase {
 	public function up() {}
 	public function down() {}
 
-	public function getPluginID(): string {
+	/**
+     * @return string
+     */
+    public function getPluginID(): string {
 		return '';
 	}
 
-	protected function mockHook($value, $params = []): Event {
+	/**
+     * @param mixed $value
+     * @param mixed $params
+     * @return Event
+     */
+    protected function mockHook($value, $params = []): Event {
 		$hook = $this->getMockBuilder(Event::class)->disableOriginalConstructor()->getMock();
 		$hook->method('getValue')->willReturn($value);
 $hook->method('getParam')->willReturnCallback(function ($name, $default = null) use ($params) {

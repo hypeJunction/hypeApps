@@ -7,15 +7,20 @@ namespace hypeJunction\Servers;
  */
 class IconServer extends Server {
 
-	private $uid;
+	/** @var mixed */
+    private $uid;
 
-	private $d;
+	/** @var mixed */
+    private $d;
 
-	private $ts;
+	/** @var mixed */
+    private $ts;
 
-	private $path;
+	/** @var mixed */
+    private $path;
 
-	private $hmac;
+	/** @var mixed */
+    private $hmac;
 
 	/**
 	 * {@inheritdoc}

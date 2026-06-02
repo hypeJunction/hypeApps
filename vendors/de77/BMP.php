@@ -37,7 +37,12 @@ namespace WideImage\vendor\de77;
 
 class BMP {
 
-	public static function imagebmp(&$img, $filename = false) {
+	/**
+     * @param mixed $img
+     * @param mixed $filename
+     * @return mixed
+     */
+    public static function imagebmp(&$img, $filename = false) {
 		$wid = imagesx($img);
 		$hei = imagesy($img);
 		$wid_pad = str_pad('', $wid % 4, "\0");
@@ -97,7 +102,11 @@ class BMP {
 		return true;
 	}
 
-	public static function imagecreatefromstring($data) {
+	/**
+     * @param mixed $data
+     * @return mixed
+     */
+    public static function imagecreatefromstring($data) {
 		//read header
 		$pos = 0;
 		$header = substr($data, 0, 54);
@@ -157,11 +166,21 @@ class BMP {
 		return $img;
 	}
 
-	public static function imagecreatefrombmp($filename) {
+	/**
+     * @param mixed $filename
+     * @return mixed
+     */
+    public static function imagecreatefrombmp($filename) {
 		return self::imagecreatefromstring(file_get_contents($filename));
 	}
 
-	private static function str_split2($row, $bps, $palette) {
+	/**
+     * @param mixed $row
+     * @param mixed $bps
+     * @param mixed $palette
+     * @return mixed
+     */
+    private static function str_split2($row, $bps, $palette) {
 		switch ($bps) {
 			case 32:
 			case 24: return str_split($row, $bps / 8);
@@ -202,7 +221,14 @@ class BMP {
 		}
 	}
 
-	private static function makepixel($img, $x, $y, $str, $bps) {
+	/**
+     * @param mixed $img
+     * @param mixed $x
+     * @param mixed $y
+     * @param mixed $str
+     * @param mixed $bps
+     */
+    private static function makepixel($img, $x, $y, $str, $bps) {
 		switch ($bps) {
 			case 32 : $a = ord($str[0]);
 				$b = ord($str[1]);
@@ -224,20 +250,36 @@ class BMP {
 		}
 	}
 
-	private static function byte3($n) {
+	/**
+     * @param mixed $n
+     * @return mixed
+     */
+    private static function byte3($n) {
 		return chr($n & 255) . chr(($n >> 8) & 255) . chr(($n >> 16) & 255);
 	}
 
-	private static function undword($n) {
+	/**
+     * @param mixed $n
+     * @return mixed
+     */
+    private static function undword($n) {
 		$r = unpack("V", $n);
 		return $r[1];
 	}
 
-	private static function dword($n) {
+	/**
+     * @param mixed $n
+     * @return mixed
+     */
+    private static function dword($n) {
 		return pack("V", $n);
 	}
 
-	private static function word($n) {
+	/**
+     * @param mixed $n
+     * @return mixed
+     */
+    private static function word($n) {
 		return pack("v", $n);
 	}
 

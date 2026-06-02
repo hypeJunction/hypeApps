@@ -55,7 +55,7 @@ class DeleteAction extends Action {
 		$container = $this->entity->getContainerEntity();
 
 		// determine forward URL
-		$forward_url = REFERER;
+		$forward_url = REFERRER;
 		$referrer_url = !empty($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
 		if ($referrer_url) {
 			$path = explode('/', parse_url($referrer_url, PHP_URL_PATH));

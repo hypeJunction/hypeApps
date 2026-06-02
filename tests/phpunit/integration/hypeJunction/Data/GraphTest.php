@@ -9,7 +9,10 @@ class GraphTest extends IntegrationTestCase {
 	public function up() {}
 	public function down() {}
 
-	public function getPluginID(): string {
+	/**
+     * @return string
+     */
+    public function getPluginID(): string {
 		return '';
 	}
 
@@ -19,7 +22,10 @@ class GraphTest extends IntegrationTestCase {
 		}
 	}
 
-	protected function makeGraph(): Graph {
+	/**
+     * @return Graph
+     */
+    protected function makeGraph(): Graph {
 		$plugin = \elgg_get_plugin_from_id('hypeapps');
 		$config = new \hypeJunction\Apps\Config($plugin);
 		return new Graph($config);

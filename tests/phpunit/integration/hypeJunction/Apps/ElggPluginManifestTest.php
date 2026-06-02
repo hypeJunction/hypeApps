@@ -9,11 +9,17 @@ class ElggPluginManifestTest extends IntegrationTestCase {
 	public function up() {}
 	public function down() {}
 
-	public function getPluginID(): string {
+	/**
+     * @return string
+     */
+    public function getPluginID(): string {
 		return '';
 	}
 
-	protected function loadManifest(): array {
+	/**
+     * @return array
+     */
+    protected function loadManifest(): array {
 		$path = dirname(__DIR__, 5) . '/elgg-plugin.php';
 		$this->assertFileExists($path);
 		return require $path;
