@@ -20,7 +20,10 @@ class DiContainerTest extends UnitTestCase {
 		(new DiContainer())->setValue('bad_', 1);
 	}
 
-	public function testSetFactoryProducesValueFromCallable() {
+	/**
+     * @return mixed
+     */
+    public function testSetFactoryProducesValueFromCallable() {
 		$c = new DiContainer();
 $c->setFactory('service', function () {
 			return new \stdClass();
@@ -28,7 +31,10 @@ $c->setFactory('service', function () {
 		$this->assertInstanceOf(\stdClass::class, $c->service);
 	}
 
-	public function testSharedFactoryReturnsSameInstance() {
+	/**
+     * @return mixed
+     */
+    public function testSharedFactoryReturnsSameInstance() {
 		$c = new DiContainer();
 $c->setFactory('svc', function () {
 			return new \stdClass();
@@ -38,7 +44,10 @@ $c->setFactory('svc', function () {
 		$this->assertSame($a, $b);
 	}
 
-	public function testNonSharedFactoryReturnsNewInstance() {
+	/**
+     * @return mixed
+     */
+    public function testNonSharedFactoryReturnsNewInstance() {
 		$c = new DiContainer();
 $c->setFactory('svc', function () {
 			return new \stdClass();
@@ -48,7 +57,10 @@ $c->setFactory('svc', function () {
 		$this->assertNotSame($a, $b);
 	}
 
-	public function testFactoryReceivesContainerAsArg() {
+	/**
+     * @return mixed
+     */
+    public function testFactoryReceivesContainerAsArg() {
 		$c = new DiContainer();
 		$received = null;
 $c->setFactory('svc', function ($container) use (&$received) {
@@ -90,7 +102,10 @@ $c->setFactory('svc', function ($container) use (&$received) {
 		$unused = $c->missing;
 	}
 
-	public function testGetNamesIncludesFactories() {
+	/**
+     * @return mixed
+     */
+    public function testGetNamesIncludesFactories() {
 		$c = new DiContainer();
 		$c->setFactory('one', function () { return 1; });
 		$c->setValue('two', 2);

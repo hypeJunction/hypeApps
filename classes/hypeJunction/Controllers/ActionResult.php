@@ -4,52 +4,85 @@ namespace hypeJunction\Controllers;
 
 class ActionResult {
 
-	protected $forwardUrl;
-	protected $forwardReason;
-	protected $messages = array();
-	protected $errors = array();
-	public $output = '';
-	public $data;
+	/** @var mixed */
+    protected $forwardUrl;
+	/** @var mixed */
+    protected $forwardReason;
+	/** @var mixed */
+    protected $messages = array();
+	/** @var mixed */
+    protected $errors = array();
+	/** @var mixed */
+    public $output = '';
+	/** @var mixed */
+    public $data;
 
 	public function __construct() {
 		$this->setForwardURL();
 	}
 
-	public function setForwardURL($url = null) {
+	/**
+     * @param mixed $url
+     */
+    public function setForwardURL($url = null) {
 		$this->forwardUrl = $url ?? REFERER;
 	}
 
-	public function getForwardURL() {
+	/**
+     * @return mixed
+     */
+    public function getForwardURL() {
 		return ($this->forwardUrl) ? : REFERER;
 	}
 
-	public function setForwardReason($reason = 'system') {
+	/**
+     * @param mixed $reason
+     * @return mixed
+     */
+    public function setForwardReason($reason = 'system') {
 		return $this->forwardReason = $reason;
 	}
 
-	public function getForwardReason() {
+	/**
+     * @return mixed
+     */
+    public function getForwardReason() {
 		return ($this->forwardReason) ? : 'system';
 	}
 
-	public function addError($error = '') {
+	/**
+     * @param mixed $error
+     * @return mixed
+     */
+    public function addError($error = '') {
 		if ($error) {
 			$this->errors[] = $error;
 		}
 		return $this;
 	}
 
-	public function addMessage($message = '') {
+	/**
+     * @param mixed $message
+     * @return mixed
+     */
+    public function addMessage($message = '') {
 		if ($message) {
 			$this->messages[] = $message;
 		}
 		return $this;
 	}
 
-	public function getErrors() {
+	/**
+     * @return mixed
+     */
+    public function getErrors() {
 		return $this->errors;
 	}
 
-	public function getMessages() {
+	/**
+     * @return mixed
+     */
+    public function getMessages() {
 		return $this->messages;
 	}
 

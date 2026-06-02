@@ -9,7 +9,10 @@ class BatchResultTest extends UnitTestCase {
 	public function up() {}
 	public function down() {}
 
-	public function testGetCountCallsGetterWithCountFlag() {
+	/**
+     * @return mixed
+     */
+    public function testGetCountCallsGetterWithCountFlag() {
 		$received = null;
 		$getter = function ($options) use (&$received) {
 			$received = $options;
@@ -21,7 +24,10 @@ class BatchResultTest extends UnitTestCase {
 		$this->assertSame('object', $received['types']);
 	}
 
-	public function testGetCountCoercesToInt() {
+	/**
+     * @return mixed
+     */
+    public function testGetCountCoercesToInt() {
 		$getter = function ($options) { return '42'; };
 		$b = new BatchResult($getter);
 		$this->assertSame(42, $b->getCount());

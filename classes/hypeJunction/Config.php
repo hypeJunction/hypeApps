@@ -7,8 +7,10 @@ namespace hypeJunction;
  */
 abstract class Config {
 
-	private $plugin;
-	private $settings;
+	/** @var mixed */
+    private $plugin;
+	/** @var mixed */
+    private $settings;
 
 	/**
 	 * Constructor

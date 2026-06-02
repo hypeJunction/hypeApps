@@ -4,7 +4,15 @@ namespace hypeJunction\Data;
 
 class Validators {
 
-	public static function validateRule(PropertyInterface $prop, $value = null, $rule = '', $expectation = null, array $params = array()) {
+	/**
+     * @param PropertyInterface $prop
+     * @param mixed $value
+     * @param mixed $rule
+     * @param mixed $expectation
+     * @param array $params
+     * @return mixed
+     */
+    public static function validateRule(PropertyInterface $prop, $value = null, $rule = '', $expectation = null, array $params = array()) {
 
 		$params['value'] = $value;
 		$params['rule'] = $rule;
@@ -20,7 +28,13 @@ class Validators {
 		return $result;
 	}
 
-	public static function isValidUsername(PropertyInterface $prop, $value = null, array $params = array()) {
+	/**
+     * @param PropertyInterface $prop
+     * @param mixed $value
+     * @param array $params
+     * @return mixed
+     */
+    public static function isValidUsername(PropertyInterface $prop, $value = null, array $params = array()) {
 		try {
 			elgg()->accounts->assertValidUsername($value);
 			return true;
@@ -29,7 +43,13 @@ class Validators {
 		}
 	}
 
-	public static function isAvailableUsername(PropertyInterface $prop, $value = null, array $params = array()) {
+	/**
+     * @param PropertyInterface $prop
+     * @param mixed $value
+     * @param array $params
+     * @return mixed
+     */
+    public static function isAvailableUsername(PropertyInterface $prop, $value = null, array $params = array()) {
 		$access_status = elgg()->session->getDisabledEntityVisibility();
 		access_show_hidden_entities(true);
 

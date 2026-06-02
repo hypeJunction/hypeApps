@@ -15,11 +15,17 @@ class TypedPropertiesHookTest extends IntegrationTestCase {
 	public function up() {}
 	public function down() {}
 
-	public function getPluginID(): string {
+	/**
+     * @return string
+     */
+    public function getPluginID(): string {
 		return '';
 	}
 
-	protected function mockHook(): Hook {
+	/**
+     * @return Hook
+     */
+    protected function mockHook(): Hook {
 		$hook = $this->getMockBuilder(Hook::class)->getMock();
 		$hook->method('getValue')->willReturn([]);
 		$hook->method('getParams')->willReturn([]);
@@ -29,7 +35,10 @@ class TypedPropertiesHookTest extends IntegrationTestCase {
 		return $hook;
 	}
 
-	public function handlerProvider(): array {
+	/**
+     * @return array
+     */
+    public function handlerProvider(): array {
 		return [
 			[UserPropertiesHook::class],
 			[GroupPropertiesHook::class],

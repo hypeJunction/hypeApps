@@ -4,7 +4,14 @@ namespace hypeJunction\Data;
 
 class Files {
 
-	public static function setIcon(PropertyInterface $prop, \ElggEntity $entity, $value = null, array $params = null) {
+	/**
+     * @param PropertyInterface $prop
+     * @param ElggEntity $entity
+     * @param mixed $value
+     * @param array $params
+     * @return mixed
+     */
+    public static function setIcon(PropertyInterface $prop, \ElggEntity $entity, $value = null, array $params = null) {
 
 		$prop_id = $prop->getIdentifier();
 		if (!is_array($value) || !isset($value)) {

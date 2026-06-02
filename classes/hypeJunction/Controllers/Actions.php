@@ -20,7 +20,10 @@ class Actions {
 	private $result;
 
 
-	public function __construct(ActionResult $result) {
+	/**
+     * @param ActionResult $result
+     */
+    public function __construct(ActionResult $result) {
 		$this->result = $result;
 	}
 

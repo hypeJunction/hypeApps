@@ -37,7 +37,12 @@ namespace WideImage\vendor\de77;
 
 class TGA {
 
-	public static function rle_decode($data, $datalen) {
+	/**
+     * @param mixed $data
+     * @param mixed $datalen
+     * @return mixed
+     */
+    public static function rle_decode($data, $datalen) {
 		$len = strlen($data);
 
 		$out = '';
@@ -74,12 +79,21 @@ class TGA {
 		return $out;
 	}
 
-	public static function dec_bits($byte, &$type, &$value) {
+	/**
+     * @param mixed $byte
+     * @param mixed $type
+     * @param mixed $value
+     */
+    public static function dec_bits($byte, &$type, &$value) {
 		$type = ($byte & 0x80) >> 7;
 		$value = 1 + ($byte & 0x7F);
 	}
 
-	public static function imagecreatefromstring($bin_data) {
+	/**
+     * @param mixed $bin_data
+     * @return mixed
+     */
+    public static function imagecreatefromstring($bin_data) {
 		$bin_pos = 0;
 		$header = substr($bin_data, $bin_pos, 18);
 		$bin_pos += 18;
@@ -163,11 +177,19 @@ class TGA {
 		return $im;
 	}
 
-	public static function imagecreatefromtga($filename) {
+	/**
+     * @param mixed $filename
+     * @return mixed
+     */
+    public static function imagecreatefromtga($filename) {
 		return self::imagecreatefromstring(file_get_contents($filename));
 	}
 
-	public static function dwordize($str) {
+	/**
+     * @param mixed $str
+     * @return mixed
+     */
+    public static function dwordize($str) {
 		$a = ord($str[0]);
 		$b = ord($str[1]);
 		$c = ord($str[2]);
@@ -175,7 +197,11 @@ class TGA {
 		return $c * 256 * 256 + $b * 256 + $a;
 	}
 
-	public static function bit5($x) {
+	/**
+     * @param mixed $x
+     * @return mixed
+     */
+    public static function bit5($x) {
 		return ($x & 32) >> 5;
 	}
 

@@ -11,11 +11,18 @@ class PropertiesHookTest extends IntegrationTestCase {
 	public function up() {}
 	public function down() {}
 
-	public function getPluginID(): string {
+	/**
+     * @return string
+     */
+    public function getPluginID(): string {
 		return '';
 	}
 
-	protected function mockHook($value = []): Hook {
+	/**
+     * @param mixed $value
+     * @return Hook
+     */
+    protected function mockHook($value = []): Hook {
 		$hook = $this->getMockBuilder(Hook::class)->getMock();
 		$hook->method('getValue')->willReturn($value);
 		$hook->method('getParams')->willReturn([]);
@@ -35,7 +42,10 @@ class PropertiesHookTest extends IntegrationTestCase {
 		}
 	}
 
-	public function testHandleIncludesCoreIdentifiers() {
+	/**
+     * @return mixed
+     */
+    public function testHandleIncludesCoreIdentifiers() {
 		$hook = $this->mockHook([]);
 		$result = PropertiesHook::handle($hook);
 		$ids = array_map(function (Property $p) { return $p->getIdentifier(); }, $result);
@@ -44,7 +54,10 @@ class PropertiesHookTest extends IntegrationTestCase {
 		}
 	}
 
-	public function testHandlePreservesExistingValues() {
+	/**
+     * @return mixed
+     */
+    public function testHandlePreservesExistingValues() {
 		$existing = [new Property('custom')];
 		$hook = $this->mockHook($existing);
 		$result = PropertiesHook::handle($hook);

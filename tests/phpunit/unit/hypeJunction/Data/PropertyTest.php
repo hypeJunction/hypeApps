@@ -41,7 +41,10 @@ $prop = new Property('status', [
 		$this->assertSame(['Published' => 1, 'Draft' => 0], $prop->getEnumOptions());
 	}
 
-	public function testGetEnumOptionsFromCallable() {
+	/**
+     * @return mixed
+     */
+    public function testGetEnumOptionsFromCallable() {
 $prop = new Property('status', [
 			'enum' => function () { return ['A' => 'a']; },
 		]);
@@ -63,7 +66,10 @@ $prop = new Property('title', [
 		$this->assertTrue($called);
 	}
 
-	public function testGetterInvokedOnGetValue() {
+	/**
+     * @return mixed
+     */
+    public function testGetterInvokedOnGetValue() {
 $prop = new Property('title', [
 			'getter' => function ($p, $obj) { return $obj->title ?? null; },
 		]);

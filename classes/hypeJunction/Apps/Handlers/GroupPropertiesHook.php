@@ -118,7 +118,7 @@ $return[] = new Property('access', array(
 		));
 
 		if ($full_view) {
-			$profile_fields = (array) \elgg_get_config('group');
+			$profile_fields = (array) \elgg()->fields->get('group', 'group');
 			foreach ($profile_fields as $shortname => $type) {
 				$return[] = new Property($shortname, array(
 					'getter' => '\hypeJunction\Data\Values::getVerbatim',
