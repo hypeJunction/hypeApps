@@ -140,6 +140,7 @@ class Upload {
 	 * @return string
 	 */
 	public function parseSimpleType() {
+		// TODO(6.x): elgg_get_file_simple_type removed; is_callable guard falls through to manual switch below. Confirm replacement (no 1:1 verified rename).
 		if (is_callable('elgg_get_file_simple_type')) {
 			return elgg_get_file_simple_type($this->detectMimeType());
 		}

@@ -37,7 +37,7 @@ class Graph implements GraphInterface {
 			],
 		];
 		
-		return elgg_trigger_plugin_hook('aliases', 'graph', null, $aliases);
+		return elgg_trigger_event_results('aliases', 'graph', null, $aliases);
 	}
 
 	/**
@@ -217,9 +217,9 @@ class Graph implements GraphInterface {
 			$hook_params['object'] = $data;
 			$hook_params['fields'] = $fields;
 
-			$return = elgg_trigger_plugin_hook('graph:export', $type, $hook_params, $return);
+			$return = elgg_trigger_event_results('graph:export', $type, $hook_params, $return);
 			if ($subtype) {
-				$return = elgg_trigger_plugin_hook('graph:export', "$type:$subtype", $hook_params, $return);
+				$return = elgg_trigger_event_results('graph:export', "$type:$subtype", $hook_params, $return);
 			}
 
 			ksort($return);
@@ -246,9 +246,9 @@ class Graph implements GraphInterface {
 
 		$params['object'] = $object;
 
-		$fields = elgg_trigger_plugin_hook('graph:properties', $type, $params, $fields);
+		$fields = elgg_trigger_event_results('graph:properties', $type, $params, $fields);
 		if ($subtype) {
-			$fields = elgg_trigger_plugin_hook('graph:properties', "$type:$subtype", $params, $fields);
+			$fields = elgg_trigger_event_results('graph:properties', "$type:$subtype", $params, $fields);
 		}
 
 		return (array) $fields;

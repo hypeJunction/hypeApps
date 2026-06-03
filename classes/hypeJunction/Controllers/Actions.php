@@ -84,7 +84,7 @@ class Actions {
 			}
 		}
 
-		return elgg_trigger_plugin_hook('action:after', $action, null, $this->result);
+		return elgg_trigger_event_results('action:after', $action, null, $this->result);
 	}
 
 	/**

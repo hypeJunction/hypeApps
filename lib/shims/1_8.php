@@ -33,6 +33,7 @@ if (!function_exists('elgg_format_element')) {
 		}
 
 		if ($attributes) {
+			// TODO(6.x): elgg_format_attributes removed; needs verified replacement before use.
 			$attrs = elgg_format_attributes($attributes);
 			if ($attrs !== '') {
 				$attrs = " $attrs";
