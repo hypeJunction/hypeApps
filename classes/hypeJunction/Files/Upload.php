@@ -140,30 +140,6 @@ class Upload {
 	 * @return string
 	 */
 	public function parseSimpleType() {
-		// TODO(6.x): elgg_get_file_simple_type removed; is_callable guard falls through to manual switch below. Confirm replacement (no 1:1 verified rename).
-		if (is_callable('elgg_get_file_simple_type')) {
-			return elgg_get_file_simple_type($this->detectMimeType());
-		}
-
-		$mime_type = $this->detectMimeType();
-		switch ($mime_type) {
-			case 'application/msword':
-			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
-			case 'application/pdf':
-				return 'document';
-			case 'application/ogg':
-				return 'audio';
-		}
-
-		if (preg_match('~^(audio|image|video)/~', $mime_type, $m)) {
-			return $m[1];
-		}
-
-		if (strpos($mime_type, 'text/') === 0 || strpos($mime_type, 'opendocument') !== false) {
-			return 'document';
-		}
-
-		// unrecognized MIME
-		return 'general';
+		return _elgg_services()->mimetype->getSimpleType($this->detectMimeType());
 	}
 }
