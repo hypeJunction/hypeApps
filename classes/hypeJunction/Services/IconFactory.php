@@ -156,7 +156,7 @@ class IconFactory {
 		$defaults = ($entity && $entity->getSubtype() == 'file') ? $this->config->getFileIconSizes() : $this->config->getGlobalIconSizes();
 		$sizes = array_merge($defaults, $icon_sizes);
 
-		return elgg_trigger_plugin_hook('entity:icon:sizes', $entity->getType(), [
+		return elgg_trigger_event_results('entity:icon:sizes', $entity->getType(), [
 			'entity' => $entity,
 			'subtype' => $entity->getSubtype(),
 		], $sizes);
@@ -191,7 +191,7 @@ class IconFactory {
 			}
 		}
 
-		$directory = elgg_trigger_plugin_hook('entity:icon:directory', $entity->getType(), [
+		$directory = elgg_trigger_event_results('entity:icon:directory', $entity->getType(), [
 			'entity' => $entity,
 			'size' => $size,
 		], $directory);
@@ -231,7 +231,7 @@ class IconFactory {
 			$filename = "{$entity->guid}{$size}.{$ext}";
 		}
 
-		return elgg_trigger_plugin_hook('entity:icon:directory', $entity->getType(), [
+		return elgg_trigger_event_results('entity:icon:directory', $entity->getType(), [
 			'entity' => $entity,
 			'size' => $size,
 		], $filename);

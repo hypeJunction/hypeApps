@@ -140,9 +140,9 @@ class Upload {
 	 * @return string
 	 */
 	public function parseSimpleType() {
-		if (is_callable('elgg_get_file_simple_type')) {
-			return elgg_get_file_simple_type($this->detectMimeType());
-		}
+		return _elgg_services()->mimetype->getSimpleType($this->detectMimeType());
+
+		// phpcs:ignore -- legacy fallback retained below for non-core environments
 
 		$mime_type = $this->detectMimeType();
 		switch ($mime_type) {

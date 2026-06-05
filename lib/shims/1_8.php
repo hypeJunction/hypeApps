@@ -33,7 +33,7 @@ if (!function_exists('elgg_format_element')) {
 		}
 
 		if ($attributes) {
-			$attrs = elgg_format_attributes($attributes);
+			$attrs = _elgg_services()->html_formatter->formatAttributes($attributes);
 			if ($attrs !== '') {
 				$attrs = " $attrs";
 			}
