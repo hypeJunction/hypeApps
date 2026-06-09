@@ -63,14 +63,14 @@ class Validators {
 	 */
 	public static function isAvailableUsername(PropertyInterface $prop, $value = null, array $params = []) {
 		$access_status = elgg()->session->getDisabledEntityVisibility();
-		access_show_hidden_entities(true);
+		elgg()->session->setDisabledEntityVisibility(true);
 
 		$available = true;
 		if (elgg_get_user_by_username($value)) {
 			$available = false;
 		}
 
-		access_show_hidden_entities($access_status);
+		elgg()->session->setDisabledEntityVisibility($access_status);
 
 		return $available;
 	}

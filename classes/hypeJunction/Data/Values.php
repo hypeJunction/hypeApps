@@ -229,7 +229,7 @@ class Values {
 	 */
 	public static function getEntity(PropertyInterface $prop, $object) {
 		$id = $prop->getAttributeName();
-		return isset($object->$id) ? get_entity($object->$id) : null;
+		return isset($object->$id) ? get_entity((int) $object->$id) : null;
 	}
 
 	/**
