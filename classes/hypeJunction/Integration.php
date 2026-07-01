@@ -47,8 +47,8 @@ class Integration {
 			return self::$version;
 		}
 
-		if (is_callable('elgg_get_version')) {
-			self::$version = elgg_get_version(true);
+		if (is_callable('elgg_get_release')) {
+			self::$version = elgg_get_release();
 			return self::$version;
 		}
 

@@ -229,7 +229,7 @@ class Values {
 	 */
 	public static function getEntity(PropertyInterface $prop, $object) {
 		$id = $prop->getAttributeName();
-		return isset($object->$id) ? get_entity($object->$id) : null;
+		return isset($object->$id) ? get_entity((int) $object->$id) : null;
 	}
 
 	/**
@@ -391,6 +391,6 @@ class Values {
 
 		$params['src'] = $object->$key;
 		// This has a listener in hypeScraper
-		return elgg_trigger_plugin_hook('extract:meta', 'all', $params, []);
+		return elgg_trigger_event_results('extract:meta', 'all', $params, []);
 	}
 }

@@ -78,7 +78,7 @@ class Files {
 				return $tmp_icon_sizes;
 			};
 
-			elgg_register_plugin_hook_handler('entity:icon:sizes', 'object', $reset_hook, 999);
+			elgg_register_event_handler('entity:icon:sizes', 'object', $reset_hook, 999);
 			if (hypeApps()->iconFactory->create($entity, $_FILES[$prop_id]['tmp_name'], $options)) {
 				foreach (['x1', 'x2', 'y1', 'y2'] as $c) {
 					$entity->{"_coord_{$ratio}_{$c}"} = elgg_extract($c, $coords, 0);
@@ -88,7 +88,7 @@ class Files {
 				}
 			}
 
-			elgg_unregister_plugin_hook_handler('entity:icon:sizes', 'object', $reset_hook);
+			elgg_unregister_event_handler('entity:icon:sizes', 'object', $reset_hook);
 		}
 
 		return $entity;

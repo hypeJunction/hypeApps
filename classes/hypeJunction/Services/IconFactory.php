@@ -54,7 +54,7 @@ class IconFactory {
 		$coords = elgg_extract('coords', $options, false);
 		$dir = $this->getIconDirectory($entity, elgg_extract('icon_filestore_prefix', $options));
 
-		$entity->icon_mimetype = (new \ElggFile)->detectMimeType($source, $entity->mimetype ?: 'image/jpeg');
+		$entity->icon_mimetype = _elgg_services()->mimetype->getMimeType($source, $entity->mimetype ?: 'image/jpeg');
 		$entity->icon_directory = $dir;
 
 		// reset
@@ -103,7 +103,7 @@ class IconFactory {
 					$icons_meta[$metadata_name] = $icon->getFilename();
 				}
 			} catch (\Exception $ex) {
-				elgg_log($ex->getMessage(), 'ERROR');
+				elgg_log($ex->getMessage(), 'error');
 				$error = true;
 			}
 		}
@@ -156,7 +156,7 @@ class IconFactory {
 		$defaults = ($entity && $entity->getSubtype() == 'file') ? $this->config->getFileIconSizes() : $this->config->getGlobalIconSizes();
 		$sizes = array_merge($defaults, $icon_sizes);
 
-		return elgg_trigger_plugin_hook('entity:icon:sizes', $entity->getType(), [
+		return elgg_trigger_event_results('entity:icon:sizes', $entity->getType(), [
 			'entity' => $entity,
 			'subtype' => $entity->getSubtype(),
 		], $sizes);
@@ -191,7 +191,7 @@ class IconFactory {
 			}
 		}
 
-		$directory = elgg_trigger_plugin_hook('entity:icon:directory', $entity->getType(), [
+		$directory = elgg_trigger_event_results('entity:icon:directory', $entity->getType(), [
 			'entity' => $entity,
 			'size' => $size,
 		], $directory);
@@ -231,7 +231,7 @@ class IconFactory {
 			$filename = "{$entity->guid}{$size}.{$ext}";
 		}
 
-		return elgg_trigger_plugin_hook('entity:icon:directory', $entity->getType(), [
+		return elgg_trigger_event_results('entity:icon:directory', $entity->getType(), [
 			'entity' => $entity,
 			'size' => $size,
 		], $filename);
@@ -260,7 +260,7 @@ class IconFactory {
 		$file = new \ElggFile();
 		$file->owner_guid = $owner_guid;
 		$file->setFilename("{$dir}/{$filename}");
-		$file->mimetype = $file->detectMimeType();
+		$file->mimetype = $file->getMimeType();
 
 		return $file;
 	}
@@ -314,8 +314,8 @@ class IconFactory {
 		}
 
 		$ha = elgg()->session->getDisabledEntityVisibility();
-		access_show_hidden_entities(true);
-		$entity = get_entity($entity_guid);
+		elgg()->session->setDisabledEntityVisibility(true);
+		$entity = $entity_guid ? get_entity((int) $entity_guid) : null;
 		if (!$entity) {
 			exit;
 		}
@@ -335,7 +335,7 @@ class IconFactory {
 		}
 
 		$mimetype = ($entity->mimetype) ? $entity->mimetype : 'image/jpeg';
-		access_show_hidden_entities($ha);
+		elgg()->session->setDisabledEntityVisibility($ha);
 		header("Content-type: $mimetype");
 		header("Etag: $etag");
 		header('Expires: ' . date('r', time() + 864000));

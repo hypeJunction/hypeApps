@@ -83,7 +83,10 @@ final class ItemCollection {
 	 * @codeCoverageIgnore
 	 */
 	protected function toEntity($guid = null) {
-		return get_entity($guid);
+		if ($guid instanceof \ElggEntity) {
+			return $guid;
+		}
+		return $guid ? get_entity((int) $guid) : null;
 	}
 
 	/**

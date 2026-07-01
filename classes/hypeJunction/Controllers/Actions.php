@@ -54,16 +54,16 @@ class Actions {
 			$this->result = $controller->getResult();
 		} catch (ActionValidationException $ex) {
 			$this->result->addError($ex->getMessage());
-			elgg_log($ex->getMessage(), 'ERROR');
+			elgg_log($ex->getMessage(), 'error');
 		} catch (PermissionsException $ex) {
 			$this->result->addError(elgg_echo('apps:permissions:error'));
-			elgg_log($ex->getMessage(), 'ERROR');
+			elgg_log($ex->getMessage(), 'error');
 		} catch (InvalidEntityException $ex) {
 			$this->result->addError(elgg_echo('apps:entity:error'));
-			elgg_log($ex->getMessage(), 'ERROR');
+			elgg_log($ex->getMessage(), 'error');
 		} catch (Exception $ex) {
 			$this->result->addError(elgg_echo('apps:action:error'));
-			elgg_log($ex->getMessage(), 'ERROR');
+			elgg_log($ex->getMessage(), 'error');
 		}
 
 		$errors = $this->result->getErrors();
@@ -84,7 +84,7 @@ class Actions {
 			}
 		}
 
-		return elgg_trigger_plugin_hook('action:after', $action, null, $this->result);
+		return elgg_trigger_event_results('action:after', $action, [], $this->result);
 	}
 
 	/**

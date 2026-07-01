@@ -30,8 +30,8 @@
         "elgg/elgg": "~7.0.0"
     },
     "autoload": {
-        "psr-0": {
-            "": "classes/"
+        "psr-4": {
+            "hypeJunction\\": "classes/hypeJunction/"
         },
         "classmap": [
             "vendors/de77/"

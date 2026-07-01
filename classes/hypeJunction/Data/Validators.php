@@ -25,7 +25,7 @@ class Validators {
 		$params['expectation'] = $expectation;
 		$params['property'] = $prop;
 
-		$result = elgg_trigger_plugin_hook("validate:$rule", 'action', $params, true);
+		$result = elgg_trigger_event_results("validate:$rule", 'action', $params, true);
 
 		if ($result === false) {
 			throw new \hypeJunction\Exceptions\ActionValidationException(elgg_echo('apps:validation:error:prop', [$prop->getIdentifier()]));
@@ -63,14 +63,14 @@ class Validators {
 	 */
 	public static function isAvailableUsername(PropertyInterface $prop, $value = null, array $params = []) {
 		$access_status = elgg()->session->getDisabledEntityVisibility();
-		access_show_hidden_entities(true);
+		elgg()->session->setDisabledEntityVisibility(true);
 
 		$available = true;
-		if (get_user_by_username($value)) {
+		if (elgg_get_user_by_username($value)) {
 			$available = false;
 		}
 
-		access_show_hidden_entities($access_status);
+		elgg()->session->setDisabledEntityVisibility($access_status);
 
 		return $available;
 	}

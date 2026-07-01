@@ -90,7 +90,7 @@ class Upload {
 				$this->file = $filehandler;
 			}
 		} catch (\Exception $ex) {
-			elgg_log($ex->getMessage(), 'ERROR');
+			elgg_log($ex->getMessage(), 'error');
 			$this->error = elgg_echo('upload:error:unknown');
 		}
 
@@ -132,7 +132,10 @@ class Upload {
 	 * @return string
 	 */
 	public function detectMimeType() {
-		return (new \ElggFile())->detectMimeType($this->tmp_name, $this->type) ?: $this->type;
+		if (empty($this->tmp_name) || !is_file($this->tmp_name)) {
+			return $this->type;
+		}
+		return _elgg_services()->mimetype->getMimeType($this->tmp_name, $this->type) ?: $this->type;
 	}
 
 	/**
@@ -140,9 +143,9 @@ class Upload {
 	 * @return string
 	 */
 	public function parseSimpleType() {
-		if (is_callable('elgg_get_file_simple_type')) {
-			return elgg_get_file_simple_type($this->detectMimeType());
-		}
+		return _elgg_services()->mimetype->getSimpleType($this->detectMimeType());
+
+		// phpcs:ignore -- legacy fallback retained below for non-core environments
 
 		$mime_type = $this->detectMimeType();
 		switch ($mime_type) {
